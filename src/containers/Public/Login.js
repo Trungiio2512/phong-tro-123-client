@@ -1,10 +1,23 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { InputForm, Button } from "../../components";
+import { apiRegister } from "../../services/auth";
+import * as actions from "../../store/actions";
 
 function Login() {
+    const dispatch = useDispatch();
     const location = useLocation();
     const [isRegister, setRegister] = useState(null);
+    const [payload, setPayload] = useState({
+        name: "",
+        phone: "",
+        password: "",
+    });
+
+    const handleSubmit = async () => {
+        dispatch(actions.register(payload));
+    };
 
     useEffect(() => {
         // console.log(location.state?.flag);
@@ -16,9 +29,26 @@ function Login() {
                 {isRegister ? "Đăng ký tài khoản" : "Đăng nhập"}
             </h1>
             <div className="w-full flex flex-col mt-5">
-                {isRegister && <InputForm label="họ tên" />}
-                <InputForm label="số điện thoại" />
-                <InputForm label="mật khẩu" />
+                {isRegister && (
+                    <InputForm
+                        label="họ tên"
+                        value={payload.name}
+                        name={"name"}
+                        setValue={setPayload}
+                    />
+                )}
+                <InputForm
+                    label="số điện thoại"
+                    value={payload.phone}
+                    setValue={setPayload}
+                    name={"phone"}
+                />
+                <InputForm
+                    label="mật khẩu"
+                    value={payload.password}
+                    setValue={setPayload}
+                    name={"password"}
+                />
             </div>
             <div className="mt-5">
                 <Button
@@ -26,6 +56,7 @@ function Login() {
                     textColor="text-white"
                     bgColor={"bg-secondary1"}
                     fullWidth
+                    onClick={handleSubmit}
                 />
             </div>
             <div className="w-full flex items-center justify-between mt-[30px]">

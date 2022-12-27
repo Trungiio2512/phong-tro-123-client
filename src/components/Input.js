@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-function Input({ label }) {
+function Input({ label, type, value, setValue, name }) {
     const idForcus = label
         .split(" ")
         .map((i) => i.charAt(0))
@@ -14,9 +14,14 @@ function Input({ label }) {
                 </label>
             )}
             <input
-                type="w-full text"
+                name={name}
+                value={value}
+                onChange={(e) =>
+                    setValue((prev) => ({ ...prev, [name]: e.target.value }))
+                }
+                type={type ? type : "text"}
                 id={label && idForcus}
-                className="outline-none rounded-md bg-[#e8f0fe] hover:cursor-text caret-purple-400 p-2 text-lg"
+                className="w-full outline-none rounded-md bg-[#e8f0fe] hover:cursor-text caret-purple-400 p-2 text-lg"
             />
         </div>
     );
