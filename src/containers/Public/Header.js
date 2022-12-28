@@ -5,11 +5,16 @@ import icons from "../../untils/icons";
 import { Button } from "../../components";
 import { useCallback } from "react";
 import { path } from "../../untils/constant";
-
+import { useDispatch, useSelector } from "react-redux";
+import * as actions from "../../store/actions/auth";
 const { AiOutlinePlusCircle } = icons;
 
 function Header() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const { isLogging } = useSelector((state) => state.auth);
+
     const goLogin = useCallback((flag) => {
         navigate(path.LOGIN, { state: { flag } });
     }, []);
@@ -24,21 +29,37 @@ function Header() {
                     />
                 </Link>
                 <div className="flex items-center gap-1">
-                    <small className="text-lg">Phòng trọ 123 xin chào</small>
+                    {!isLogging && (
+                        <>
+                            <small className="text-lg">Phòng trọ 123 xin chào</small>
 
-                    <Button
-                        onClick={() => goLogin(false)}
-                        text={"Đăng nhập"}
-                        textColor="text-white"
-                        bgColor="bg-secondary1"
-                    />
+                            <Button
+                                onClick={() => goLogin(false)}
+                                text={"Đăng nhập"}
+                                textColor="text-white"
+                                bgColor="bg-secondary1"
+                            />
 
-                    <Button
-                        text={"Đăng ký"}
-                        onClick={() => goLogin(true)}
-                        textColor="text-white"
-                        bgColor="bg-secondary1"
-                    />
+                            <Button
+                                text={"Đăng ký"}
+                                onClick={() => goLogin(true)}
+                                textColor="text-white"
+                                bgColor="bg-secondary1"
+                            />
+                        </>
+                    )}
+                    {isLogging && (
+                        <>
+                            <small className="text-lg">Tên</small>
+
+                            <Button
+                                onClick={() => dispatch(actions.logout())}
+                                text={"Đăng xuất"}
+                                textColor="text-white"
+                                bgColor="bg-secondary1"
+                            />
+                        </>
+                    )}
                     <Button
                         isAfter
                         text={"Đăng tin mới"}

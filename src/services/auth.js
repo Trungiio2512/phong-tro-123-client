@@ -1,5 +1,5 @@
 import axios from "axios";
-import axiosConfig from "../untils/axiosConfig";
+import axiosConfig from "../axiosConfig";
 
 export const apiRegister = (payload) => {
     return new Promise(async (resolve, reject) => {
@@ -7,6 +7,22 @@ export const apiRegister = (payload) => {
             const res = await axiosConfig({
                 method: "post",
                 url: "/api/v1/auth/register",
+                data: payload,
+            });
+
+            resolve(res);
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
+export const apiLogin = (payload) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const res = await axiosConfig({
+                method: "post",
+                url: "/api/v1/auth/login",
                 data: payload,
             });
 
