@@ -14,11 +14,8 @@ function Input({ label, type, value, setValue, name, invalidFields, setInvalidFi
                 </label>
             )}
             <input
-                name={name}
                 value={value}
-                onChange={(e) =>
-                    setValue((prev) => ({ ...prev, [name]: e.target.value }))
-                }
+                onChange={(e) => setValue((prev) => ({ ...prev, [name]: e.target.value }))}
                 type={type ? type : "text"}
                 id={label && idForcus}
                 onFocus={() => {

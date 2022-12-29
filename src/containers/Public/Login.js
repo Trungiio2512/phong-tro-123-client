@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
+
 import { InputForm, Button } from "../../components";
 import * as actions from "../../store/actions";
 
@@ -9,7 +11,7 @@ function Login() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const { isLogging } = useSelector((state) => state.auth);
+    const { isLogging, msg, update } = useSelector((state) => state.auth);
 
     const [isRegister, setRegister] = useState(null);
     const [invalidFields, setInvalidFields] = useState([]);
@@ -17,6 +19,7 @@ function Login() {
         name: "",
         phone: "",
         password: "",
+        type: "R2",
     });
 
     const handleSubmit = () => {
@@ -48,7 +51,6 @@ function Login() {
                 ]);
                 invalid++;
             }
-            console.log(">>check :" + invalid);
         });
 
         fields.forEach((field) => {
@@ -63,7 +65,7 @@ function Login() {
                     }
                     break;
                 case "phone":
-                    if (!+field[1]) {
+                    if (!+field[1] && field[1]) {
                         setInvalidFields((prev) => [
                             ...prev,
                             { name: field[0], message: "Số điện thoại không hợp lệ" },
@@ -74,11 +76,10 @@ function Login() {
                 default:
                     break;
             }
-            console.log(">> check phone pass " + invalid);
         });
         return invalid;
     };
-
+    // console.log(msg);
     useEffect(() => {
         // console.log(location.state?.flag);
         setRegister(location.state?.flag);
@@ -87,6 +88,11 @@ function Login() {
     useEffect(() => {
         isLogging && navigate("/");
     }, [isLogging, navigate]);
+
+    useEffect(() => {
+        msg && Swal.fire("Ooopps !", msg, "error");
+    }, [msg, update]);
+
     return (
         <div className="bg-white w-full max-w-600 pt-[30px] px-[30px] pb-[100px] rounded-md border-1 border-stone-300">
             <h1 className="font-semibold text-3xl">
@@ -118,6 +124,7 @@ function Login() {
                     value={payload.password}
                     setValue={setPayload}
                     name={"password"}
+                    type="password"
                 />
             </div>
             <div className="mt-5">

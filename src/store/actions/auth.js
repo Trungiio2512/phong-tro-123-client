@@ -12,7 +12,7 @@ export const register = (payload) => async (dispatch) => {
         }
     } catch (error) {
         console.log(error);
-        dispatch({ type: actionTypes.REGISTER_FAILED, data: error });
+        dispatch({ type: actionTypes.REGISTER_FAILED, data: error.response.data?.msg });
     }
 };
 
@@ -27,7 +27,7 @@ export const login = (payload) => async (dispatch) => {
         }
     } catch (error) {
         console.log(error);
-        dispatch({ type: actionTypes.REGISTER_FAILED, data: error });
+        dispatch({ type: actionTypes.REGISTER_FAILED, data: error.response.data?.msg });
     }
 };
 

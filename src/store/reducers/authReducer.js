@@ -3,7 +3,8 @@ import actionTypes from "../actions/actionsType";
 const initialState = {
     isLogging: false,
     token: null,
-    mess: "",
+    msg: "",
+    update: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -14,21 +15,22 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 isLogging: true,
                 token: action.data,
-                mess: "",
+                msg: "",
             };
         case actionTypes.REGISTER_FAILED:
         case actionTypes.LOGIN_FAILED:
             return {
                 ...state,
                 isLogging: false,
-                mess: action.data,
+                msg: action.data,
                 token: null,
+                update: !state.update,
             };
         case actionTypes.LOGOUT:
             return {
                 ...state,
                 isLogging: false,
-                mess: "",
+                msg: "",
                 token: null,
             };
         default:
