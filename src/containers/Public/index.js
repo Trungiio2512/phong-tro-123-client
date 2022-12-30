@@ -7,3 +7,5 @@ export { default as RentailSpace } from "./RentailScpace";
 export { default as RentailApartment } from "./RentailApartment";
 export { default as HomePage } from "./HomePage";
 export { default as Search } from "./Search";
+export { default as Navigation } from "./Navigation";
+export { default as List } from "./List";

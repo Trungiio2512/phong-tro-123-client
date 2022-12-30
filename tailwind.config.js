@@ -18,6 +18,10 @@ module.exports = {
             borderWidth: {
                 1: "1px",
             },
+            boxShadow: {
+                type1: "0 0 10px 1px rgb(0 0 0 / 15%);",
+                type2: "0 0 10px 1px rgb(0 0 0 / 5%);",
+            },
             // caretColor: {
             //     primary: ''
             // }
