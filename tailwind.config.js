@@ -10,6 +10,7 @@ module.exports = {
                 primary: "#f5f5f5",
                 secondary1: "#1266dd",
                 secondary2: "#f73859",
+                "overlay-50": "rgba(0, 0, 0, 0.5)",
             },
             maxWidth: {
                 600: "600px",
@@ -27,5 +28,5 @@ module.exports = {
             // }
         },
     },
-    plugins: [],
+    plugins: [require("@tailwindcss/line-clamp")],
 };
