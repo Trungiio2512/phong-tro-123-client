@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { Button, Item } from "../../components";
-import { getPosts } from "../../store/actions/post";
+import { getPosts, getPostsLimit } from "../../store/actions/post";
 import { useDispatch, useSelector } from "react-redux";
-
-const List = (props) => {
+const List = ({ pageNumber }) => {
     const dispatch = useDispatch();
     const { posts } = useSelector((state) => state.post);
     useEffect(() => {
-        dispatch(getPosts());
-    }, []);
+        let offset = pageNumber ? Number(pageNumber) : 0;
+        dispatch(getPostsLimit(offset));
+    }, [dispatch, pageNumber]);
     // console.log(posts);
     return (
         <div className="w-full  border border-gray-300 p-2 rounded-lg bg-white shadow-md">
@@ -36,6 +36,7 @@ const List = (props) => {
                                 images={JSON.parse(post?.imagesData?.images)}
                                 star={+post?.star}
                                 user={post?.userData}
+                                id={post?.id}
                             />
                         );
                     })}

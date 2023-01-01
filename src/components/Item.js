@@ -1,53 +1,24 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import icons from "../untils/icons";
 import { Link } from "react-router-dom";
+import { formatVietnameseToString } from "../untils/common/fn";
 const indexs = [0, 1, 2, 3];
 const { BsFillHeartFill, GrStar, BsHeart, BsFillBookmarkStarFill } = icons;
 
-const Item = ({ title, address, attributes, description, images, star, user }) => {
+const Item = ({ id, title, address, attributes, description, images, star, user }) => {
     const [isHoverHeart, setisHoverHeart] = useState(false);
+    const [stars, setstars] = useState(() => {
+        const stars = [];
+        for (let i = 0; i < star; i++) {
+            stars.push(<GrStar size={20} className=" star-item text-yellow-400 shrink-0" />);
+        }
+        return stars;
+    });
+
     return (
         <div className="w-full flex border-t-1 border-t-red-500 py-4">
-            {/* <div className="w-2/5 flex flex-wrap gap-[2px] items-center relative">
- 
-                {images.length > 4
-                    ? images
-                          .filter((i, index) => indexs.some((i) => i === index))
-                          ?.map((i, index) => (
-                              <img
-                                  key={index}
-                                  src={i}
-                                  alt="preview"
-                                  className="w-[140px] h-[120px] object-cover"
-                              />
-                          ))
-                    : images.map((i, index) => (
-                          <img
-                              key={index}
-                              src={i}
-                              alt="preview"
-                              className="w-[140px] h-[120px] object-cover"
-                          />
-                      ))}
-                {images.length > 0 && (
-                    <span className="bg-overlay-50 text-white p-1 text-xs rounded-md absolute bottom-1 left-1">
-                        {images.length} ảnh
-                    </span>
-                )}
-                <span
-                    className="text-white absolute bottom-1 right-5"
-                    onMouseEnter={() => setisHoverHeart(true)}
-                    onMouseLeave={() => setisHoverHeart(false)}
-                >
-                    {!isHoverHeart ? (
-                        <BsHeart size={20} />
-                    ) : (
-                        <BsFillHeartFill size={20} className="text-pink-600" />
-                    )}
-                </span>
-            </div> */}
-            <div className="w-2/5 relative">
+            <Link to={`detail/${formatVietnameseToString(title)}/${id}`} className="w-2/5 relative">
                 {images.length > 0 && (
                     <>
                         <img
@@ -71,18 +42,16 @@ const Item = ({ title, address, attributes, description, images, star, user }) =
                         <BsFillHeartFill size={20} className="text-pink-600" />
                     )}
                 </span>
-            </div>
+            </Link>
             <div className="w-3/5 flex flex-col gap-3 pr-3">
                 <div className="flex items-start justify-between">
                     <Link
                         to={"/"}
                         className="gap-2 text-red-600 uppercase font-semibold hover:cursor-pointer hover:underline line-clamp-2"
                     >
-                        <GrStar size={20} className=" star-item text-yellow-400 shrink-0" />
-                        <GrStar size={20} className=" star-item text-yellow-400 shrink-0" />
-                        <GrStar size={20} className=" star-item text-yellow-400 shrink-0" />
-                        <GrStar size={20} className=" star-item text-yellow-400 shrink-0" />
-                        <GrStar size={20} className=" star-item text-yellow-400 shrink-0" />
+                        {stars.map((i, index) => (
+                            <span key={index}>{i}</span>
+                        ))}
                         {title}
                     </Link>
                     {star > 4 && (
@@ -104,7 +73,7 @@ const Item = ({ title, address, attributes, description, images, star, user }) =
                         to={"/"}
                         className="hover:underline text-sm text-gray-500 text-ellipsis overflow-hidden whitespace-nowrap max-w-[250px]"
                     >
-                        {address}
+                        {address.split(",").slice(-2, address.length).join("-")}
                     </Link>
                 </div>
                 <p className="text-sm text-gray-400 line-clamp-3">{description}</p>
@@ -131,7 +100,15 @@ const Item = ({ title, address, attributes, description, images, star, user }) =
         </div>
     );
 };
-
-Item.propTypes = {};
+// title, address, attributes, description, images, star, user
+Item.propTypes = {
+    title: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
+    attributes: PropTypes.objectOf(PropTypes.string),
+    description: PropTypes.arrayOf(PropTypes.string),
+    images: PropTypes.arrayOf(PropTypes.string),
+    star: PropTypes.number,
+    user: PropTypes.objectOf(PropTypes.string),
+};
 
 export default memo(Item);

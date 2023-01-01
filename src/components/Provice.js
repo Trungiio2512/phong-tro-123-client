@@ -4,7 +4,7 @@ import { ProvinceButton } from "./index";
 import { location } from "../untils/constant";
 
 const Provice = (props) => {
-    console.log(location);
+    // console.log(location);
     return (
         <div className="flex gap-3 justify-center items-center">
             {location &&
