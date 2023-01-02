@@ -18,21 +18,24 @@ const Item = ({ id, title, address, attributes, description, images, star, user 
 
     return (
         <div className="w-full flex border-t-1 border-t-red-500 py-4">
-            <Link to={`detail/${formatVietnameseToString(title)}/${id}`} className="w-2/5 relative">
+            <Link
+                to={`detail/${formatVietnameseToString(title)}/${id}`}
+                className="relative shrink-0 w-[280px] h-[240px] rounded-md overflow-hidden"
+            >
                 {images.length > 0 && (
                     <>
                         <img
                             src={images[0]}
                             alt="preview"
-                            className="w-full h-full max-w-[280px] max-h-[280px] object-cover border border-gray-300"
+                            className="w-full h-full object-cover border border-gray-300"
                         />
-                        <span className="bg-overlay-50 text-white p-1 text-xs rounded-md absolute bottom-1 left-1">
+                        <span className="bg-overlay-50 text-white p-1 text-xs rounded-md absolute bottom-1 left-2">
                             {images.length} ảnh
                         </span>
                     </>
                 )}
                 <span
-                    className="absolute bottom-1 right-5"
+                    className="absolute bottom-1 right-2"
                     onMouseEnter={() => setisHoverHeart(true)}
                     onMouseLeave={() => setisHoverHeart(false)}
                 >
@@ -43,7 +46,7 @@ const Item = ({ id, title, address, attributes, description, images, star, user 
                     )}
                 </span>
             </Link>
-            <div className="w-3/5 flex flex-col gap-3 pr-3">
+            <div className="flex flex-col gap-3 ml-3">
                 <div className="flex items-start justify-between">
                     <Link
                         to={"/"}

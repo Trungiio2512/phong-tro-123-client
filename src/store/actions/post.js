@@ -26,10 +26,10 @@ export const getPostsLimit = (page) => async (dispatch) => {
                 count: res?.data?.count,
             });
         } else {
-            dispatch({ type: actionTypes.GET_POSTS_LIMIT, msg: res.data.msg });
+            dispatch({ type: actionTypes.GET_POSTS_LIMIT, msg: res.msg });
         }
     } catch (error) {
         console.log(error);
-        dispatch({ type: actionTypes.GET_POSTS, posts: null });
+        dispatch({ type: actionTypes.GET_POSTS_LIMIT, msg: error?.message });
     }
 };

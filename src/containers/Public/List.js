@@ -12,7 +12,7 @@ const List = ({ pageNumber }) => {
     }, [dispatch, pageNumber]);
     // console.log(posts);
     return (
-        <div className="w-full  border border-gray-300 p-2 rounded-lg bg-white shadow-md">
+        <div className="w-full  border border-gray-300 p-4 rounded-lg bg-white shadow-md">
             <div className="flex items-baseline justify-between mb-3">
                 <h3 className="text-lg font-semibold ">Danh sach tin dang</h3>
                 <span>cap nhat ngay 25-12-2022</span>

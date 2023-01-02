@@ -1,26 +1,21 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { apiGetCategories } from "../../services/category";
 import { path } from "../../untils/constant";
 import { formatVietnameseToString } from "../../untils/common/fn";
+import { useDispatch, useSelector } from "react-redux";
+import * as actions from "../../store/actions";
 
 const defaultLink = "p-3 transition-colors ease-in-out duration-75";
 const linkActive = "bg-secondary2";
 const notActive = "hover:bg-secondary2";
 
 function Navigation() {
-    const [categories, setCategories] = useState([]);
-
+    const dispatch = useDispatch();
+    // const [categories, setCategories] = useState([]);
+    const { categories } = useSelector((state) => state.app);
     useEffect(() => {
-        const fetchCategories = async () => {
-            const res = await apiGetCategories();
-            console.log(res);
-            if (res?.err === 0) {
-                setCategories(res?.data);
-            }
-        };
-
-        fetchCategories();
+      
+        dispatch(actions.getCategories());
     }, []);
     return (
         <div className="w-full bg-secondary1 ">
