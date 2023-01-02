@@ -15,9 +15,9 @@ export const getPosts = (payload) => async (dispatch) => {
         dispatch({ type: actionTypes.GET_POSTS, posts: null });
     }
 };
-export const getPostsLimit = (page) => async (dispatch) => {
+export const getPostsLimit = (payload) => async (dispatch) => {
     try {
-        const res = await apiGetPostsLitmit(page);
+        const res = await apiGetPostsLitmit(payload);
         // console.log(res);
         if (res?.err === 0) {
             dispatch({

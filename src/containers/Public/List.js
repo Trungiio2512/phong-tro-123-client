@@ -1,16 +1,27 @@
 import React, { useEffect, useRef } from "react";
-import PropTypes from "prop-types";
-import { Button, Item } from "../../components";
-import { getPosts, getPostsLimit } from "../../store/actions/post";
 import { useDispatch, useSelector } from "react-redux";
-const List = ({ pageNumber }) => {
+
+import { Button, Item } from "../../components";
+import PropTypes from "prop-types";
+import * as actions from "../../store/actions";
+import { useSearchParams } from "react-router-dom";
+
+const List = () => {
     const dispatch = useDispatch();
+    const [searchParams, setSearchParams] = useSearchParams();
+
     const { posts } = useSelector((state) => state.post);
+
     useEffect(() => {
-        let offset = pageNumber ? Number(pageNumber) : 0;
-        dispatch(getPostsLimit(offset));
-    }, [dispatch, pageNumber]);
-    // console.log(posts);
+        const queryParams = {};
+
+        for (let [key, value] of searchParams.entries()) {
+            queryParams[key] = value;
+        }
+        // console.log(queryParams);
+        dispatch(actions.getPostsLimit(queryParams));
+    }, [dispatch, searchParams]);
+
     return (
         <div className="w-full  border border-gray-300 p-4 rounded-lg bg-white shadow-md">
             <div className="flex items-baseline justify-between mb-3">

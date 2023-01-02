@@ -83,17 +83,17 @@ const Item = ({ id, title, address, attributes, description, images, star, user 
                 <div className="flex items-center justify-between">
                     <div className="flex items-center">
                         <img
-                            src="	https://pt123.cdn.static123.com/images/thumbs/450x300/fit/2022/05/23/anh-2-1-590x308_1653278194.jpg"
+                            src="https://pt123.cdn.static123.com/images/thumbs/450x300/fit/2022/05/23/anh-2-1-590x308_1653278194.jpg"
                             alt="avatar"
                             className="w-[30px] h-[30px] object-cover rounded-full"
                         />
                         <span className="ml-2 text-sm text-gray-400">{user?.name}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                        <button className="py-[2px] px-1 text-sm bg-blue-700  outline outline-1 outline-blue-700  text-white rounded-md">
-                            Gọi ${user?.zalo}
+                        <button className="py-[2px] px-1 text-sm bg-blue-700  outline outline-1 outline-blue-700  text-white rounded-md select-none">
+                            Gọi {user?.zalo}
                         </button>
-                        <button className="py-[2px] px-1 text-sm bg-white text-blue-700 outline outline-1 outline-blue-700 rounded-md">
+                        <button className="py-[2px] px-1 text-sm bg-white text-blue-700 outline outline-1 outline-blue-700 rounded-md select-none">
                             Nhắn zalo
                         </button>
                     </div>

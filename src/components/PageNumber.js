@@ -1,19 +1,36 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
 import { useSearchParams } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 const defaultClassName = "w-[46px] h-[48px] flex text-sm bg-white rounded-md";
 const active = "bg-secondary2 text-white";
 const notActive = "hover:bg-gray-300";
 const PageNumber = ({ currentPage, text, icon, morePage = false, setCurrentPage = () => {} }) => {
+    const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
+    const entries = searchParams.entries();
+
+    const appendValueSearch = (entries) => {
+        const params = {};
+
+        searchParams.append("page", text);
+
+        for (let [key, value] of entries) {
+            params[key] = value;
+        }
+        return params;
+    };
+
     const handleChangePage = () => {
         if (morePage) {
             return;
         }
         setCurrentPage(text);
-        searchParams.set("page", text);
-        setSearchParams(searchParams);
+        navigate({
+            pathname: "/",
+            search: `?${createSearchParams(appendValueSearch(entries))}`,
+        });
     };
 
     return (

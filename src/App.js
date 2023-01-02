@@ -16,12 +16,13 @@ function App() {
             <Routes>
                 <Route path={path.HOME} element={<Home />}>
                     <Route index element={<HomePage />} />
-                    <Route path={path.HOME__PAGE} element={<HomePage />} />
+                    {/* <Route path={path.HOME__PAGE} element={<HomePage />} /> */}
                     <Route path={path.LOGIN} element={<Login />} />
                     <Route path={path.CHO_THUE_CAN_HO} element={<RentailApartment />} />
                     <Route path={path.CHO_THUE_MAT_BANG} element={<RentailScpace />} />
                     <Route path={path.CHO_THUE_PHONG_TRO} element={<RentailRoom />} />
                     <Route path={path.NHA_CHO_THUE} element={<RentailHouse />} />
+                    <Route path={"detail/*"} element={<DetailPost />} />
                     <Route path={path.DETAIL_POST__TITLE__POSTID} element={<DetailPost />} />
                 </Route>
             </Routes>

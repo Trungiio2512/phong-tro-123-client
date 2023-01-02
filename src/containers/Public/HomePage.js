@@ -10,12 +10,11 @@ import * as actions from "../../store/actions";
 
 const HomePage = (props) => {
     const dispatch = useDispatch();
-    const [searchParams, setSearchParams] = useSearchParams();
-    const page = searchParams.get("page");
-
+    // console.log(page);
     const { categories, prices, areas } = useSelector((state) => state.app);
 
     useEffect(() => {
+        // [["page", 5], ["pageSize", 25]]
         dispatch(actions.getPrices());
         dispatch(actions.getAreas());
     }, []);
@@ -30,13 +29,18 @@ const HomePage = (props) => {
             <div className="w-full flex gap-4 ">
                 <div className="w-[70%]">
                     {" "}
-                    <List pageNumber={page} />
-                    <Panigation number={page} />
+                    <List />
+                    <Panigation />
                 </div>
                 <div className="w-[30%] flex flex-col items-center gap-4">
                     <ItemSidebar content={categories} title={"danh sach cho thue"} />
-                    <ItemSidebar title="xem theo gia" isDouble content={prices} />
-                    <ItemSidebar title="xem theo dien tich" isDouble content={areas} />
+                    <ItemSidebar type="priceCode" title="xem theo gia" isDouble content={prices} />
+                    <ItemSidebar
+                        title="xem theo dien tich"
+                        type="areaCode"
+                        isDouble
+                        content={areas}
+                    />
                 </div>
             </div>
         </div>

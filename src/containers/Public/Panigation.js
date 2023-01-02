@@ -3,36 +3,50 @@ import PropTypes from "prop-types";
 import { PageNumber } from "../../components";
 import { useSelector } from "react-redux";
 import icons from "../../untils/icons";
+import { useSearchParams } from "react-router-dom";
 const { TbPlayerTrackNext, TbPlayerTrackPrev } = icons;
-const Panigation = ({ number }) => {
+const Panigation = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
+
     const { count, posts } = useSelector((state) => state.post);
 
     const [arrPage, setArrPage] = useState([]);
-    const [currentPage, setCurrentPage] = useState(+number || 0);
+    const [currentPage, setCurrentPage] = useState(1);
     const [hasFirstPage, setFirstPage] = useState(false);
     const [hasLastPage, setLastPage] = useState(false);
 
     // console.log(count, posts);
     // console.log(arrPage);
+
     useEffect(() => {
-        let maxPage = Math.floor(count / posts.length);
+        const page = searchParams.get("page");
+        page && +page !== currentPage && setCurrentPage(+page);
+        !page && setCurrentPage(1);
+    }, [currentPage, searchParams]);
+
+    useEffect(() => {
+        let maxPage = Math.ceil(count / process.env.REACT_APP_LIMIT_POSTS);
         let end = currentPage + 1 > maxPage ? maxPage : currentPage + 1;
-        let start = currentPage - 1 <= 0 ? 0 : currentPage - 1;
+        let start = currentPage - 1 <= 0 ? 1 : currentPage - 1;
         const temp = [];
+
         for (let i = start; i <= end; i++) {
             temp.push(i);
         }
-        currentPage > 1 ? setFirstPage(true) : setFirstPage(false);
-        currentPage >= maxPage - 1 ? setLastPage(false) : setLastPage(true);
+
+        currentPage <= 2 ? setFirstPage(false) : setFirstPage(true);
+        currentPage + 1 >= maxPage ? setLastPage(false) : setLastPage(true);
+
         setArrPage(temp);
-    }, [count, currentPage, posts.length]);
+    }, [count, currentPage]);
+
     return (
         <div className="flex items-center justify-center gap-2 mt-5">
             {hasFirstPage && (
                 <>
                     <PageNumber
                         icon={<TbPlayerTrackPrev />}
-                        text={0}
+                        text={1}
                         setCurrentPage={setCurrentPage}
                     />
                     <PageNumber text="..." morePage />

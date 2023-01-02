@@ -16,16 +16,14 @@ export const apiGetPosts = () => {
     });
 };
 
-export const apiGetPostsLitmit = (page) => {
+export const apiGetPostsLitmit = (payload = {}) => {
     return new Promise(async (resolve, reject) => {
         try {
             const res = await axiosConfig({
                 method: "get",
                 url: "/api/v1/post/limit",
                 // data: payload,
-                params: {
-                    page,
-                },
+                params: payload,
             });
 
             resolve(res.data);
