@@ -8,7 +8,7 @@ const { HiOutlineLocationMarker, TbReportMoney, BsChevronRight, SlCrop, MdApartm
 
 const Search = () => {
     return (
-        <div className="p-[10px] mt-[10px] w-4/5 rounded-lg bg-[#febb02] flex flex-col lg:flex-row items-center justify-around gap-2">
+        <div className="p-[10px] w-4/5 rounded-lg bg-[#febb02] flex flex-col lg:flex-row items-center justify-around gap-2">
             <SearchItem
                 fontWeight
                 iconBefore={<MdApartment className="shrink-0" />}

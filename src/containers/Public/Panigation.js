@@ -41,7 +41,7 @@ const Panigation = () => {
     }, [count, currentPage]);
 
     return (
-        <div className="flex items-center justify-center gap-2 mt-5">
+        <div className="flex items-center justify-center gap-2 mt-3 ">
             {hasFirstPage && (
                 <>
                     <PageNumber
