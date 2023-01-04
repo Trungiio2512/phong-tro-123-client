@@ -10,7 +10,7 @@ const { text } = data;
 
 const Intro = (props) => {
     const { categories } = useSelector((state) => state.app);
-    console.log(categories);
+    // console.log(categories);
     return (
         <div
             className="border border-gray-300

@@ -4,20 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
 import { textHome } from "../../untils/constant";
-import { ItemSidebar, Provice } from "../../components";
+import { ItemSidebar, Provice, RelatedPost } from "../../components";
 import { List, Panigation } from "./index";
-import * as actions from "../../store/actions";
 
 const HomePage = (props) => {
-    const dispatch = useDispatch();
     // console.log(page);
     const { categories, prices, areas } = useSelector((state) => state.app);
-
-    useEffect(() => {
-        // [["page", 5], ["pageSize", 25]]
-        dispatch(actions.getPrices());
-        dispatch(actions.getAreas());
-    }, []);
 
     return (
         <div className=" w-full flex flex-col gap-3">
@@ -41,6 +33,7 @@ const HomePage = (props) => {
                         isDouble
                         content={areas}
                     />
+                    <RelatedPost />
                 </div>
             </div>
         </div>

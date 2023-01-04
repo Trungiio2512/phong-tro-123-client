@@ -32,3 +32,18 @@ export const apiGetPostsLitmit = (payload = {}) => {
         }
     });
 };
+
+export const apiGetNewPosts = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const res = await axiosConfig({
+                method: "get",
+                url: "/api/v1/post/new_post",
+            });
+
+            resolve(res.data);
+        } catch (error) {
+            reject(error);
+        }
+    });
+};

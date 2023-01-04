@@ -25,15 +25,19 @@ const Panigation = () => {
     }, [currentPage, searchParams]);
 
     useEffect(() => {
+        // tính tổng số trang
         let maxPage = Math.ceil(count / process.env.REACT_APP_LIMIT_POSTS);
-        let end = currentPage + 1 > maxPage ? maxPage : currentPage + 1;
+        //trang trước đó hoặc trang bắt đầu
         let start = currentPage - 1 <= 0 ? 1 : currentPage - 1;
+        // trang tiếp theo
+        let end = currentPage + 1 > maxPage ? maxPage : currentPage + 1;
         const temp = [];
 
         for (let i = start; i <= end; i++) {
             temp.push(i);
         }
 
+        // hiển thị nut về đầu và cuối trang
         currentPage <= 2 ? setFirstPage(false) : setFirstPage(true);
         currentPage + 1 >= maxPage ? setLastPage(false) : setLastPage(true);
 

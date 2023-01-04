@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { memo, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Button, Item } from "../../components";
@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import * as actions from "../../store/actions";
 import { useSearchParams } from "react-router-dom";
 
-const List = () => {
+const List = ({ categoryCode }) => {
     const dispatch = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -19,9 +19,11 @@ const List = () => {
             queryParams[key] = value;
         }
         // console.log(queryParams);
-        dispatch(actions.getPostsLimit(queryParams));
-    }, [dispatch, searchParams]);
+        if (categoryCode) queryParams.categoryCode = categoryCode;
 
+        // console.log(queryParams);
+        dispatch(actions.getPostsLimit(queryParams));
+    }, [categoryCode, dispatch, searchParams]);
     return (
         <div className="w-full  border border-gray-300 p-4 rounded-lg bg-white shadow-md">
             <div className="flex items-baseline justify-between mb-3">
@@ -59,6 +61,8 @@ const List = () => {
     );
 };
 
-List.propTypes = {};
+List.propTypes = {
+    categoryCode: PropTypes.string,
+};
 
-export default List;
+export default memo(List);

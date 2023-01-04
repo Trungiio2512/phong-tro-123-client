@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
 import * as data from "../untils/data";
 import Button from "./Button";
@@ -32,4 +32,4 @@ const Contact = (props) => {
 
 Contact.propTypes = {};
 
-export default Contact;
+export default memo(Contact);

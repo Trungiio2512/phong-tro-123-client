@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { createSearchParams, useNavigate } from "react-router-dom";
 
 const defaultClassName = "w-[46px] h-[48px] flex text-sm bg-white rounded-md";
@@ -8,6 +8,8 @@ const active = "bg-secondary2 text-white";
 const notActive = "hover:bg-gray-300";
 const PageNumber = ({ currentPage, text, icon, morePage = false, setCurrentPage = () => {} }) => {
     const navigate = useNavigate();
+    const location = useLocation();
+
     const [searchParams, setSearchParams] = useSearchParams();
     const entries = searchParams.entries();
 
@@ -28,7 +30,7 @@ const PageNumber = ({ currentPage, text, icon, morePage = false, setCurrentPage 
         }
         setCurrentPage(text);
         navigate({
-            pathname: "/",
+            pathname: location.pathname,
             search: `?${createSearchParams(appendValueSearch(entries))}`,
         });
     };

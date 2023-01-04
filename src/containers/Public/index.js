@@ -1,10 +1,7 @@
 export { default as Home } from "./Home";
 export { default as Header } from "./Header";
 export { default as Login } from "./Login";
-export { default as RentailRoom } from "./RentailRoom";
-export { default as RentailHouse } from "./RentailHouse";
-export { default as RentailSpace } from "./RentailScpace";
-export { default as RentailApartment } from "./RentailApartment";
+export { default as Rentail } from "./Rentail";
 export { default as HomePage } from "./HomePage";
 export { default as Search } from "./Search";
 export { default as Navigation } from "./Navigation";
