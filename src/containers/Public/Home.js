@@ -13,6 +13,7 @@ function Home() {
         dispatch(actions.getPrices());
         dispatch(actions.getAreas());
         dispatch(actions.getNewPosts());
+        dispatch(actions.getProvinces());
     }, []);
     return (
         <div className="w-full flex flex-col items-center h-fulj gap-3">
