@@ -6,3 +6,15 @@ export const formatVietnameseToString = (value) => {
         .join("-")
         .toLowerCase();
 };
+
+export const getNumberPrices = (string) => {
+    let arr = string.split(" ");
+    const numbers = arr.filter((item) => isFinite(+item) && !isNaN(+item));
+    return numbers;
+};
+
+export const getNumberAreas = (string) => {
+    let arr = string.split(" ");
+    const numbers = arr.map((item) => +item.match(/\d+/)).filter((item) => item !== 0);
+    return numbers;
+};

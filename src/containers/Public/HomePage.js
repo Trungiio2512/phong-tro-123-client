@@ -6,11 +6,19 @@ import { useSearchParams } from "react-router-dom";
 import { textHome } from "../../untils/constant";
 import { ItemSidebar, Provice, RelatedPost } from "../../components";
 import { List, Panigation } from "./index";
+import {
+    getCodeAreas,
+    getCodePrices,
+    getCodesAreasNeedFind,
+    getCodesPricesNeedFind,
+} from "../../untils/common/getCodes";
 
 const HomePage = (props) => {
     // console.log(page);
     const { categories, prices, areas } = useSelector((state) => state.app);
-
+    // console.log(getCodePrices(prices));
+    // console.log(getCodeAreas(areas));
+    console.log(getCodesPricesNeedFind([3.5, 9], prices));
     return (
         <div className=" w-full flex flex-col gap-3">
             <div className="">
