@@ -13,17 +13,28 @@ const List = ({ categoryCode }) => {
     const { posts } = useSelector((state) => state.post);
 
     useEffect(() => {
-        const queryParams = {};
+        const params = [];
 
-        for (let [key, value] of searchParams.entries()) {
-            queryParams[key] = value;
+        for (let entry of searchParams.entries()) {
+            params.push(entry);
         }
-        // console.log(queryParams);
-        if (categoryCode) queryParams.categoryCode = categoryCode;
 
-        // console.log(queryParams);
-        dispatch(actions.getPostsLimit(queryParams));
+        let searchQueryParams = {};
+
+        params?.forEach((i) => {
+            // từ v2 key có trong obj searchQueryParams hay không
+            if (Object.keys(searchQueryParams)?.some((item) => item === i[0])) {
+                // gộp value có key giống nàu thanh 1 mảng
+                searchQueryParams[i[0]] = [...searchQueryParams[i[0]], i[1]];
+            } else {
+                searchQueryParams = { ...searchQueryParams, [i[0]]: [i[1]] };
+            }
+        });
+        if (categoryCode) searchQueryParams.categoryCode = categoryCode;
+        // console.log(searchQueryParams);
+        dispatch(actions.getPostsLimit(searchQueryParams));
     }, [categoryCode, dispatch, searchParams]);
+
     return (
         <div className="w-full  border border-gray-300 p-4 rounded-lg bg-white shadow-md">
             <div className="flex items-baseline justify-between mb-3">

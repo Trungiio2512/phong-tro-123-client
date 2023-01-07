@@ -8,3 +8,4 @@ export { default as Navigation } from "./Navigation";
 export { default as List } from "./List";
 export { default as Panigation } from "./Panigation";
 export { default as DetailPost } from "./DetailPost";
+export { default as SearchDetail } from "./SearchDetail";

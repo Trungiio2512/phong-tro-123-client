@@ -12,7 +12,9 @@ const Modal = ({
     handleSubit = () => {},
     queries,
     objMinMax,
+    defaultText,
 }) => {
+    // console.log(content);
     const [persent1, setpersent1] = useState(
         name === "price" && objMinMax?.priceArr
             ? objMinMax?.priceArr[0]
@@ -105,21 +107,21 @@ const Modal = ({
     };
 
     const handleBeforeSubmit = () => {
-        const gapsValue =
-            name === "price"
-                ? getCodesPricesNeedFind(
-                      [convert100toTarget(persent1), convert100toTarget(persent2)],
-                      content,
-                  )
-                : name === "area"
-                ? getCodesAreasNeedFind(
-                      [convert100toTarget(persent1), convert100toTarget(persent2)],
-                      content,
-                  )
-                : [];
+        let newArrMinMax =
+            persent1 < persent2
+                ? [convert100toTarget(persent1), convert100toTarget(persent2)]
+                : [convert100toTarget(persent2), convert100toTarget(persent1)];
+        // const gapsValue =
+        //     name === "price"
+        //         ? getCodesPricesNeedFind(newArrMinMax, content)
+        //         : name === "area"
+        //         ? getCodesAreasNeedFind(newArrMinMax, content)
+        //         : [];
+        // console.log(gapsValue);
         handleSubit(
             {
-                [`${name}Code`]: gapsValue.map((item) => item.code),
+                [`${name}Number`]: newArrMinMax,
+                // [`${name}Code`]: gapsValue.map((item) => item.code),
                 [name]: handleResultText(),
             },
             { [`${name}Arr`]: [persent1, persent2] },
@@ -155,13 +157,13 @@ const Modal = ({
             onClick={(e) => {
                 handleShowModal(false);
             }}
-            className="fixed inset-0 bg-overlay-70 z-10 flex"
+            className="fixed inset-0 bg-overlay-70 z-10 flex items-center justify-center"
         >
             <div
                 onClick={(e) => {
                     e.stopPropagation();
                 }}
-                className="max-w-[700px] p-4 w-full rounded-md m-auto bg-white "
+                className="max-w-[700px] h-[500px] p-4 w-full rounded-md  flex flex-col bg-white "
             >
                 <div className="h-[45px] items-center justify-between border-b-1 border-gray-300">
                     <span
@@ -176,6 +178,24 @@ const Modal = ({
                 </div>
                 {(name === "province" || name === "category") && (
                     <ul>
+                        <li className="flex items-center gap-2 cursor-pointer py-1 px-2 hover:text-blue-500">
+                            <input
+                                type={"radio"}
+                                name={name}
+                                id="default"
+                                value={defaultText || ""}
+                                checked={!queries[`${name}Code`] ? true : false}
+                                onChange={() =>
+                                    handleSubit({
+                                        [name]: defaultText,
+                                        [`${name}Code`]: null,
+                                    })
+                                }
+                            />
+                            <label className="flex-1 " htmlFor={"default"}>
+                                {defaultText}
+                            </label>
+                        </li>
                         {content.length &&
                             content.map((item) => {
                                 return (
@@ -185,7 +205,7 @@ const Modal = ({
                                     >
                                         <input
                                             type={"radio"}
-                                            id={item?.lcode}
+                                            id={item?.code}
                                             name={name}
                                             value={item?.value}
                                             checked={item?.code === queries[`${name}Code`]}
@@ -289,7 +309,7 @@ const Modal = ({
                                 })}
                         </div>
                         <button
-                            className="w-full py-2 rounded-md bg-orange-400 text-black text-base font-medium "
+                            className="w-full py-2 rounded-md bg-orange-400 text-black text-base font-medium"
                             onClick={() => handleBeforeSubmit()}
                         >
                             Áp dụng

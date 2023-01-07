@@ -47,8 +47,10 @@ export const getCodesPricesNeedFind = (arrMinMax, prices) => {
     const codeMinMax = getCodePrices(prices);
     const resultCode = codeMinMax.filter(
         (item) =>
-            (item.min >= +arrMinMax[0] && item.min <= +arrMinMax[1]) ||
-            (item.max >= +arrMinMax[0] && item.max <= +arrMinMax[1]),
+            item.min >= +arrMinMax[0] &&
+            item.min <= +arrMinMax[1] &&
+            item.max >= +arrMinMax[0] &&
+            item.max <= +arrMinMax[1],
     );
     return resultCode;
 };
@@ -58,8 +60,10 @@ export const getCodesAreasNeedFind = (arrMinMax, areas) => {
 
     const resultCode = codeMinMax.filter(
         (item) =>
-            (item.min >= +arrMinMax[0] && item.min <= +arrMinMax[1]) ||
-            (item.max >= +arrMinMax[0] && item.max <= +arrMinMax[1]),
+            item.min >= +arrMinMax[0] &&
+            item.min <= +arrMinMax[1] &&
+            item.max >= +arrMinMax[0] &&
+            item.max <= +arrMinMax[1],
     );
     return resultCode;
 };

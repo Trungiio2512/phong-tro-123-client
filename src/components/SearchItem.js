@@ -20,9 +20,11 @@ const SearchItem = ({ iconBefore, iconAfter, text, fontWeight = false, defaultTe
 };
 
 SearchItem.propTypes = {
-    // iconBefore: PropTypes.any,
-    // iconAfter: PropTypes.any,
-    // text: PropTypes.string.isRequired,
+    iconBefore: PropTypes.any,
+    iconAfter: PropTypes.any,
+    text: PropTypes.string,
+    defaultText: PropTypes.string,
+    fontWeight: PropTypes.bool,
 };
 
 export default memo(SearchItem);

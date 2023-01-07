@@ -18,7 +18,7 @@ const HomePage = (props) => {
     const { categories, prices, areas } = useSelector((state) => state.app);
     // console.log(getCodePrices(prices));
     // console.log(getCodeAreas(areas));
-    console.log(getCodesPricesNeedFind([3.5, 9], prices));
+    // console.log(getCodesPricesNeedFind([3.5, 9], prices));
     return (
         <div className=" w-full flex flex-col gap-3">
             <div className="">

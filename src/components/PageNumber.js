@@ -14,14 +14,24 @@ const PageNumber = ({ currentPage, text, icon, morePage = false, setCurrentPage 
     const entries = searchParams.entries();
 
     const appendValueSearch = (entries) => {
-        const params = {};
-
         searchParams.append("page", text);
 
-        for (let [key, value] of entries) {
-            params[key] = value;
+        const params = [];
+
+        for (let entry of entries) {
+            params.push(entry);
         }
-        return params;
+
+        let searchQueryParams = {};
+
+        params?.forEach((i) => {
+            if (Object.keys(searchQueryParams)?.some((item) => item === i[0] && item !== "page")) {
+                searchQueryParams[i[0]] = [...searchQueryParams[i[0]], i[1]];
+            } else {
+                searchQueryParams = { ...searchQueryParams, [i[0]]: [i[1]] };
+            }
+        });
+        return searchQueryParams;
     };
 
     const handleChangePage = () => {
