@@ -12,13 +12,13 @@ export const getPosts = (payload) => async (dispatch) => {
         }
     } catch (error) {
         console.log(error);
-        dispatch({ type: actionTypes.GET_POSTS, posts: null });
+        dispatch({ type: actionTypes.GET_POSTS, data: null, msg: error.message });
     }
 };
 export const getPostsLimit = (payload) => async (dispatch) => {
     try {
         const res = await apiGetPostsLitmit(payload);
-        console.log(res);
+        // console.log(res);
         if (res?.err === 0) {
             dispatch({
                 type: actionTypes.GET_POSTS_LIMIT,

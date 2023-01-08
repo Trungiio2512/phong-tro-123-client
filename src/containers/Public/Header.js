@@ -19,6 +19,7 @@ function Header() {
     const headerRef = useRef();
 
     const { isLogging } = useSelector((state) => state.auth);
+    const { currentData } = useSelector((state) => state.user);
 
     const goLogin = useCallback((flag) => {
         navigate(path.LOGIN, { state: { flag } });
@@ -56,7 +57,7 @@ function Header() {
                     )}
                     {isLogging && (
                         <>
-                            <small className="text-lg">Tên</small>
+                            <small className="text-lg">{currentData?.name}</small>
 
                             <Button
                                 onClick={() => dispatch(actions.logout())}

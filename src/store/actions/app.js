@@ -55,7 +55,7 @@ export const getAreas = () => async (dispatch) => {
 export const getProvinces = () => async (dispatch) => {
     try {
         const res = await apiProvince.getProvinces();
-        console.log(res);
+        // console.log(res);
         if (res?.err === 0) {
             dispatch({
                 type: actionTypes.GET_PROVINCES,

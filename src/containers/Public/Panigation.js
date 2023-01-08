@@ -12,8 +12,8 @@ const Panigation = () => {
 
     const [arrPage, setArrPage] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [hasFirstPage, setFirstPage] = useState(false);
-    const [hasLastPage, setLastPage] = useState(false);
+    const [isShowStart, setShowStart] = useState(false);
+    const [isShowEnd, setShowEnd] = useState(false);
 
     // console.log(count, posts);
     // console.log(arrPage);
@@ -28,9 +28,9 @@ const Panigation = () => {
         // tính tổng số trang
         let maxPage = Math.ceil(count / process.env.REACT_APP_LIMIT_POSTS);
         //trang trước đó hoặc trang bắt đầu
-        let start = currentPage - 1 <= 0 ? 1 : currentPage - 1;
+        let start = currentPage - 2 <= 1 ? 1 : currentPage - 2;
         // trang tiếp theo
-        let end = currentPage + 1 > maxPage ? maxPage : currentPage + 1;
+        let end = currentPage + 2 > maxPage - 1 ? maxPage : currentPage + 2;
         const temp = [];
 
         for (let i = start; i <= end; i++) {
@@ -38,24 +38,22 @@ const Panigation = () => {
         }
 
         // hiển thị nut về đầu và cuối trang
-        currentPage <= 2 ? setFirstPage(false) : setFirstPage(true);
-        currentPage + 1 >= maxPage ? setLastPage(false) : setLastPage(true);
+        currentPage <= 3 ? setShowStart(false) : setShowStart(true);
+        currentPage >= maxPage - 2 ? setShowEnd(false) : setShowEnd(true);
 
         setArrPage(temp);
     }, [count, currentPage]);
 
     return (
         <div className="flex items-center justify-center gap-2 mt-3 ">
-            {hasFirstPage && (
-                <>
-                    <PageNumber
-                        icon={<TbPlayerTrackPrev />}
-                        text={1}
-                        setCurrentPage={setCurrentPage}
-                    />
-                    <PageNumber text="..." morePage />
-                </>
+            {isShowStart && (
+                <PageNumber
+                    // icon={<TbPlayerTrackPrev />}
+                    text={1}
+                    setCurrentPage={setCurrentPage}
+                />
             )}
+            {isShowStart && currentPage > 3 && <PageNumber text="..." morePage />}
             {arrPage.length > 0 &&
                 arrPage.map((i) => {
                     return (
@@ -67,7 +65,7 @@ const Panigation = () => {
                         />
                     );
                 })}
-            {hasLastPage && (
+            {isShowEnd && (
                 <>
                     <PageNumber text="..." morePage />
                     <PageNumber
