@@ -5,7 +5,7 @@ import { useLocation, useSearchParams } from "react-router-dom";
 
 import { textHome } from "../../untils/constant";
 import { ItemSidebar, Provice, RelatedPost } from "../../components";
-import { List, Panigation } from "./index";
+import { List, Panigation } from "./components";
 import * as actions from "../../store/actions";
 import { formatVietnameseToString } from "../../untils/common/fn";
 

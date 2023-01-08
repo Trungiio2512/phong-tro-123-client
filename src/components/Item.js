@@ -19,7 +19,7 @@ const Item = ({ id, title, address, attributes, description, images, star, user 
     return (
         <div className="w-full flex border-t-1 border-t-red-500 py-4">
             <Link
-                to={`detail/${formatVietnameseToString(title)}/${id}`}
+                to={`chi-tiet/${formatVietnameseToString(title)}/${id}`}
                 className="relative shrink-0 w-[280px] h-[240px] rounded-md overflow-hidden"
             >
                 {images.length > 0 && (

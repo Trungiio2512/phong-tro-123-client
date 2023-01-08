@@ -6,8 +6,12 @@ export const path = {
     CHO_THUE_MAT_BANG: "cho-thue-mat-bang",
     CHO_THUE_PHONG_TRO: "cho-thue-phong-tro",
     NHA_CHO_THUE: "nha-cho-thue",
-    DETAIL_POST__TITLE__POSTID: "detail/:title/:postId",
-    SEARCH: "search",
+    DETAIL_POST__TITLE__POSTID: "chi-tiet/:title/:postId",
+    SEARCH: "tim-kiem",
+    NOTFOUND: "*",
+    //private
+    SYSTEM: "/he-thong/*",
+    CREATE_POST: "tao-moi-bai-dang",
 };
 
 export const textHome = {

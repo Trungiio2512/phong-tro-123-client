@@ -1,9 +1,9 @@
 import React, { memo, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Button, Item } from "../../components";
+import { Button, Item } from "../../../components";
 import PropTypes from "prop-types";
-import * as actions from "../../store/actions";
+import * as actions from "../../../store/actions";
 import { useSearchParams } from "react-router-dom";
 
 const List = ({ categoryCode }) => {

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { SearchItem, Modal } from "../../components";
-import icons from "../../untils/icons";
+import { SearchItem, Modal } from "../../../components";
+import icons from "../../../untils/icons";
 import { useDispatch, useSelector } from "react-redux";
-import * as actions from "../../store/actions";
+import * as actions from "../../../store/actions";
 import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
-import { path } from "../../untils/constant";
+import { path } from "../../../untils/constant";
 
 const { HiOutlineLocationMarker, TbReportMoney, BsChevronRight, SlCrop, MdApartment, FiSearch } =
     icons;

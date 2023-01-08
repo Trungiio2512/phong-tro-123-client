@@ -2,12 +2,12 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import logo_nobg from "../../assests/logo_nobg.png";
-import icons from "../../untils/icons";
-import { Button, User } from "../../components";
-import { path } from "../../untils/constant";
-import * as actions from "../../store/actions/auth";
-import menuManager from "../../untils/menuMangager";
+import logo_nobg from "../../../assests/logo_nobg.png";
+import icons from "../../../untils/icons";
+import { Button, User } from "../../../components";
+import { path } from "../../../untils/constant";
+import * as actions from "../../../store/actions/auth";
+import menuManager from "../../../untils/menuMangager";
 
 const { AiOutlinePlusCircle, AiOutlineLogout, BsFillCaretDownFill } = icons;
 
@@ -22,7 +22,6 @@ function Header() {
     const [isShowMenu, setisShowMenu] = useState(false);
 
     const { isLogging } = useSelector((state) => state.auth);
-    const { currentData } = useSelector((state) => state.user);
 
     const goLogin = useCallback((flag) => {
         navigate(path.LOGIN, { state: { flag } });

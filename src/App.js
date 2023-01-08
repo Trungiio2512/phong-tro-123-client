@@ -1,6 +1,16 @@
 import { Routes, Route } from "react-router-dom";
 import { path } from "./untils/constant";
-import { DetailPost, Home, HomePage, Login, Rentail, SearchDetail } from "./containers/Public";
+import {
+    DetailPost,
+    Home,
+    HomePage,
+    Login,
+    NotFound,
+    Rentail,
+    SearchDetail,
+} from "./containers/Public";
+
+import { CreatePost, System } from "./containers/System";
 function App() {
     return (
         <div className="bg-primary">
@@ -15,9 +25,13 @@ function App() {
                     <Route path={path.NHA_CHO_THUE} element={<Rentail />} />
                     <Route path={path.SEARCH} element={<SearchDetail />} />
 
-                    <Route path={"detail/*"} element={<DetailPost />} />
+                    <Route path={"chi-tiet/*"} element={<DetailPost />} />
                     <Route path={path.DETAIL_POST__TITLE__POSTID} element={<DetailPost />} />
                 </Route>
+                <Route path={path.SYSTEM} element={<System />}>
+                    <Route path={path.CREATE_POST} element={<CreatePost />} />
+                </Route>
+                <Route path={path.NOTFOUND} element={<NotFound />} />
             </Routes>
         </div>
     );

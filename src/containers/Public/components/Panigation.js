@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { PageNumber } from "../../components";
+import { PageNumber } from "../../../components";
 import { useSelector } from "react-redux";
-import icons from "../../untils/icons";
+import icons from "../../../untils/icons";
 import { useSearchParams } from "react-router-dom";
 const { TbPlayerTrackNext, TbPlayerTrackPrev } = icons;
 const Panigation = () => {

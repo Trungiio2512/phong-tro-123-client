@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import { Contact, Intro } from "../../components";
-import { Search, Navigation, Header } from "./index";
+import { Contact, Intro, Navigation } from "../../components";
+import { Search, Header } from "./components";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../store/actions";
 import { useEffect } from "react";
@@ -27,7 +27,7 @@ function Home() {
         <div className="w-full flex flex-col items-center h-fulj gap-3">
             <Header />
             <Navigation />
-            <Search />
+            {isLogging && <Search />}
 
             <div className="w-4/5 flex flex-col mt-3 ">
                 <Outlet />

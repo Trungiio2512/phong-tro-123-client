@@ -1,17 +1,10 @@
 import PropTypes from "prop-types";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import React from "react";
+import { useSelector } from "react-redux";
 
 import { textHome } from "../../untils/constant";
 import { ItemSidebar, Provice, RelatedPost } from "../../components";
-import { List, Panigation } from "./index";
-import {
-    getCodeAreas,
-    getCodePrices,
-    getCodesAreasNeedFind,
-    getCodesPricesNeedFind,
-} from "../../untils/common/getCodes";
+import { List, Panigation } from "./components";
 
 const HomePage = (props) => {
     // console.log(page);

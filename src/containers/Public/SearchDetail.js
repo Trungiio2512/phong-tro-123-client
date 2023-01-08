@@ -3,19 +3,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useSearchParams } from "react-router-dom";
 
-import { textHome } from "../../untils/constant";
-import { ItemSidebar, Provice, RelatedPost } from "../../components";
-import { List, Panigation } from "./index";
-import * as actions from "../../store/actions";
-import { formatVietnameseToString } from "../../untils/common/fn";
+import { ItemSidebar, RelatedPost } from "../../components";
+import { List, Panigation } from "./components";
 
 const SearchDetail = (props) => {
     const location = useLocation();
     const titleSearch = location.state?.titleSearch;
-    const { prices, areas, categories } = useSelector((state) => state.app);
-    // useEffect(() => {
-    //     console.log(location);
-    // }, [location]);
+    const { prices, areas } = useSelector((state) => state.app);
+
     return (
         <div className=" w-full flex flex-col gap-3">
             <div className="">
