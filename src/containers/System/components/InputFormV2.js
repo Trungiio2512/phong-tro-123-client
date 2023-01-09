@@ -1,23 +1,32 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const InputFormV2 = ({ label, value, setValue, unit }) => {
+const InputFormV2 = ({ label, value, setValue, unit, name, small }) => {
     return (
         <div>
-            <label htmlFor="title">{label}</label>
+            <label htmlFor={name || "title"}>{label}</label>
             <div className="flex items-center">
                 <input
                     type="text"
-                    id="title"
+                    id={name || "title"}
                     className="w-full p-2 outline-none border border-gray-300 rounded-tl-md rounded-bl-md bg-gray-100"
                     value={value}
-                    setValue={() => setValue()}
+                    onChange={(e) =>
+                        name
+                            ? setValue((prev) => {
+                                  return { ...prev, [name]: e.target.value };
+                              })
+                            : setValue(e.target.value)
+                    }
                 />
 
-                <span className="p-2 border border-gray-200 bg-gray-200 rounded-tr-md rounded-br-md min-w-[60px] text-center">
-                    {unit}
-                </span>
+                {unit && (
+                    <span className="p-2 border border-gray-200 bg-gray-200 rounded-tr-md rounded-br-md min-w-[60px] text-center">
+                        {unit}
+                    </span>
+                )}
             </div>
+            {small && <small className="text-sm text-gray-400">{small}</small>}
         </div>
     );
 };

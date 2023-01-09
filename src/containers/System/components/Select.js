@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
 
-const Select = ({ label, options, value, setValue = () => {}, type, reset }) => {
+const Select = ({ label, options, value, setValue = () => {}, type, reset, name }) => {
     return (
         <div className="flex flex-col gap-2">
             <label htmlFor="select" className="font-medium text-md">
@@ -9,7 +9,16 @@ const Select = ({ label, options, value, setValue = () => {}, type, reset }) => 
             </label>
             <select
                 value={reset ? "" : value}
-                onChange={(e) => setValue(e.target.value)}
+                onChange={(e) =>
+                    name
+                        ? setValue((prev) => {
+                              return {
+                                  ...prev,
+                                  [name]: e.target.value,
+                              };
+                          })
+                        : setValue(e.target.value)
+                }
                 id="select"
                 className="outline-none border border-gray-300 px-2 py-1 bg-white rounded-md text-sm"
             >
