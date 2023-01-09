@@ -11,7 +11,19 @@ import {
 } from "./containers/Public";
 
 import { CreatePost, System } from "./containers/System";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as actions from "./store/actions";
+
 function App() {
+    const { isLogging, token } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        const timoutGetInfoUser = setTimeout(() => {
+            isLogging && dispatch(actions.getCurrentUser());
+        }, 1000);
+        return () => clearTimeout(timoutGetInfoUser);
+    }, [isLogging, token]);
     return (
         <div className="bg-primary">
             <Routes>

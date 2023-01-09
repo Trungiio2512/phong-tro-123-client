@@ -2,19 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html *::-webkit-scrollbar {
-    width: 4px;
-}
-
-html *::-webkit-scrollbar-track {
-    border-radius: 4px;
-}
-
-html *::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    /* background-color: var(--artist-layout-bg); */
-}
-
 .star-item {
     display: inline-block;
     margin-top: -4px;

@@ -7,7 +7,7 @@ import icons from "../../../untils/icons";
 import { Button, User } from "../../../components";
 import { path } from "../../../untils/constant";
 import * as actions from "../../../store/actions/auth";
-import menuManager from "../../../untils/menuMangager";
+import { menuHomeManager } from "../../../untils/menuMangager";
 
 const { AiOutlinePlusCircle, AiOutlineLogout, BsFillCaretDownFill } = icons;
 
@@ -72,7 +72,7 @@ function Header() {
                                 />
                                 {isShowMenu && (
                                     <div className="absolute right-0 top-full bg-white shadow-md rounded-md min-w-200 flex flex-col">
-                                        {menuManager.map((item) => {
+                                        {menuHomeManager.map((item) => {
                                             return (
                                                 <Link
                                                     className="p-2 flex items-center gap-2 text-blue-500 hover:text-orange-500"
@@ -86,8 +86,8 @@ function Header() {
                                         })}
                                         <button
                                             onClick={() => {
-                                                dispatch(actions.logout());
                                                 setisShowMenu(false);
+                                                dispatch(actions.logout());
                                             }}
                                             className="text-blue-500 hover:text-orange-500 flex items-center justify-center gap-2"
                                         >

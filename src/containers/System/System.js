@@ -19,7 +19,7 @@ const System = ({ children }) => {
             <Header />
             <div className="flex w-full h-full">
                 <Sidebar />
-                <div className="flex-auto bg-white shadow-md h-full">
+                <div className=" bg-white shadow-md h-full flex-1">
                     <Outlet />
                 </div>
             </div>

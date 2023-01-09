@@ -10,12 +10,7 @@ function Home() {
     const { isLogging, token } = useSelector((state) => state.auth);
     const { currentData } = useSelector((state) => state.user);
     // console.log(currentData);
-    useEffect(() => {
-        const timoutGetInfoUser = setTimeout(() => {
-            isLogging && dispatch(actions.getCurrentUser());
-        }, 1000);
-        return () => clearTimeout(timoutGetInfoUser);
-    }, [isLogging, token]);
+  
     useEffect(() => {
         // [["page", 5], ["pageSize", 25]]
         dispatch(actions.getPrices());

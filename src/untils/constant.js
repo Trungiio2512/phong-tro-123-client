@@ -10,7 +10,7 @@ export const path = {
     SEARCH: "tim-kiem",
     NOTFOUND: "*",
     //private
-    SYSTEM: "/he-thong/*",
+    SYSTEM: "/he-thong/",
     CREATE_POST: "tao-moi-bai-dang",
 };
 
