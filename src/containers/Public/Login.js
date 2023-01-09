@@ -112,7 +112,7 @@ function Login() {
                 <InputForm
                     setInvalidFields={setInvalidFields}
                     invalidFields={invalidFields}
-                    label="số điện thoại"
+                    label="Số điện thoại"
                     value={payload.phone}
                     setValue={setPayload}
                     name={"phone"}
@@ -120,7 +120,7 @@ function Login() {
                 <InputForm
                     setInvalidFields={setInvalidFields}
                     invalidFields={invalidFields}
-                    label="mật khẩu"
+                    label="Mật khẩu"
                     value={payload.password}
                     setValue={setPayload}
                     name={"password"}

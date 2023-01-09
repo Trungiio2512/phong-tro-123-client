@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Select } from "../components";
+import { InputReadOnly, Select } from "../components";
 import {
     getPublicDistricts,
     getPublicProvinces,
@@ -90,27 +90,22 @@ const Address = (props) => {
                     />
                     {/* <Select label="Đường phố" /> */}
                 </div>
-                <div>
-                    <h3 className="font-medium">Địa chỉ chính xác</h3>
-                    <input
-                        type={"text"}
-                        readOnly
-                        className="border border-gray-300 outline-none p-2 w-full rounded-md bg-gray-200"
-                        value={`${
-                            ward ? wards.find((item) => item?.ward_id === ward)?.ward_name : ""
-                        } ${
-                            district
-                                ? districts.find((item) => item?.district_id === district)
-                                      ?.district_name
-                                : ""
-                        } ${
-                            province
-                                ? provinces.find((item) => item?.province_id === province)
-                                      ?.province_name
-                                : ""
-                        }`}
-                    />
-                </div>
+                <InputReadOnly
+                    label={"Địa chỉ chính xác"}
+                    value={`${
+                        ward ? wards.find((item) => item?.ward_id === ward)?.ward_name : ""
+                    } ${
+                        district
+                            ? districts.find((item) => item?.district_id === district)
+                                  ?.district_name
+                            : ""
+                    } ${
+                        province
+                            ? provinces.find((item) => item?.province_id === province)
+                                  ?.province_name
+                            : ""
+                    }`}
+                />
             </div>
         </div>
     );

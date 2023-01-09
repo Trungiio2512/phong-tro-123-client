@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
 
-const Select = ({ label, options, value, setValue, type, reset }) => {
+const Select = ({ label, options, value, setValue = () => {}, type, reset }) => {
     return (
         <div className="flex flex-col gap-2">
             <label htmlFor="select" className="font-medium text-md">
@@ -24,7 +24,7 @@ const Select = ({ label, options, value, setValue, type, reset }) => {
                                     ? option?.district_id
                                     : type === "ward"
                                     ? option?.ward_id
-                                    : ""
+                                    : option?.code
                             }
                             value={
                                 type === "province"
@@ -33,7 +33,7 @@ const Select = ({ label, options, value, setValue, type, reset }) => {
                                     ? option?.district_id
                                     : type === "ward"
                                     ? option?.ward_id
-                                    : ""
+                                    : option?.code
                             }
                         >
                             {type === "province"
@@ -42,7 +42,7 @@ const Select = ({ label, options, value, setValue, type, reset }) => {
                                 ? option?.district_name
                                 : type === "ward"
                                 ? option?.ward_name
-                                : ""}
+                                : option?.value}
                         </option>
                     );
                 })}
@@ -51,6 +51,13 @@ const Select = ({ label, options, value, setValue, type, reset }) => {
     );
 };
 
-Select.propTypes = {};
+Select.propTypes = {
+    label: PropTypes.string,
+    option: PropTypes.array,
+    value: PropTypes.string,
+    setValue: PropTypes.func,
+    type: PropTypes.string,
+    reset: PropTypes.bool,
+};
 
 export default memo(Select);

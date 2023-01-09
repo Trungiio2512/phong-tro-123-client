@@ -1,15 +1,10 @@
 import { memo } from "react";
 
 function Input({ label, type, value, setValue, name, invalidFields, setInvalidFields }) {
-    const idForcus = label
-        .split(" ")
-        .map((i) => i.charAt(0))
-        .join("")
-        .toUpperCase();
     return (
         <div className="flex flex-col">
             {label && (
-                <label htmlFor={idForcus} className="uppercase text-sm mb-1">
+                <label htmlFor={name} className="text-md mb-1 select-none">
                     {label}
                 </label>
             )}
@@ -17,7 +12,7 @@ function Input({ label, type, value, setValue, name, invalidFields, setInvalidFi
                 value={value}
                 onChange={(e) => setValue((prev) => ({ ...prev, [name]: e.target.value }))}
                 type={type ? type : "text"}
-                id={label && idForcus}
+                id={name}
                 onFocus={() => {
                     invalidFields.length > 0 && setInvalidFields([]);
                 }}

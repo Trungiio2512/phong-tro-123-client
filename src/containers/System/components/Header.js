@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
@@ -7,7 +7,7 @@ import { path } from "../../../untils/constant";
 import logo_nobg from "../../../assests/logo_nobg.png";
 const Header = (props) => {
     return (
-        <div className="flex items-center">
+        <div className="flex items-center w-full">
             <Navigation system />
         </div>
     );
@@ -15,4 +15,4 @@ const Header = (props) => {
 
 Header.propTypes = {};
 
-export default Header;
+export default memo(Header);

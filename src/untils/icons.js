@@ -8,6 +8,7 @@ import {
     BsFillPencilFill,
     BsFillCaretDownFill,
     BsChatText,
+    BsFillCameraFill,
 } from "react-icons/bs";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { TbReportMoney, TbPlayerTrackNext, TbPlayerTrackPrev } from "react-icons/tb";
@@ -21,6 +22,7 @@ const icons = {
     GrNext,
     BsChevronRight,
     HiOutlineLocationMarker,
+    BsFillCameraFill,
     TbReportMoney,
     SlCrop,
     MdApartment,
