@@ -27,7 +27,7 @@ export const login = (payload) => async (dispatch) => {
         }
     } catch (error) {
         console.log(error);
-        dispatch({ type: actionTypes.LOGIN_FAILED, data: error.response.data?.msg });
+        dispatch({ type: actionTypes.LOGIN_FAILED, data: error });
     }
 };
 

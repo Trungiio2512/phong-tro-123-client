@@ -36,7 +36,7 @@ function Login() {
     useEffect(() => {
         msg && Swal.fire("Ooopps !", msg, "error");
     }, [msg]);
-
+    // console.log(formik.errors);
     return (
         <div className="bg-white w-full max-w-600 pt-[30px] px-[30px] pb-[100px] rounded-md border-1 border-stone-300 m-auto">
             <h1 className="font-semibold text-3xl">Đăng nhập</h1>
@@ -46,6 +46,8 @@ function Login() {
                     value={formik.values.phone}
                     setValue={formik.handleChange}
                     name={"phone"}
+                    onBlur={formik.handleBlur}
+                    touched={formik.touched.phone}
                     error={formik.errors?.phone}
                 />
                 <InputForm
@@ -54,6 +56,8 @@ function Login() {
                     setValue={formik.handleChange}
                     name={"password"}
                     type="password"
+                    touched={formik.touched.password}
+                    onBlur={formik.handleBlur}
                     error={formik.errors?.password}
                 />
             </div>

@@ -1,7 +1,23 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
 
-const Select = ({ label, options, value, setValue = () => {}, type, reset, name }) => {
+const Select = ({
+    label,
+    options,
+    value,
+    setValue = () => {},
+    type,
+    reset,
+    name,
+    invalidFields,
+    setinvalidFields,
+}) => {
+    const handleError = () => {
+        const nameValid = invalidFields?.find((item) => item.name === name);
+        const addressValid = invalidFields?.find((item) => item.name === "address");
+        let text = nameValid ? nameValid.message : addressValid ? addressValid.message : null;
+        return text;
+    };
     return (
         <div className="flex flex-col gap-2">
             <label htmlFor="select" className="font-medium text-md">
@@ -19,6 +35,7 @@ const Select = ({ label, options, value, setValue = () => {}, type, reset, name 
                           })
                         : setValue(e.target.value)
                 }
+                onBlur={() => setinvalidFields([])}
                 id="select"
                 className="outline-none border border-gray-300 px-2 py-1 bg-white rounded-md text-sm"
             >
@@ -57,6 +74,7 @@ const Select = ({ label, options, value, setValue = () => {}, type, reset, name 
                         );
                     })}
             </select>
+            <small className="text-red-500">{handleError()}</small>
         </div>
     );
 };

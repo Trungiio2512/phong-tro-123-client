@@ -7,7 +7,7 @@ import {
     getPublicWards,
 } from "../../../services/apiPublic";
 
-const Address = ({ setpayload }) => {
+const Address = ({ setpayload, invalidFields, setinvalidFields }) => {
     //list
     const [provinces, setprovinces] = useState([]);
     const [districts, setdistricts] = useState([]);
@@ -86,6 +86,8 @@ const Address = ({ setpayload }) => {
                         type="province"
                         setValue={setprovince}
                         options={provinces}
+                        invalidFields={invalidFields}
+                        setinvalidFields={setinvalidFields}
                     />
                     <Select
                         label="Quận/Huyện"
@@ -93,6 +95,8 @@ const Address = ({ setpayload }) => {
                         value={district}
                         setValue={setdistrict}
                         options={districts}
+                        setinvalidFields={setinvalidFields}
+                        invalidFields={invalidFields}
                     />
                     <Select
                         label="Xã/Phường"
@@ -100,6 +104,8 @@ const Address = ({ setpayload }) => {
                         setValue={setward}
                         options={wards}
                         type="ward"
+                        setinvalidFields={setinvalidFields}
+                        invalidFields={invalidFields}
                     />
                     {/* <Select label="Đường phố" /> */}
                 </div>

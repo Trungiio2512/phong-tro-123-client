@@ -5,16 +5,20 @@ import { useSelector } from "react-redux";
 
 const targets = [
     {
-        code: "Nam",
+        code: "All",
+        value: "Tất cả",
+    },
+    {
+        code: "Male",
         value: "Nam",
     },
     {
-        code: "Nữ",
+        code: "Female",
         value: "Nữ",
     },
 ];
 
-const OverView = ({ payload, setpayload }) => {
+const OverView = ({ payload, setpayload, invalidFields, setinvalidFields }) => {
     const { categories } = useSelector((state) => state.app);
     const { currentData } = useSelector((state) => state.user);
     // console.log(categories);
@@ -30,6 +34,8 @@ const OverView = ({ payload, setpayload }) => {
                         value={payload?.categoryCode}
                         setValue={setpayload}
                         name="categoryCode"
+                        invalidFields={invalidFields}
+                        setinvalidFields={setinvalidFields}
                     />
                 </div>
                 <InputFormV2
@@ -37,6 +43,8 @@ const OverView = ({ payload, setpayload }) => {
                     name="title"
                     value={payload?.title}
                     setValue={setpayload}
+                    invalidFields={invalidFields}
+                    setinvalidFields={setinvalidFields}
                 />
                 <div className="flex flex-col">
                     <label htmlFor="desc">Nội dung mô tả</label>
@@ -50,6 +58,12 @@ const OverView = ({ payload, setpayload }) => {
                             setpayload((prev) => ({ ...prev, description: e.target.value }))
                         }
                     ></textarea>
+                    {invalidFields?.some((item) => item.name === "description") && (
+                        <small className="text-red-500 text-sm">
+                            {" "}
+                            {invalidFields?.find((item) => item.name === "description")?.message}
+                        </small>
+                    )}
                 </div>
                 <div className="w-1/2 flex flex-col gap-3">
                     <InputReadOnly label="Thông tin liên hệ" value={currentData?.name || ""} />
@@ -61,7 +75,8 @@ const OverView = ({ payload, setpayload }) => {
                         name="priceNumber"
                         value={payload?.priceNumber}
                         setValue={setpayload}
-                        // error ={payload?.priceNumber }
+                        invalidFields={invalidFields}
+                        setinvalidFields={setinvalidFields}
                     />
                     <InputFormV2
                         label="Diện tích"
@@ -69,6 +84,8 @@ const OverView = ({ payload, setpayload }) => {
                         name="areaNumber"
                         value={payload?.areaNumber}
                         setValue={setpayload}
+                        invalidFields={invalidFields}
+                        setinvalidFields={setinvalidFields}
                     />{" "}
                     <Select
                         label="Đối tượng cho thuê"
@@ -76,6 +93,8 @@ const OverView = ({ payload, setpayload }) => {
                         name="target"
                         value={payload?.target}
                         setValue={setpayload}
+                        invalidFields={invalidFields}
+                        setinvalidFields={setinvalidFields}
                     />
                 </div>
             </div>

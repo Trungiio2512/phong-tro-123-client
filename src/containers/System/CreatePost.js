@@ -8,6 +8,7 @@ import { Button, LoadingCircle } from "../../components";
 import { Address, OverView } from "./components";
 import { useSelector } from "react-redux";
 import icons from "../../untils/icons";
+import validate from "../../untils/validate";
 const { BsFillCameraFill, FaTimesCircle } = icons;
 
 const CreatePost = (props) => {
@@ -22,13 +23,13 @@ const CreatePost = (props) => {
         areaNumber: 0,
         images: "",
         address: "",
-        priceCode: "",
-        areaCode: "",
+        // priceCode: "",
+        // areaCode: "",
         description: "",
         target: "",
         province: "",
     });
-
+    const [invalidFields, setinvalidFields] = useState([]);
     const handleFiles = async (e) => {
         e.stopPropagation();
         const files = e.target.files;
@@ -71,46 +72,48 @@ const CreatePost = (props) => {
     }, [previewImages]);
 
     const handleSubmit = async () => {
-        const price = getCodesPricesNeedFind(
-            prices,
-            +payload?.priceNumber / Math.pow(10, 6),
-            1,
-            15,
-        );
-        const area = getCodesAreasNeedFind(areas, +payload?.areaNumber, 0, 90);
-        const finalPayLoad = {
-            ...payload,
-            priceCode: price?.code,
-            areaCode: area?.code,
-            priceNumber: +payload?.priceNumber / Math.pow(10, 6),
-            areaNumber: +payload?.areaNumber,
-            target: payload?.target || "Tất cả",
-            label: `${categories.find((item) => item.code === payload.categoryCode)?.value} ${
-                payload?.address.split(",").length > 2
-                    ? payload?.address.split(",")[1]
-                    : payload?.address.split(",")[0]
-            }`,
-        };
-
-        const res = await apiCreateNewPost(finalPayLoad);
-        if (res.err === 0) {
-            Swal.fire("Thành công ", "Đã thêm bài mới", "success").then(() => {
-                setpayload({
-                    categoryCode: "",
-                    title: "",
-                    priceNumber: 0,
-                    areaNumber: 0,
-                    images: "",
-                    address: "",
-                    priceCode: "",
-                    areaCode: "",
-                    description: "",
-                    target: "",
-                    province: "",
+        const resultValidate = validate(payload, setinvalidFields);
+        if (resultValidate === 0) {
+            const price = getCodesPricesNeedFind(
+                prices,
+                +payload?.priceNumber / Math.pow(10, 6),
+                1,
+                15,
+            );
+            const area = getCodesAreasNeedFind(areas, +payload?.areaNumber, 0, 90);
+            const finalPayLoad = {
+                ...payload,
+                priceCode: price?.code,
+                areaCode: area?.code,
+                priceNumber: +payload?.priceNumber / Math.pow(10, 6),
+                areaNumber: +payload?.areaNumber,
+                target: payload?.target || "All",
+                label: `${categories.find((item) => item.code === payload.categoryCode)?.value} ${
+                    payload?.address.split(",").length > 2
+                        ? payload?.address.split(",")[1]
+                        : payload?.address.split(",")[0]
+                }`,
+            };
+            const res = await apiCreateNewPost(finalPayLoad);
+            if (res.err === 0) {
+                Swal.fire("Thành công ", "Đã thêm bài mới", "success").then(() => {
+                    setpayload({
+                        categoryCode: "",
+                        title: "",
+                        priceNumber: 0,
+                        areaNumber: 0,
+                        images: "",
+                        address: "",
+                        //   priceCode: "",
+                        //   areaCode: "",
+                        description: "",
+                        target: "",
+                        province: "",
+                    });
                 });
-            });
-        } else {
-            Swal.fire("Thất bại", "Có lỗi", "error");
+            } else {
+                Swal.fire("Thất bại", "Có lỗi", "error");
+            }
         }
     };
 
@@ -119,8 +122,18 @@ const CreatePost = (props) => {
             <h1 className="font-semibold text-3xl py-4 border-b-1 border-gray-300">Đăng tin mới</h1>
             <div className="flex gap-4">
                 <div className="flex flex-auto flex-col gap-8">
-                    <Address payload={payload} setpayload={setpayload} />
-                    <OverView payload={payload} setpayload={setpayload} />
+                    <Address
+                        payload={payload}
+                        invalidFields={invalidFields}
+                        setpayload={setpayload}
+                        setinvalidFields={setinvalidFields}
+                    />
+                    <OverView
+                        payload={payload}
+                        setpayload={setpayload}
+                        invalidFields={invalidFields}
+                        setinvalidFields={setinvalidFields}
+                    />
                     <div className="w-full">
                         <h2 className="font-semibold text-xl border-gray-300">Hình ảnh</h2>
                         <small>Cập nhật hình ảnh dễ đàng sẽ cho thuê nhanh hơn</small>
