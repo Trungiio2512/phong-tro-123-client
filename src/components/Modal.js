@@ -2,7 +2,6 @@ import React, { memo, useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import icons from "../untils/icons";
 import { getNumberAreas, getNumberPrices } from "../untils/common/fn";
-import { getCodesAreasNeedFind, getCodesPricesNeedFind } from "../untils/common/getCodes";
 
 const { GrNext, GrLinkPrevious } = icons;
 const Modal = ({
@@ -110,18 +109,13 @@ const Modal = ({
         let newArrMinMax =
             persent1 < persent2
                 ? [convert100toTarget(persent1), convert100toTarget(persent2)]
-                : [convert100toTarget(persent2), convert100toTarget(persent1)];
-        // const gapsValue =
-        //     name === "price"
-        //         ? getCodesPricesNeedFind(newArrMinMax, content)
-        //         : name === "area"
-        //         ? getCodesAreasNeedFind(newArrMinMax, content)
-        //         : [];
-        // console.log(gapsValue);
+                : persent1 > persent2
+                ? [convert100toTarget(persent2), convert100toTarget(persent1)]
+                : [convert100toTarget(persent1), 9000000];
+
         handleSubit(
             {
                 [`${name}Number`]: newArrMinMax,
-                // [`${name}Code`]: gapsValue.map((item) => item.code),
                 [name]: handleResultText(),
             },
             { [`${name}Arr`]: [persent1, persent2] },

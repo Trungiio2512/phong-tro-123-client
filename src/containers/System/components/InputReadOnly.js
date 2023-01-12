@@ -9,7 +9,7 @@ const InputReadOnly = ({ label, value }) => {
                 type={"text"}
                 readOnly
                 className="border border-gray-300 outline-none p-2 w-full rounded-md bg-gray-200"
-                value={value}
+                value={value|| ''}
                 // onChange={() => {}}
             />
         </div>

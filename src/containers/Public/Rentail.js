@@ -20,7 +20,7 @@ const Rentail = (props) => {
         const category = categories.find(
             (i) => `/${formatVietnameseToString(i.value)}` === location.pathname,
         );
-        console.log(category);
+        // console.log(category);
         setCurrentCategory(category);
     }, [categories, location]);
     // console.log(location);

@@ -18,8 +18,6 @@ const Address = ({ setpayload }) => {
     const [district, setdistrict] = useState("");
     const [ward, setward] = useState("");
 
-    const [reset, setreset] = useState(false);
-
     useEffect(() => {
         const fs = async () => {
             const res = await getPublicProvinces();
@@ -30,16 +28,17 @@ const Address = ({ setpayload }) => {
     }, []);
     //api get district
     useEffect(() => {
+        setwards([]);
+        setward("");
+        setdistrict("");
+        setdistricts([]);
         const fs = async () => {
             const res = await getPublicDistricts(province);
             // console.log(res);
             setdistricts(res?.results);
         };
         if (province) {
-            setreset(false);
             fs();
-        } else {
-            setreset(true);
         }
     }, [province]);
     // api get ward
@@ -51,33 +50,30 @@ const Address = ({ setpayload }) => {
         };
         district && fs();
     }, [district]);
-    // console.log(district);
-    useEffect(() => {
-        if (reset) {
-            setdistrict("");
-            setward("");
-        }
-    }, [reset]);
 
     useEffect(() => {
         setpayload((prev) => {
             return {
                 ...prev,
-                address: `${ward ? wards.find((item) => item?.ward_id === ward)?.ward_name : ""} ${
-                    district
+                province: province
+                    ? provinces.find((item) => item?.province_id === province)?.province_name
+                    : "",
+                address: `${
+                    ward && wards.length > 0
+                        ? wards.find((item) => item?.ward_id === ward)?.ward_name
+                        : ""
+                }${ward && ","}${
+                    district && districts.length > 0
                         ? districts.find((item) => item?.district_id === district)?.district_name
                         : ""
-                } ${
+                }${district && ","}${
                     province
                         ? provinces.find((item) => item?.province_id === province)?.province_name
                         : ""
                 }`,
-                province: province
-                    ? provinces.find((item) => item?.province_id === province)?.province_name
-                    : "",
             };
         });
-    }, [district, province, ward]);
+    }, [district, districts, province, provinces, setpayload, ward, wards]);
 
     return (
         <div>
@@ -90,7 +86,6 @@ const Address = ({ setpayload }) => {
                         type="province"
                         setValue={setprovince}
                         options={provinces}
-                        reset={reset}
                     />
                     <Select
                         label="Quận/Huyện"
@@ -98,14 +93,12 @@ const Address = ({ setpayload }) => {
                         value={district}
                         setValue={setdistrict}
                         options={districts}
-                        reset={reset}
                     />
                     <Select
                         label="Xã/Phường"
                         value={ward}
                         setValue={setward}
                         options={wards}
-                        reset={reset}
                         type="ward"
                     />
                     {/* <Select label="Đường phố" /> */}
@@ -113,13 +106,15 @@ const Address = ({ setpayload }) => {
                 <InputReadOnly
                     label={"Địa chỉ chính xác"}
                     value={`${
-                        ward ? wards.find((item) => item?.ward_id === ward)?.ward_name : ""
-                    } ${
-                        district
+                        ward && wards.length > 0
+                            ? wards.find((item) => item?.ward_id === ward)?.ward_name
+                            : ""
+                    }${ward && ","}${
+                        district && districts.length > 0
                             ? districts.find((item) => item?.district_id === district)
                                   ?.district_name
                             : ""
-                    } ${
+                    }${district && ","}${
                         province
                             ? provinces.find((item) => item?.province_id === province)
                                   ?.province_name

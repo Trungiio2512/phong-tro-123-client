@@ -23,38 +23,39 @@ const Select = ({ label, options, value, setValue = () => {}, type, reset, name 
                 className="outline-none border border-gray-300 px-2 py-1 bg-white rounded-md text-sm"
             >
                 <option value="">{`--Chọn ${label}--`}</option>
-                {options?.map((option) => {
-                    return (
-                        <option
-                            key={
-                                type === "province"
-                                    ? option?.province_id
+                {options.length > 0 &&
+                    options?.map((option) => {
+                        return (
+                            <option
+                                key={
+                                    type === "province"
+                                        ? option?.province_id
+                                        : type === "district"
+                                        ? option?.district_id
+                                        : type === "ward"
+                                        ? option?.ward_id
+                                        : option?.code
+                                }
+                                value={
+                                    type === "province"
+                                        ? option?.province_id
+                                        : type === "district"
+                                        ? option?.district_id
+                                        : type === "ward"
+                                        ? option?.ward_id
+                                        : option?.code
+                                }
+                            >
+                                {type === "province"
+                                    ? option?.province_name
                                     : type === "district"
-                                    ? option?.district_id
+                                    ? option?.district_name
                                     : type === "ward"
-                                    ? option?.ward_id
-                                    : option?.code
-                            }
-                            value={
-                                type === "province"
-                                    ? option?.province_id
-                                    : type === "district"
-                                    ? option?.district_id
-                                    : type === "ward"
-                                    ? option?.ward_id
-                                    : option?.code
-                            }
-                        >
-                            {type === "province"
-                                ? option?.province_name
-                                : type === "district"
-                                ? option?.district_name
-                                : type === "ward"
-                                ? option?.ward_name
-                                : option?.value}
-                        </option>
-                    );
-                })}
+                                    ? option?.ward_name
+                                    : option?.value}
+                            </option>
+                        );
+                    })}
             </select>
         </div>
     );

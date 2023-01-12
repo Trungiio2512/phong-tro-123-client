@@ -6,6 +6,7 @@ import {
     HomePage,
     Login,
     NotFound,
+    Register,
     Rentail,
     SearchDetail,
 } from "./containers/Public";
@@ -16,14 +17,22 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from "./store/actions";
 
 function App() {
-    const { isLogging, token } = useSelector((state) => state.auth);
+    const { token } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     useEffect(() => {
         const timoutGetInfoUser = setTimeout(() => {
-            isLogging && dispatch(actions.getCurrentUser());
+            token && dispatch(actions.getCurrentUser());
         }, 1000);
         return () => clearTimeout(timoutGetInfoUser);
-    }, [isLogging, token]);
+    }, [token]);
+
+    useEffect(() => {
+        // [["page", 5], ["pageSize", 25]]
+        dispatch(actions.getPrices());
+        dispatch(actions.getAreas());
+        dispatch(actions.getNewPosts());
+        dispatch(actions.getProvinces());
+    }, []);
     return (
         <div className="bg-primary">
             <Routes>
@@ -31,6 +40,7 @@ function App() {
                     <Route index element={<HomePage />} />
                     {/* <Route path={path.HOME__PAGE} element={<HomePage />} /> */}
                     <Route path={path.LOGIN} element={<Login />} />
+                    <Route path={path.REGISTER} element={<Register />} />
                     <Route path={path.CHO_THUE_CAN_HO} element={<Rentail />} />
                     <Route path={path.CHO_THUE_MAT_BANG} element={<Rentail />} />
                     <Route path={path.CHO_THUE_PHONG_TRO} element={<Rentail />} />

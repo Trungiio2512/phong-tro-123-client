@@ -8,9 +8,11 @@ export const getCurrentUser = () => async (dispatch) => {
             dispatch({ type: actionTypes.GET_USER, data: res.data });
         } else {
             dispatch({ type: actionTypes.GET_USER_FAIL, msg: res.msg });
+            dispatch({ type: actionTypes.LOGOUT });
         }
     } catch (error) {
         console.log(error);
         dispatch({ type: actionTypes.GET_USER_FAIL, msg: error?.response });
+        dispatch({ type: actionTypes.LOGOUT });
     }
 };

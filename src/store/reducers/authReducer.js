@@ -4,7 +4,6 @@ const initialState = {
     isLogging: false,
     token: null,
     msg: "",
-    update: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -14,7 +13,7 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLogging: true,
-                token: action.data,
+                token: action.data || "",
                 msg: "",
             };
         case actionTypes.REGISTER_FAILED:
@@ -22,9 +21,8 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLogging: false,
-                msg: action.data,
+                msg: action.data || "",
                 token: null,
-                update: !state.update,
             };
         case actionTypes.LOGOUT:
             return {

@@ -3,10 +3,14 @@ import PropTypes from "prop-types";
 import icons from "../untils/icons";
 import { Link } from "react-router-dom";
 import { formatVietnameseToString } from "../untils/common/fn";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+
+import "react-loading-skeleton/dist/skeleton.css";
+
 const indexs = [0, 1, 2, 3];
 const { BsFillHeartFill, GrStar, BsHeart, BsFillBookmarkStarFill } = icons;
 
-const Item = ({ id, title, address, attributes, description, images, star, user }) => {
+const Item = ({ id, title, address, attributes, description, images, star, user, loading }) => {
     const [isHoverHeart, setisHoverHeart] = useState(false);
     const [stars, setstars] = useState(() => {
         const stars = [];
@@ -18,34 +22,39 @@ const Item = ({ id, title, address, attributes, description, images, star, user 
 
     return (
         <div className="w-full flex border-t-1 border-t-red-500 py-4">
-            <Link
-                to={`chi-tiet/${formatVietnameseToString(title)}/${id}`}
-                className="relative shrink-0 w-[280px] h-[240px] rounded-md overflow-hidden"
-            >
-                {images.length > 0 && (
-                    <>
-                        <img
-                            src={images[0]}
-                            alt="preview"
-                            className="w-full h-full object-cover border border-gray-300"
-                        />
-                        <span className="bg-overlay-50 text-white p-1 text-xs rounded-md absolute bottom-1 left-2">
-                            {images.length} ảnh
-                        </span>
-                    </>
-                )}
-                <span
-                    className="absolute bottom-1 right-2"
-                    onMouseEnter={() => setisHoverHeart(true)}
-                    onMouseLeave={() => setisHoverHeart(false)}
-                >
-                    {!isHoverHeart ? (
-                        <BsHeart size={20} className="text-gray-500" />
-                    ) : (
-                        <BsFillHeartFill size={20} className="text-pink-600" />
+            {!loading ? (
+                <div className="relative shrink-0 w-[280px] h-[240px] rounded-md overflow-hidden">
+                    {images.length > 0 && (
+                        <>
+                            <Link to={`chi-tiet/${formatVietnameseToString(title)}/${id}`}>
+                                <figure className="w-full h-full">
+                                    <img
+                                        src={images[0]}
+                                        alt="preview"
+                                        className="w-full h-full object-cover border border-gray-300"
+                                    />
+                                </figure>
+                            </Link>
+                            <span className="bg-overlay-50 text-white p-1 text-xs rounded-md absolute bottom-1 left-2">
+                                {images.length} ảnh
+                            </span>
+                        </>
                     )}
-                </span>
-            </Link>
+                    <span
+                        className="absolute bottom-1 right-2"
+                        onMouseEnter={() => setisHoverHeart(true)}
+                        onMouseLeave={() => setisHoverHeart(false)}
+                    >
+                        {!isHoverHeart ? (
+                            <BsHeart size={20} className="text-gray-500" />
+                        ) : (
+                            <BsFillHeartFill size={20} className="text-pink-600" />
+                        )}
+                    </span>
+                </div>
+            ) : (
+                <Skeleton />
+            )}
             <div className="flex flex-col gap-3 ml-3">
                 <div className="flex items-start justify-between">
                     <Link
@@ -79,7 +88,9 @@ const Item = ({ id, title, address, attributes, description, images, star, user 
                         {address.split(",").slice(-2, address.length).join("-")}
                     </Link>
                 </div>
-                <p className="text-sm text-gray-400 line-clamp-3">{description}</p>
+                <p className="text-sm text-gray-400 line-clamp-3">
+                    {loading ? <Skeleton count={3} /> : description}
+                </p>
                 <div className="flex items-center justify-between">
                     <div className="flex items-center">
                         <img
@@ -91,7 +102,7 @@ const Item = ({ id, title, address, attributes, description, images, star, user 
                     </div>
                     <div className="flex items-center gap-2">
                         <button className="py-[2px] px-1 text-sm bg-blue-700  outline outline-1 outline-blue-700  text-white rounded-md select-none">
-                            Gọi {user?.zalo}
+                            Gọi {user?.zalo || user?.phone}
                         </button>
                         <button className="py-[2px] px-1 text-sm bg-white text-blue-700 outline outline-1 outline-blue-700 rounded-md select-none">
                             Nhắn zalo
@@ -108,7 +119,7 @@ Item.propTypes = {
     title: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,
     attributes: PropTypes.objectOf(PropTypes.string),
-    description: PropTypes.arrayOf(PropTypes.string),
+    description: PropTypes.any,
     images: PropTypes.arrayOf(PropTypes.string),
     star: PropTypes.number,
     user: PropTypes.objectOf(PropTypes.string),

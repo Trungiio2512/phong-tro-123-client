@@ -5,11 +5,11 @@ import { useSelector } from "react-redux";
 
 const targets = [
     {
-        code: "male",
+        code: "Nam",
         value: "Nam",
     },
     {
-        code: "female",
+        code: "Nữ",
         value: "Nữ",
     },
 ];
@@ -61,6 +61,7 @@ const OverView = ({ payload, setpayload }) => {
                         name="priceNumber"
                         value={payload?.priceNumber}
                         setValue={setpayload}
+                        // error ={payload?.priceNumber }
                     />
                     <InputFormV2
                         label="Diện tích"

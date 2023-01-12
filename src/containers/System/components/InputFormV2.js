@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const InputFormV2 = ({ label, value, setValue, unit, name, small }) => {
+const InputFormV2 = ({ label, value, setValue, unit, name, small, type }) => {
     return (
         <div>
             <label htmlFor={name || "title"}>{label}</label>
             <div className="flex items-center">
                 <input
-                    type="text"
+                    type={type || "text"}
                     id={name || "title"}
                     className="w-full p-2 outline-none border border-gray-300 rounded-tl-md rounded-bl-md bg-gray-100"
                     value={value}

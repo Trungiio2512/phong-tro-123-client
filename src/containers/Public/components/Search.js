@@ -4,8 +4,9 @@ import { SearchItem, Modal } from "../../../components";
 import icons from "../../../untils/icons";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../../store/actions";
-import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
+import { createSearchParams, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { path } from "../../../untils/constant";
+import { formatVietnameseToString } from "../../../untils/common/fn";
 
 const { HiOutlineLocationMarker, TbReportMoney, BsChevronRight, SlCrop, MdApartment, FiSearch } =
     icons;
@@ -15,6 +16,7 @@ const Search = () => {
     const navigate = useNavigate();
     const { provinces, prices, areas, categories } = useSelector((state) => state.app);
 
+    const [searchParams, setSearchParams] = useSearchParams();
     const [queries, setqueries] = useState({});
     const [showModal, setshowModal] = useState(false);
     const [name, setname] = useState("");
@@ -38,9 +40,12 @@ const Search = () => {
     };
 
     const handleSearch = () => {
+        // trả về mảng có code và arr number filter
         const queriesArr = Object.entries(queries).filter(
             (item) => (item[0].includes("Code") || item[0].includes("Number")) && item[1],
         );
+
+        // trả về mảng chưa text và number filter
         const queriesText = Object.entries(queries).filter(
             (item) => !item[0].includes("Code") || !item[0].includes("Number"),
         );
@@ -62,8 +67,8 @@ const Search = () => {
         } ${queriesObjText.area ? `diện tích ${queriesObjText.area}` : ""}`;
         // return params;
         // console.log(queries);
-        // console.log(queriesObjText);
-        // console.log(params);
+        // console.log(queriesArr);
+        console.log(params);
         // dispatch(actions.getPostsLimit(params));
         navigate(
             {

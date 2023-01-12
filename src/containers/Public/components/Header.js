@@ -1,6 +1,6 @@
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 
 import logo_nobg from "../../../assests/logo_nobg.png";
 import icons from "../../../untils/icons";
@@ -8,7 +8,6 @@ import { Button, User } from "../../../components";
 import { path } from "../../../untils/constant";
 import * as actions from "../../../store/actions/auth";
 import { menuHomeManager } from "../../../untils/menuMangager";
-
 const { AiOutlinePlusCircle, AiOutlineLogout, BsFillCaretDownFill } = icons;
 
 function Header() {
@@ -22,10 +21,6 @@ function Header() {
     const [isShowMenu, setisShowMenu] = useState(false);
 
     const { isLogging } = useSelector((state) => state.auth);
-
-    const goLogin = useCallback((flag) => {
-        navigate(path.LOGIN, { state: { flag } });
-    }, []);
 
     useEffect(() => {
         headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -44,7 +39,7 @@ function Header() {
                                 <small className="text-lg">Phòng trọ 123 xin chào</small>
 
                                 <Button
-                                    onClick={() => goLogin(false)}
+                                    onClick={() => navigate(`/${path.LOGIN}`)}
                                     text={"Đăng nhập"}
                                     textColor="text-white"
                                     bgColor="bg-secondary1"
@@ -52,7 +47,7 @@ function Header() {
 
                                 <Button
                                     text={"Đăng ký"}
-                                    onClick={() => goLogin(true)}
+                                    onClick={() => navigate(`${path.REGISTER}`)}
                                     textColor="text-white"
                                     bgColor="bg-secondary1"
                                 />
@@ -114,4 +109,4 @@ function Header() {
     );
 }
 
-export default Header;
+export default memo(Header);

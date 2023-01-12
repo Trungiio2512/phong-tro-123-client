@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-function Input({ label, type, value, setValue, name, invalidFields, setInvalidFields }) {
+function Input({ label, type, value, setValue, name, error }) {
     return (
         <div className="flex flex-col">
             {label && (
@@ -10,19 +10,13 @@ function Input({ label, type, value, setValue, name, invalidFields, setInvalidFi
             )}
             <input
                 value={value}
-                onChange={(e) => setValue((prev) => ({ ...prev, [name]: e.target.value }))}
+                onChange={setValue}
                 type={type ? type : "text"}
                 id={name}
-                onFocus={() => {
-                    invalidFields.length > 0 && setInvalidFields([]);
-                }}
                 className="w-full outline-none rounded-md bg-[#e8f0fe] hover:cursor-text caret-purple-400 p-2 text-lg"
             />
-            {invalidFields.length > 0 && invalidFields.some((i) => i.name === name) && (
-                <small className="text-red-400 italic">
-                    {invalidFields.find((i) => i.name === name).message}
-                </small>
-            )}
+
+            {error && <small className="text-red-400 italic">{error}</small>}
         </div>
     );
 }

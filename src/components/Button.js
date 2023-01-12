@@ -10,6 +10,7 @@ function Button({
     isBefore = false,
     disabled = false,
     fullWidth = false,
+    type,
 }) {
     // console.log("render");
     // if(disabled) {
@@ -18,6 +19,7 @@ function Button({
     return (
         <button
             onClick={onClick}
+            type={type || "button"}
             className={`px-3 py-2 ${textColor} ${bgColor} flex items-center justify-center m-auto gap-1 outline-none rounded-md hover:underline ${
                 fullWidth ? "w-full" : ""
             }`}

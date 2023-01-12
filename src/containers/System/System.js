@@ -14,12 +14,12 @@ const System = ({ children }) => {
     return children ? (
         children
     ) : (
-        <div className="w-full h-screen flex flex-col items-center">
+        <div className="w-full h-screen flex flex-col items-center overflow-hidden">
             {" "}
             <Header />
-            <div className="flex w-full flex-auto">
+            <div className="flex w-full h-screen flex-auto">
                 <Sidebar />
-                <div className=" bg-white shadow-md h-full flex-1">
+                <div className=" bg-white shadow-md h-full overflow-y-scroll flex-1">
                     <Outlet />
                 </div>
             </div>

@@ -15,7 +15,7 @@ import { TbReportMoney, TbPlayerTrackNext, TbPlayerTrackPrev } from "react-icons
 import { SlCrop } from "react-icons/sl";
 import { MdApartment } from "react-icons/md";
 import { FiSearch } from "react-icons/fi";
-import { FaClipboardList } from "react-icons/fa";
+import { FaClipboardList, FaTimesCircle } from "react-icons/fa";
 import { RiFolderUserLine } from "react-icons/ri";
 const icons = {
     AiOutlinePlusCircle,
@@ -40,6 +40,7 @@ const icons = {
     TbPlayerTrackPrev,
     BsFillPencilFill,
     BsFillCaretDownFill,
+    FaTimesCircle,
 };
 
 export default icons;
