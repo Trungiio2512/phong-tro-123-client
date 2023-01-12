@@ -79,3 +79,20 @@ export const apiUploadImages = (images) => {
         }
     });
 };
+
+export const apiGetPostsPrivate = (payload = {}) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const res = await axiosConfig({
+                method: "get",
+                url: "/api/v1/post/limit_private",
+                // data: payload,
+                params: payload,
+            });
+
+            resolve(res.data);
+        } catch (error) {
+            reject(error);
+        }
+    });
+};

@@ -22,6 +22,7 @@ const postReducer = (state = initialState, action) => {
                 newPosts: action.data || [],
                 msg: action.msg || "",
             };
+
         default:
             return state;
     }

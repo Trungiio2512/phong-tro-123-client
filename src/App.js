@@ -11,10 +11,11 @@ import {
     SearchDetail,
 } from "./containers/Public";
 
-import { CreatePost, System } from "./containers/System";
+import { CreatePost, ManagerPost, System } from "./containers/System";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "./store/actions";
+import moment from "moment";
 
 function App() {
     const { token } = useSelector((state) => state.auth);
@@ -25,6 +26,9 @@ function App() {
         }, 1000);
         return () => clearTimeout(timoutGetInfoUser);
     }, [token]);
+    useEffect(() => {
+        console.log(moment("2010/10/20").isAfter("2010/10/21"));
+    }, []);
 
     useEffect(() => {
         // [["page", 5], ["pageSize", 25]]
@@ -52,6 +56,7 @@ function App() {
                 </Route>
                 <Route path={path.SYSTEM} element={<System />}>
                     <Route path={path.CREATE_POST} element={<CreatePost />} />
+                    <Route path={path.MANAGER_POST} element={<ManagerPost />} />
                 </Route>
                 <Route path={path.NOTFOUND} element={<NotFound />} />
             </Routes>

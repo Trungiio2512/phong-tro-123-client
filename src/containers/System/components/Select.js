@@ -74,7 +74,7 @@ const Select = ({
                         );
                     })}
             </select>
-            <small className="text-red-500">{handleError()}</small>
+            {invalidFields.length > 0 && <small className="text-red-500">{handleError()}</small>}
         </div>
     );
 };

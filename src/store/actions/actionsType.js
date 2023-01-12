@@ -19,6 +19,8 @@ const actionTypes = {
 
     GET_USER: "GET_USER",
     GET_USER_FAIL: "GET_USER_FAIL",
+
+    GET_POSTS_PRIVATE: "GET_POSTS_PRIVATE",
 };
 
 export default actionTypes;

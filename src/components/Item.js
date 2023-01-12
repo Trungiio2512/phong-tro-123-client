@@ -19,12 +19,12 @@ const Item = ({ id, title, address, attributes, description, images, star, user,
         }
         return stars;
     });
-
+    // console.log(images);
     return (
         <div className="w-full flex border-t-1 border-t-red-500 py-4">
             {!loading ? (
                 <div className="relative shrink-0 w-[280px] h-[240px] rounded-md overflow-hidden">
-                    {images.length > 0 && (
+                    {images?.length > 0 && (
                         <>
                             <Link to={`chi-tiet/${formatVietnameseToString(title)}/${id}`}>
                                 <figure className="w-full h-full">

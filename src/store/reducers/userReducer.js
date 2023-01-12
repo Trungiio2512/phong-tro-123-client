@@ -1,6 +1,7 @@
 import actionTypes from "../actions/actionsType";
 const initialState = {
     currentData: {},
+    posts: [],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -22,6 +23,13 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 currentData: {},
                 msg: "",
+            };
+        case actionTypes.GET_POSTS_PRIVATE:
+            return {
+                ...state,
+                posts: action.data || [],
+                msg: action.msg || "",
+                // count: action.count || 0,
             };
         default:
             return state;

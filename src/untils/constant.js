@@ -11,8 +11,9 @@ export const path = {
     SEARCH: "tim-kiem",
     NOTFOUND: "*",
     //private
-    SYSTEM: "/he-thong/",
+    SYSTEM: "/he-thong/*",
     CREATE_POST: "tao-moi-bai-dang",
+    MANAGER_POST: "quan-ly-bai-dang",
 };
 
 export const textHome = {

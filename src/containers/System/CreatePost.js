@@ -110,6 +110,7 @@ const CreatePost = (props) => {
                         target: "",
                         province: "",
                     });
+                    setpreviewImages([]);
                 });
             } else {
                 Swal.fire("Thất bại", "Có lỗi", "error");

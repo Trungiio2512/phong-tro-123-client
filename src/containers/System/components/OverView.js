@@ -5,15 +5,15 @@ import { useSelector } from "react-redux";
 
 const targets = [
     {
-        code: "All",
+        code: "Tất cả",
         value: "Tất cả",
     },
     {
-        code: "Male",
+        code: "Nam",
         value: "Nam",
     },
     {
-        code: "Female",
+        code: "Nữ",
         value: "Nữ",
     },
 ];
@@ -87,6 +87,15 @@ const OverView = ({ payload, setpayload, invalidFields, setinvalidFields }) => {
                         invalidFields={invalidFields}
                         setinvalidFields={setinvalidFields}
                     />{" "}
+                    {/* <InputFormV2
+                        label="Ngày hết hạn"
+                        name="expired"
+                        type="date"
+                        value={payload?.expired}
+                        setValue={setpayload}
+                        // invalidFields={invalidFields}
+                        // setinvalidFields={setinvalidFields}
+                    />{" "} */}
                     <Select
                         label="Đối tượng cho thuê"
                         options={targets}
