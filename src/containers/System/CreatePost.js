@@ -1,34 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
 
 import { getCodesAreasNeedFind, getCodesPricesNeedFind } from "../../untils/common/getCodes";
-import { apiUploadImages, apiCreateNewPost } from "../../services/post";
+import { apiUploadImages, apiCreateNewPost, apiUpdatePostPrivate } from "../../services/post";
 import { Button, LoadingCircle } from "../../components";
 import { Address, OverView } from "./components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import icons from "../../untils/icons";
 import validate from "../../untils/validate";
+import { useNavigate } from "react-router-dom";
+import * as actions from "../../store/actions";
+
 const { BsFillCameraFill, FaTimesCircle } = icons;
 
-const CreatePost = (props) => {
+const CreatePost = ({ isEdit = false }) => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { post } = useSelector((state) => state.user);
     const { prices, areas, categories, provinces } = useSelector((state) => state.app);
 
-    const [previewImages, setpreviewImages] = useState([]);
-    const [loading, setloading] = useState(false);
-    const [payload, setpayload] = useState({
-        categoryCode: "",
-        title: "",
-        priceNumber: 0,
-        areaNumber: 0,
-        images: "",
-        address: "",
-        // priceCode: "",
-        // areaCode: "",
-        description: "",
-        target: "",
-        province: "",
+    const [previewImages, setpreviewImages] = useState(() => {
+        return isEdit ? JSON.parse(post?.imagesData?.images) : [];
     });
+    const [loading, setloading] = useState(false);
+    const [payload, setpayload] = useState(() => {
+        const value = {
+            categoryCode: isEdit ? post?.categoryCode : "",
+            title: isEdit ? post?.title : "",
+            priceNumber: isEdit ? +post?.priceNumber * Math.pow(10, 6) : 0,
+            areaNumber: isEdit ? +post?.areaNumber : 0,
+            address: isEdit ? post?.address : "",
+            // priceCode: "",
+            // areaCode: "",
+            description: isEdit ? JSON.parse(post?.description) : "",
+            target: isEdit ? post?.overviews?.target : "",
+            province: isEdit ? post?.province : "",
+        };
+        return value;
+    });
+
     const [invalidFields, setinvalidFields] = useState([]);
     const handleFiles = async (e) => {
         e.stopPropagation();
@@ -41,35 +52,16 @@ const CreatePost = (props) => {
             formData.append("upload_preset", process.env.REACT_APP_UPLOAD_ASSETS_NAME);
 
             const response = await apiUploadImages(formData);
-            images = [
-                ...images,
-                {
-                    secure_url: response?.secure_url,
-                    asset_id: response?.asset_id,
-                    name: response?.original_filename,
-                },
-            ];
+            images = [...images, response?.secure_url];
             // console.log(response);
         }
         setloading(false);
         setpreviewImages((prev) => [...prev, ...images]);
     };
 
-    const handleDeleteImage = (id) => {
-        setpreviewImages((prev) => prev.filter((item) => item?.asset_id !== id));
+    const handleDeleteImage = (image) => {
+        setpreviewImages((prev) => prev.filter((item, index) => item !== image));
     };
-
-    useEffect(() => {
-        previewImages.length > 0
-            ? setpayload((prev) => ({
-                  ...prev,
-                  images: [...previewImages.map((item) => item?.secure_url)],
-              }))
-            : setpayload((prev) => ({
-                  ...prev,
-                  images: [],
-              }));
-    }, [previewImages]);
 
     const handleSubmit = async () => {
         const resultValidate = validate(payload, setinvalidFields);
@@ -81,10 +73,12 @@ const CreatePost = (props) => {
                 15,
             );
             const area = getCodesAreasNeedFind(areas, +payload?.areaNumber, 0, 90);
+            // console.log(area);
             const finalPayLoad = {
                 ...payload,
                 priceCode: price?.code,
                 areaCode: area?.code,
+                images: previewImages,
                 priceNumber: +payload?.priceNumber / Math.pow(10, 6),
                 areaNumber: +payload?.areaNumber,
                 target: payload?.target || "All",
@@ -93,37 +87,59 @@ const CreatePost = (props) => {
                         ? payload?.address.split(",")[1]
                         : payload?.address.split(",")[0]
                 }`,
+                category: categories.find((item) => item.code === payload.categoryCode)?.value,
             };
-            const res = await apiCreateNewPost(finalPayLoad);
-            if (res.err === 0) {
-                Swal.fire("Thành công ", "Đã thêm bài mới", "success").then(() => {
-                    setpayload({
-                        categoryCode: "",
-                        title: "",
-                        priceNumber: 0,
-                        areaNumber: 0,
-                        images: "",
-                        address: "",
-                        //   priceCode: "",
-                        //   areaCode: "",
-                        description: "",
-                        target: "",
-                        province: "",
+            if (isEdit && post) {
+                finalPayLoad.postId = post.id;
+                finalPayLoad.overviewId = post.overviewId;
+                finalPayLoad.attributesId = post.attributesId;
+                finalPayLoad.imagesId = post.imagesId;
+
+                // console.log(post);
+                // console.log(finalPayLoad);
+                const res = await apiUpdatePostPrivate(finalPayLoad);
+                if (res.err === 0) {
+                    Swal.fire("Thành công ", "thanh cong", "success").then(() => {
+                        dispatch(actions.setDefaultPostPriveate());
                     });
-                    setpreviewImages([]);
-                });
+                } else {
+                    Swal.fire("Thất bại", "Có lỗi", "error");
+                }
             } else {
-                Swal.fire("Thất bại", "Có lỗi", "error");
+                const res = await apiCreateNewPost(finalPayLoad);
+                if (res.err === 0) {
+                    Swal.fire("Thành công ", "Đã thêm bài mới", "success").then(() => {
+                        setpayload({
+                            categoryCode: "",
+                            title: "",
+                            priceNumber: 0,
+                            areaNumber: 0,
+                            images: "",
+                            address: "",
+                            //   priceCode: "",
+                            //   areaCode: "",
+                            description: "",
+                            target: "",
+                            province: "",
+                        });
+                        setpreviewImages([]);
+                    });
+                } else {
+                    Swal.fire("Thất bại", "Có lỗi", "error");
+                }
             }
         }
     };
 
     return (
-        <div className="px-8 h-full ">
-            <h1 className="font-semibold text-3xl py-4 border-b-1 border-gray-300">Đăng tin mới</h1>
-            <div className="flex gap-4">
+        <div className="px-8 h-full">
+            <h1 className="font-semibold text-3xl py-4 border-b-1 border-gray-300">
+                {isEdit ? "Chỉnh sửa tin đăng" : "Đăng tin mới"}
+            </h1>
+            <div className="flex gap-4 pb-12">
                 <div className="flex flex-auto flex-col gap-8">
                     <Address
+                        isEdit={isEdit}
                         payload={payload}
                         invalidFields={invalidFields}
                         setpayload={setpayload}
@@ -134,6 +150,7 @@ const CreatePost = (props) => {
                         setpayload={setpayload}
                         invalidFields={invalidFields}
                         setinvalidFields={setinvalidFields}
+                        isEdit={isEdit}
                     />
                     <div className="w-full">
                         <h2 className="font-semibold text-xl border-gray-300">Hình ảnh</h2>
@@ -163,21 +180,21 @@ const CreatePost = (props) => {
                         </div>
                         {previewImages.length > 0 && (
                             <div className="max-w-[620px] w-full flex items-center gap-2 overflow-x-scroll ">
-                                {previewImages.map((image) => {
+                                {previewImages.map((image, index) => {
                                     return (
                                         <figure
                                             className="w-[200px] h-[200px] border border-gray-300 relative"
-                                            key={image?.asset_id}
+                                            key={image}
                                         >
                                             <img
                                                 className="w-full h-full object-contain"
-                                                src={image?.secure_url}
-                                                alt={image?.name}
+                                                src={image}
+                                                alt={image}
                                             />
                                             <button
                                                 className="absolute top-0 right-0 z-10 "
                                                 title="Xoá"
-                                                onClick={() => handleDeleteImage(image?.asset_id)}
+                                                onClick={() => handleDeleteImage(image)}
                                             >
                                                 <FaTimesCircle
                                                     size={22}
@@ -191,12 +208,11 @@ const CreatePost = (props) => {
                         )}
                     </div>
                     <Button
-                        text="Tạo mới"
+                        text={isEdit ? "Thay đổi" : "Tạo mới"}
                         bgColor={"bg-green-400"}
                         textColor="text-white"
                         onClick={handleSubmit}
                     />
-                    <div className="h-[500px]"></div>
                 </div>
 
                 <div className="w-[40%]">Map</div>
@@ -207,4 +223,4 @@ const CreatePost = (props) => {
 
 CreatePost.propTypes = {};
 
-export default CreatePost;
+export default memo(CreatePost);

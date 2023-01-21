@@ -18,7 +18,7 @@ const targets = [
     },
 ];
 
-const OverView = ({ payload, setpayload, invalidFields, setinvalidFields }) => {
+const OverView = ({ payload, setpayload, invalidFields, setinvalidFields, isEdit }) => {
     const { categories } = useSelector((state) => state.app);
     const { currentData } = useSelector((state) => state.user);
     // console.log(categories);
@@ -66,8 +66,15 @@ const OverView = ({ payload, setpayload, invalidFields, setinvalidFields }) => {
                     )}
                 </div>
                 <div className="w-1/2 flex flex-col gap-3">
-                    <InputReadOnly label="Thông tin liên hệ" value={currentData?.name || ""} />
-                    <InputReadOnly label="Điện thoại" value={currentData?.phone} />
+                    {!isEdit && (
+                        <>
+                            <InputReadOnly
+                                label="Thông tin liên hệ"
+                                value={currentData?.name || ""}
+                            />
+                            <InputReadOnly label="Điện thoại" value={currentData?.phone} />
+                        </>
+                    )}
                     <InputFormV2
                         label="Giá cho thuê"
                         unit="đồng"

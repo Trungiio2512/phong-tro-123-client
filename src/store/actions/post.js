@@ -75,3 +75,16 @@ export const getNewPosts = () => async (dispatch) => {
         dispatch({ type: actionTypes.GET_NEW_POSTS, msg: error?.message });
     }
 };
+
+export const editPostPrivate = (payload) => {
+    return {
+        type: actionTypes.EDIT_POSTS_PRIVATE,
+        data: payload,
+    };
+};
+
+export const setDefaultPostPriveate = () => {
+    return {
+        type: actionTypes.SET_DEFAULT_POSTS_PRIVATE,
+    };
+};

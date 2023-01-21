@@ -2,6 +2,7 @@ import actionTypes from "../actions/actionsType";
 const initialState = {
     currentData: {},
     posts: [],
+    post: {},
 };
 
 const userReducer = (state = initialState, action) => {
@@ -30,6 +31,16 @@ const userReducer = (state = initialState, action) => {
                 posts: action.data || [],
                 msg: action.msg || "",
                 // count: action.count || 0,
+            };
+        case actionTypes.EDIT_POSTS_PRIVATE:
+            return {
+                ...state,
+                post: action.data || {},
+            };
+        case actionTypes.SET_DEFAULT_POSTS_PRIVATE:
+            return {
+                ...state,
+                post: null,
             };
         default:
             return state;

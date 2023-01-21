@@ -6,8 +6,11 @@ import {
     getPublicProvinces,
     getPublicWards,
 } from "../../../services/apiPublic";
+import { useSelector } from "react-redux";
 
-const Address = ({ setpayload, invalidFields, setinvalidFields }) => {
+const Address = ({ isEdit = false, setpayload, invalidFields, setinvalidFields }) => {
+    const { post } = useSelector((state) => state.user);
+    // console.log(post);
     //list
     const [provinces, setprovinces] = useState([]);
     const [districts, setdistricts] = useState([]);
@@ -37,7 +40,7 @@ const Address = ({ setpayload, invalidFields, setinvalidFields }) => {
             // console.log(res);
             setdistricts(res?.results);
         };
-        if (province) {
+        if (province.length > 0) {
             fs();
         }
     }, [province]);
@@ -50,6 +53,35 @@ const Address = ({ setpayload, invalidFields, setinvalidFields }) => {
         };
         district && fs();
     }, [district]);
+
+    useEffect(() => {
+        if (isEdit && post && provinces?.length > 0) {
+            const addArr = post?.address.split(",");
+            const provinceId = provinces?.find((item) => {
+                return item.province_name === addArr[addArr.length - 1].trim();
+            })?.province_id;
+            setprovince(provinceId);
+        }
+    }, [isEdit, post, post?.address, provinces]);
+
+    useEffect(() => {
+        if (isEdit && post && districts?.length > 0) {
+            const addArr = post?.address.split(",");
+            // console.log(districts);
+            const distrinctId = districts?.find(
+                (item) => item.district_name === addArr[addArr.length - 2].trim(),
+            )?.district_id;
+            setdistrict(distrinctId);
+        }
+    }, [isEdit, districts, post?.address, post]);
+
+    useEffect(() => {
+        if (isEdit && post && wards?.length > 0) {
+            const addArr = post?.address.split(",");
+            const wardId = wards?.find((item) => item.ward_name === addArr[0].trim())?.ward_id;
+            setward(wardId);
+        }
+    }, [isEdit, post, post?.address, wards]);
 
     useEffect(() => {
         setpayload((prev) => {

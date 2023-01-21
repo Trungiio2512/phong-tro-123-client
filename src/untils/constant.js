@@ -14,6 +14,7 @@ export const path = {
     SYSTEM: "/he-thong/*",
     CREATE_POST: "tao-moi-bai-dang",
     MANAGER_POST: "quan-ly-bai-dang",
+    // UPDATE_POST: "chinh-sua-bai-dang",
 };
 
 export const textHome = {

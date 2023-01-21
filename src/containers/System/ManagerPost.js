@@ -1,22 +1,31 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import * as actions from "../../store/actions";
 import { Button } from "../../components";
+import UpdatePost from "./UpdatePost";
+import { useLocation } from "react-router-dom";
 const ManagerPost = (props) => {
     const dispath = useDispatch();
-    const { posts } = useSelector((state) => state.user);
+
+    const { posts, post } = useSelector((state) => state.user);
+    const [isEdit, setisEdit] = useState(false);
+
     useEffect(() => {
-        dispath(actions.getPostsPrivate());
-    }, []);
+        !isEdit && dispath(actions.getPostsPrivate());
+    }, [isEdit]);
+
+    useEffect(() => {
+        !post && setisEdit(false);
+    }, [post]);
 
     const checkStatus = (date) => {
         const today = new Date().toDateString();
         return moment(date, process.env.REACT_APP_FORMAT_DATE).isSameOrAfter(today);
     };
     return (
-        <div className="px-8 h-full ">
+        <div className="px-8 h-full">
             <div className="flex items-center justify-between border-b-1 border-gray-300">
                 <h1 className="font-semibold text-3xl py-4 ">Quản lý tin đăng</h1>
                 <select>
@@ -99,6 +108,12 @@ const ManagerPost = (props) => {
                                                             text="Sửa"
                                                             bgColor={"bg-green-500"}
                                                             textColor="text-white"
+                                                            onClick={() => {
+                                                                setisEdit(true);
+                                                                dispath(
+                                                                    actions.editPostPrivate(post),
+                                                                );
+                                                            }}
                                                         />
                                                         <Button
                                                             text="Xoá"
@@ -115,6 +130,17 @@ const ManagerPost = (props) => {
                     </div>
                 </div>
             </div>
+            {isEdit && (
+                <div
+                    className="absolute inset-0 flex bg-overlay-50"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        setisEdit(false);
+                    }}
+                >
+                    <UpdatePost />
+                </div>
+            )}
         </div>
     );
 };

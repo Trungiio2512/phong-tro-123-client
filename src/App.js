@@ -26,8 +26,9 @@ function App() {
         }, 1000);
         return () => clearTimeout(timoutGetInfoUser);
     }, [token]);
+
     useEffect(() => {
-        console.log(moment("2010/10/20").isAfter("2010/10/21"));
+        console.log(moment(1330189200000).format("DD-MM-YYYY h:mm:ss"));
     }, []);
 
     useEffect(() => {
