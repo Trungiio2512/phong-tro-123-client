@@ -40,7 +40,7 @@ const userReducer = (state = initialState, action) => {
         case actionTypes.SET_DEFAULT_POSTS_PRIVATE:
             return {
                 ...state,
-                post: null,
+                post: {},
             };
         default:
             return state;

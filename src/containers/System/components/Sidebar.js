@@ -12,7 +12,7 @@ const Sidebar = (props) => {
     const navigate = useNavigate();
     const { currentData } = useSelector((state) => state.user);
     return (
-        <div className="max-w-[256px] w-full h-full">
+        <div className="max-w-[256px] w-full h-full fixed left-0 top-[48px]">
             <div className="flex flex-col gap-4 p-4">
                 <div className="flex items-center">
                     <img

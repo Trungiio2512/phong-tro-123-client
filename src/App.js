@@ -11,7 +11,7 @@ import {
     SearchDetail,
 } from "./containers/Public";
 
-import { CreatePost, ManagerPost, System } from "./containers/System";
+import { CreatePost, ManagerPost, System, UserInfo } from "./containers/System";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "./store/actions";
@@ -26,10 +26,6 @@ function App() {
         }, 1000);
         return () => clearTimeout(timoutGetInfoUser);
     }, [token]);
-
-    useEffect(() => {
-        console.log(moment(1330189200000).format("DD-MM-YYYY h:mm:ss"));
-    }, []);
 
     useEffect(() => {
         // [["page", 5], ["pageSize", 25]]
@@ -58,6 +54,7 @@ function App() {
                 <Route path={path.SYSTEM} element={<System />}>
                     <Route path={path.CREATE_POST} element={<CreatePost />} />
                     <Route path={path.MANAGER_POST} element={<ManagerPost />} />
+                    <Route path={path.USER_INFO} element={<UserInfo />} />
                 </Route>
                 <Route path={path.NOTFOUND} element={<NotFound />} />
             </Routes>

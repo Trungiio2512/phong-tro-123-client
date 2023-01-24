@@ -1,10 +1,13 @@
-const validate = (payload, setInvalidFields) => {
+import moment from "moment";
+import { formatDateDefault } from "./formatDefaultDate";
+
+const validate = (payload, setInvalidFields, createdDate) => {
     let invalid = 0;
     let fields = Object.entries(payload);
-
     let valid = [];
     fields.forEach((field) => {
-        if (field[1] === "" || field[1] === 0) {
+        if (field[1] === "" || field[1] === 0 || !field[1]) {
+            // console.log(field[0]);
             valid.push({
                 name: field[0],
                 message: "Bạn không được bỏ trường này",
@@ -25,20 +28,19 @@ const validate = (payload, setInvalidFields) => {
             case "password":
                 if (field[1].length < 6) {
                     valid.push({ name: field[0], message: "Mật khẩu tối thiểu 6 kí tự" });
-                    // setInvalidFields((prev) => [
-                    //     ...prev,
-                    //     { name: field[0], message: "Mật khẩu tối thiểu 6 kí tự" },
-                    // ]);
+
                     invalid++;
                 }
                 break;
             case "phone":
                 if (!+field[1]) {
                     valid.push({ name: field[0], message: "Số điện thoại không hợp lệ" });
-                    // setInvalidFields((prev) => [
-                    //     ...prev,
-                    //     { name: field[0], message: "Số điện thoại không hợp lệ" },
-                    // ]);
+                    invalid++;
+                }
+                break;
+            case "zalo":
+                if (!+field[1]) {
+                    valid.push({ name: field[0], message: "Số điện thoại zalo không hợp lệ" });
                     invalid++;
                 }
                 break;
@@ -68,6 +70,18 @@ const validate = (payload, setInvalidFields) => {
                     });
                 }
                 break;
+            case "expired":
+                const expired = formatDateDefault(field[1]);
+                const isAfter = moment(expired).isAfter(createdDate);
+                if (!isAfter) {
+                    valid.push({
+                        name: field[0],
+                        message: "Hạn kết thúc phải là 1 ngày",
+                    });
+                }
+
+                break;
+            //     if(moment(payload?.).is)
             default:
                 break;
         }

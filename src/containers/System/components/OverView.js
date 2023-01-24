@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import PropTypes from "prop-types";
 import { InputFormV2, InputReadOnly, Select } from "../components";
 import { useSelector } from "react-redux";
@@ -21,7 +21,7 @@ const targets = [
 const OverView = ({ payload, setpayload, invalidFields, setinvalidFields, isEdit }) => {
     const { categories } = useSelector((state) => state.app);
     const { currentData } = useSelector((state) => state.user);
-    // console.log(categories);
+
     return (
         <div>
             <h2 className="text-xl font-semibold mb-2">Thông tin mô tả</h2>
@@ -94,20 +94,23 @@ const OverView = ({ payload, setpayload, invalidFields, setinvalidFields, isEdit
                         invalidFields={invalidFields}
                         setinvalidFields={setinvalidFields}
                     />{" "}
-                    {/* <InputFormV2
-                        label="Ngày hết hạn"
-                        name="expired"
-                        type="date"
-                        value={payload?.expired}
-                        setValue={setpayload}
-                        // invalidFields={invalidFields}
-                        // setinvalidFields={setinvalidFields}
-                    />{" "} */}
                     <Select
                         label="Đối tượng cho thuê"
                         options={targets}
                         name="target"
                         value={payload?.target}
+                        setValue={setpayload}
+                        invalidFields={invalidFields}
+                        setinvalidFields={setinvalidFields}
+                    />
+                    <InputFormV2
+                        label="Ngày hết hạn"
+                        type="date"
+                        name="expired"
+                        // value={date}
+                        // setValue={setdate}
+                        small={"Hết hạn vào lúc 7h00"}
+                        value={payload?.expired}
                         setValue={setpayload}
                         invalidFields={invalidFields}
                         setinvalidFields={setinvalidFields}

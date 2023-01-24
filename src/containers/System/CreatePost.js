@@ -1,6 +1,7 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
+import moment from "moment";
 
 import { getCodesAreasNeedFind, getCodesPricesNeedFind } from "../../untils/common/getCodes";
 import { apiUploadImages, apiCreateNewPost, apiUpdatePostPrivate } from "../../services/post";
@@ -11,10 +12,11 @@ import icons from "../../untils/icons";
 import validate from "../../untils/validate";
 import { useNavigate } from "react-router-dom";
 import * as actions from "../../store/actions";
+import { formatDate, formatDateDefault } from "../../untils/formatDefaultDate";
 
 const { BsFillCameraFill, FaTimesCircle } = icons;
 
-const CreatePost = ({ isEdit = false }) => {
+const CreatePost = ({ isEdit = false, setisEdit }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { post } = useSelector((state) => state.user);
@@ -36,10 +38,12 @@ const CreatePost = ({ isEdit = false }) => {
             description: isEdit ? JSON.parse(post?.description) : "",
             target: isEdit ? post?.overviews?.target : "",
             province: isEdit ? post?.province : "",
+            expired: isEdit ? formatDateDefault(post?.overviews?.expired) : "",
         };
         return value;
     });
 
+    // formatDate(post?.overviews?.created);
     const [invalidFields, setinvalidFields] = useState([]);
     const handleFiles = async (e) => {
         e.stopPropagation();
@@ -62,9 +66,11 @@ const CreatePost = ({ isEdit = false }) => {
     const handleDeleteImage = (image) => {
         setpreviewImages((prev) => prev.filter((item, index) => item !== image));
     };
-
     const handleSubmit = async () => {
-        const resultValidate = validate(payload, setinvalidFields);
+        const today = isEdit
+            ? formatDateDefault(post?.overviews?.created)
+            : new Date().toDateString();
+        const resultValidate = validate(payload, setinvalidFields, today);
         if (resultValidate === 0) {
             const price = getCodesPricesNeedFind(
                 prices,
@@ -88,18 +94,21 @@ const CreatePost = ({ isEdit = false }) => {
                         : payload?.address.split(",")[0]
                 }`,
                 category: categories.find((item) => item.code === payload.categoryCode)?.value,
+                expired: formatDate(new Date(payload.expired)),
             };
             if (isEdit && post) {
+                // const expired = moment(date).toDate();
+
                 finalPayLoad.postId = post.id;
                 finalPayLoad.overviewId = post.overviewId;
                 finalPayLoad.attributesId = post.attributesId;
                 finalPayLoad.imagesId = post.imagesId;
-
                 // console.log(post);
                 // console.log(finalPayLoad);
                 const res = await apiUpdatePostPrivate(finalPayLoad);
                 if (res.err === 0) {
-                    Swal.fire("Thành công ", "thanh cong", "success").then(() => {
+                    Swal.fire("Thành công ", "Thành công", "success").then(() => {
+                        setisEdit(false);
                         dispatch(actions.setDefaultPostPriveate());
                     });
                 } else {
@@ -121,6 +130,7 @@ const CreatePost = ({ isEdit = false }) => {
                             description: "",
                             target: "",
                             province: "",
+                            expired: "",
                         });
                         setpreviewImages([]);
                     });
@@ -130,7 +140,7 @@ const CreatePost = ({ isEdit = false }) => {
             }
         }
     };
-
+    // console.log(formatDateDefault(post?.overviews?.expired));
     return (
         <div className="px-8 h-full">
             <h1 className="font-semibold text-3xl py-4 border-b-1 border-gray-300">
@@ -152,13 +162,15 @@ const CreatePost = ({ isEdit = false }) => {
                         setinvalidFields={setinvalidFields}
                         isEdit={isEdit}
                     />
+                    {/* <input type="date" value={date} onChange={(e) => handleExpiredPost(e)} /> */}
+
                     <div className="w-full">
                         <h2 className="font-semibold text-xl border-gray-300">Hình ảnh</h2>
                         <small>Cập nhật hình ảnh dễ đàng sẽ cho thuê nhanh hơn</small>
                         <div className="w-full my-4">
                             <label
                                 htmlFor="file"
-                                className="w-full flex flex-col gap-2 text-blue-400 items-center justify-center h-[200px] border-2 border-gray-400 border-dashed rounded-md"
+                                className="w-full flex flex-col gap-2 text-blue-400 items-center justify-center h-200 border-2 border-gray-400 border-dashed rounded-md"
                             >
                                 {loading ? (
                                     <LoadingCircle />
@@ -183,7 +195,7 @@ const CreatePost = ({ isEdit = false }) => {
                                 {previewImages.map((image, index) => {
                                     return (
                                         <figure
-                                            className="w-[200px] h-[200px] border border-gray-300 relative"
+                                            className="w-200 h-200 border border-gray-300 relative"
                                             key={image}
                                         >
                                             <img

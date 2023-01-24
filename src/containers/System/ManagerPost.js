@@ -2,34 +2,59 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
+import Swal from "sweetalert2";
+
 import * as actions from "../../store/actions";
 import { Button } from "../../components";
 import UpdatePost from "./UpdatePost";
 import { useLocation } from "react-router-dom";
+import { apiDeletePostPrivate } from "../../services/post";
 const ManagerPost = (props) => {
     const dispath = useDispatch();
 
     const { posts, post } = useSelector((state) => state.user);
+    const [refreshPage, setrefreshPage] = useState(false);
     const [isEdit, setisEdit] = useState(false);
 
     useEffect(() => {
-        !isEdit && dispath(actions.getPostsPrivate());
-    }, [isEdit]);
+        Object.keys(post).length === 0 && dispath(actions.getPostsPrivate());
+    }, [post, refreshPage]);
 
-    useEffect(() => {
-        !post && setisEdit(false);
-    }, [post]);
+    // useEffect(() => {}, []);
 
     const checkStatus = (date) => {
         const today = new Date().toDateString();
         return moment(date, process.env.REACT_APP_FORMAT_DATE).isSameOrAfter(today);
     };
+
+    const handleDeletePost = async (post) => {
+        // console.log(post);
+        const payload = {
+            postId: post.id,
+            attributesId: post.attributesId,
+            imagesId: post.imagesId,
+            overviewId: post.overviewId,
+        };
+
+        const res = await apiDeletePostPrivate(payload);
+        console.log(res);
+        if (res.data > 0) {
+            Swal.fire("Thành công ", "thanh cong", "success");
+            setrefreshPage(!refreshPage);
+        } else {
+            Swal.fire("Thất bại", "Có lỗi", "error");
+        }
+    };
+
+    const handleFilterPost = (code) => {};
     return (
         <div className="px-8 h-full">
             <div className="flex items-center justify-between border-b-1 border-gray-300">
                 <h1 className="font-semibold text-3xl py-4 ">Quản lý tin đăng</h1>
-                <select>
+                <select onChange={(e) => handleFilterPost(e.target.value)}>
                     <option value="">--Lọc theo trạng thái--</option>
+                    <option value="0">--Đang hoạt động--</option>
+                    <option value="1">--Hết hạn--</option>
                 </select>
             </div>
             <div className="relative flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border">
@@ -119,6 +144,7 @@ const ManagerPost = (props) => {
                                                             text="Xoá"
                                                             bgColor={"bg-red-500"}
                                                             textColor="text-white"
+                                                            onClick={() => handleDeletePost(post)}
                                                         />
                                                     </div>
                                                 </td>
@@ -138,7 +164,7 @@ const ManagerPost = (props) => {
                         setisEdit(false);
                     }}
                 >
-                    <UpdatePost />
+                    <UpdatePost setisEdit={setisEdit} />
                 </div>
             )}
         </div>
