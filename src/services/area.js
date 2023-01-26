@@ -6,7 +6,7 @@ export const getAreas = () => {
         try {
             const res = await axiosConfig({
                 method: "get",
-                url: "/api/v1/area/all",
+                url: "/api/v1/area",
             });
 
             resolve(res.data);

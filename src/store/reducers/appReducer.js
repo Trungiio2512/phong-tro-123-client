@@ -28,6 +28,7 @@ const appReducer = (state = initialState, action) => {
                 areas: action.data || [],
                 msg: action.msg || "",
             };
+
         case actionTypes.GET_PROVINCES:
             return {
                 ...state,

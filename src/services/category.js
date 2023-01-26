@@ -6,7 +6,7 @@ export const apiGetCategories = () => {
         try {
             const res = await axiosConfig({
                 method: "get",
-                url: "/api/v1/category/all",
+                url: "/api/v1/category",
             });
 
             resolve(res.data);

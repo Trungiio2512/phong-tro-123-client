@@ -10,6 +10,13 @@ module.exports = {
                 "overlay-50": "rgba(0, 0, 0, 0.5)",
                 "overlay-70": "rgba(0, 0, 0, 0.7)",
             },
+            backgroundImage: {
+                "blue-rb":
+                    "linear-gradient(to right bottom, #0245e6, #0072fb, #0094fd, #00b1f4, #04cae8)",
+            },
+            textColor: {
+                333: "#333333",
+            },
             width: {
                 1100: "1100px",
                 200: "200px",
@@ -20,6 +27,7 @@ module.exports = {
             },
             minWidth: {
                 200: "200px",
+                100: "100px",
             },
             height: {
                 200: "200px",

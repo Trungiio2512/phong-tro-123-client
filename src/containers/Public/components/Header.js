@@ -8,6 +8,7 @@ import { Button, User } from "../../../components";
 import { path } from "../../../untils/constant";
 import * as actions from "../../../store/actions/auth";
 import { menuHomeManager } from "../../../untils/menuMangager";
+import Swal from "sweetalert2";
 const { AiOutlinePlusCircle, AiOutlineLogout, BsFillCaretDownFill } = icons;
 
 function Header() {
@@ -32,8 +33,8 @@ function Header() {
                 <Link to={path.HOME}>
                     <img src={logo_nobg} alt="logo" className="w-[240px] h-[70px] object-contain" />
                 </Link>
-                <div className="flex items-center">
-                    <div className="flex items-center gap-1 relative">
+                <div className="flex items-center gap-2">
+                    <div className="flex items-center relative gap-2">
                         {!isLogging && (
                             <>
                                 <small className="text-lg">Phòng trọ 123 xin chào</small>
@@ -56,7 +57,6 @@ function Header() {
                         {isLogging && (
                             <>
                                 <User />
-
                                 <Button
                                     onClick={() => setisShowMenu(!isShowMenu)}
                                     text={"Quản lý tài khoản"}
@@ -81,10 +81,19 @@ function Header() {
                                         })}
                                         <button
                                             onClick={() => {
-                                                setisShowMenu(false);
-                                                dispatch(actions.logout());
+                                                // navigate(path.LOGIN);
+                                                Swal.fire(
+                                                    "Đăng xuất",
+                                                    "Thành công",
+                                                    "success",
+                                                ).then(() => {
+                                                    setisShowMenu(false);
+                                                    dispatch(actions.logout());
+                                                    navigate(path.LOGIN);
+                                                });
                                             }}
-                                            className="text-blue-500 hover:text-orange-500 flex items-center justify-center gap-2"
+                                            className="text-blue-500 hover:text-orange-500 flex 
+                                            p-2 items-center justify-start gap-2"
                                         >
                                             <span>
                                                 <AiOutlineLogout />

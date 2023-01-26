@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 
 import InputReadOnly from "../System/components/InputReadOnly";
 import InputFormV2 from "./components/InputFormV2";
@@ -8,37 +9,40 @@ import imgUserDefault from "../../assests/img_user_default_nobg.png";
 import { Button } from "../../components";
 import { apiUploadImages } from "../../services/post";
 import { apiUpdateUser } from "../../services/user";
-import validate from "../../untils/validate";
+import * as actions from "../../store/actions";
+
+import { fileToBase64, base64Tofile } from "../../untils/common/base64";
+
 const UserInfo = (props) => {
+    const dispatch = useDispatch();
     const { currentData } = useSelector((state) => state.user);
-    console.log(currentData);
-    const [invalidfields, setinvalidfields] = useState([]);
+    // console.log(currentData);
+    // const [invalidfields, setinvalidfields] = useState([]);
     // const [laodingImage, setloadingImage] = useState(false);
     const [payload, setpayload] = useState({
-        name: currentData.name || "",
-        // zalo: currentData.zalo || "",
-        fbUrl: currentData.fbUrl || "",
-        avatar: currentData.avatar || imgUserDefault,
+        name: currentData?.name || "",
+        zalo: currentData?.zalo || "",
+        fbUrl: currentData?.fbUrl || "",
+        avatar: base64Tofile(currentData?.avatar) || imgUserDefault,
     });
     const handleChangeAvatar = async (e) => {
-        const image = e.target.files;
-        // setloadingImage(true);
-        const formData = new FormData();
-        formData.append("file", image);
-        formData.append("upload_preset", process.env.REACT_APP_UPLOAD_ASSETS_NAME);
-        const response = await apiUploadImages(formData);
+        const image64 = await fileToBase64(e.target.files[0]);
         setpayload((prev) => ({
             ...prev,
-            avatar: response.secure_url,
+            avatar: image64,
         }));
     };
 
     const handleSubmit = async () => {
         console.log(payload);
-
-        // if (count === 0) {
-        //     const res = await apiUpdateUser(payload);
-        // }
+        const res = await apiUpdateUser(payload);
+        if (res.err === 0) {
+            Swal.fire("Thành công", "Sửa thông tin thành công", "success").then(() => {
+                dispatch(actions.getCurrentUser());
+            });
+        } else {
+            Swal.fire("Thất bại", "Có vấn đề gì đó", "error");
+        }
     };
     return (
         <div className="px-8 h-full mb-10">
@@ -63,13 +67,13 @@ const UserInfo = (props) => {
                     name="name"
                 />
 
-                <InputReadOnly
+                <InputFormV2
                     row
                     // setValue={setpayload}
                     // invalidFields={invalidfields}
                     // setinvalidFields={setinvalidfields}
                     label="Zalo"
-                    value={currentData.zalo}
+                    value={payload.zalo}
                     name="zalo"
                 />
                 <InputFormV2
@@ -82,11 +86,15 @@ const UserInfo = (props) => {
                     value={payload.fbUrl}
                 />
                 <div className="flex items-center">
-                    <j htmlFor="avatar" className="min-w-200">
+                    <label htmlFor="avatar" className="min-w-200">
                         Ảnh đại diện
-                    </j>
+                    </label>
                     <figure className="rounded-full w-40 h-40 border border-gray-300 overflow-hidden">
-                        <img src={payload.avatar} alt="avatar" />
+                        <img
+                            src={payload.avatar}
+                            alt="avatar"
+                            className="w-full h-full object-cover"
+                        />
                     </figure>
                 </div>
 

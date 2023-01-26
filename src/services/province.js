@@ -6,7 +6,7 @@ export const getProvinces = () => {
         try {
             const res = await axiosConfig({
                 method: "get",
-                url: "/api/v1/province/all",
+                url: "/api/v1/province/",
             });
 
             resolve(res.data);

@@ -9,9 +9,10 @@ import {
     Register,
     Rentail,
     SearchDetail,
+    NotSearch,
 } from "./containers/Public";
 
-import { CreatePost, ManagerPost, System, UserInfo } from "./containers/System";
+import { Contact, CreatePost, ManagerPost, System, UserInfo } from "./containers/System";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "./store/actions";
@@ -31,7 +32,7 @@ function App() {
         // [["page", 5], ["pageSize", 25]]
         dispatch(actions.getPrices());
         dispatch(actions.getAreas());
-        dispatch(actions.getNewPosts());
+        // dispatch(actions.getNewPosts());
         dispatch(actions.getProvinces());
     }, []);
     return (
@@ -39,22 +40,22 @@ function App() {
             <Routes>
                 <Route path={path.HOME} element={<Home />}>
                     <Route index element={<HomePage />} />
-                    {/* <Route path={path.HOME__PAGE} element={<HomePage />} /> */}
-                    <Route path={path.LOGIN} element={<Login />} />
-                    <Route path={path.REGISTER} element={<Register />} />
                     <Route path={path.CHO_THUE_CAN_HO} element={<Rentail />} />
                     <Route path={path.CHO_THUE_MAT_BANG} element={<Rentail />} />
                     <Route path={path.CHO_THUE_PHONG_TRO} element={<Rentail />} />
                     <Route path={path.NHA_CHO_THUE} element={<Rentail />} />
                     <Route path={path.SEARCH} element={<SearchDetail />} />
-
-                    <Route path={"chi-tiet/*"} element={<DetailPost />} />
-                    <Route path={path.DETAIL_POST__TITLE__POSTID} element={<DetailPost />} />
                 </Route>
                 <Route path={path.SYSTEM} element={<System />}>
                     <Route path={path.CREATE_POST} element={<CreatePost />} />
                     <Route path={path.MANAGER_POST} element={<ManagerPost />} />
                     <Route path={path.USER_INFO} element={<UserInfo />} />
+                </Route>
+                <Route element={<NotSearch />}>
+                    <Route path={path.LOGIN} element={<Login />} />
+                    <Route path={path.REGISTER} element={<Register />} />
+                    <Route path={path.CONTACT} element={<Contact />} />
+                    <Route path={path.DETAIL_POST__TITLE__POSTID} element={<DetailPost />} />
                 </Route>
                 <Route path={path.NOTFOUND} element={<NotFound />} />
             </Routes>

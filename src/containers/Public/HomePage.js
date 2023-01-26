@@ -22,10 +22,10 @@ const HomePage = (props) => {
                     <Panigation />
                 </div>
                 <div className="w-[30%] flex flex-col items-center gap-4">
-                    <ItemSidebar content={categories} title={"danh sach cho thue"} />
-                    <ItemSidebar type="priceCode" title="xem theo gia" isDouble content={prices} />
+                    <ItemSidebar content={categories} title={"Xem theo danh sách cho thuê"} />
+                    <ItemSidebar type="priceCode" title="Xem theo giá" isDouble content={prices} />
                     <ItemSidebar
-                        title="xem theo dien tich"
+                        title="Xem theo diện tích"
                         type="areaCode"
                         isDouble
                         content={areas}

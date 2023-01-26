@@ -3,10 +3,13 @@ import PropTypes from "prop-types";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import logo_nobg from "../../../assests/logo_nobg.png";
+import imgUserDefault from "../../../assests/img_user_default_nobg.png";
+
 import { menuSidebarManager } from "../../../untils/menuMangager";
 import * as actions from "../../../store/actions";
 import { path } from "../../../untils/constant";
+import { base64Tofile } from "../../../untils/common/base64";
+import Swal from "sweetalert2";
 const Sidebar = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -14,9 +17,9 @@ const Sidebar = (props) => {
     return (
         <div className="max-w-[256px] w-full h-full fixed left-0 top-[48px]">
             <div className="flex flex-col gap-4 p-4">
-                <div className="flex items-center">
+                <div className="flex items-center gap-2">
                     <img
-                        src={logo_nobg}
+                        src={base64Tofile(currentData?.avatar) || imgUserDefault}
                         alt="avatar"
                         className="w-12 h-12 rounded-full border border-gray-400"
                     />
@@ -52,15 +55,16 @@ const Sidebar = (props) => {
                     );
                 })}
                 <button
-                    className=" p-4 text-gray-500 flex items-center gap-2 hover:bg-gray-200 w-full"
+                    className="p-4 text-gray-500 flex items-center gap-2 hover:bg-gray-200 w-full"
                     onClick={() => {
-                        navigate(`/${path.LOGIN}`);
-                        dispatch(actions.logout());
+                        Swal.fire("Đăng xuất", "Thành công", "success").then(() => {
+                            // navigate(path.LOGIN);
+                            navigate(`/${path.LOGIN}`);
+                            dispatch(actions.logout());
+                        });
                     }}
                 >
                     Thoát
-                    {/* <span>{item.icon}</span>
-                    <span> {item.text}</span> */}
                 </button>
             </div>
         </div>

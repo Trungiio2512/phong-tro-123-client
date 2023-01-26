@@ -40,9 +40,9 @@ const Rentail = (props) => {
                     <Panigation />
                 </div>
                 <div className="w-[30%] flex flex-col items-center gap-4">
-                    <ItemSidebar type="priceCode" title="xem theo gia" isDouble content={prices} />
+                    <ItemSidebar type="priceCode" title="Xem theo giá" isDouble content={prices} />
                     <ItemSidebar
-                        title="xem theo dien tich"
+                        title="Xem theo diện tích"
                         type="areaCode"
                         isDouble
                         content={areas}

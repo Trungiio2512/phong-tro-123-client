@@ -12,7 +12,7 @@ import icons from "../../untils/icons";
 import validate from "../../untils/validate";
 import { useNavigate } from "react-router-dom";
 import * as actions from "../../store/actions";
-import { formatDate, formatDateDefault } from "../../untils/formatDefaultDate";
+import { formatDate, formatDateDefault } from "../../untils/common/formatDefaultDate";
 
 const { BsFillCameraFill, FaTimesCircle } = icons;
 

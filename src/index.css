@@ -27,6 +27,20 @@ input[type="range"]::-webkit-slider-thumb {
     transition: all 0.2s;
 }
 
+.table-name td {
+    font-size: 14px;
+    padding: 10px;
+    color: #333;
+}
+.table-name td:first-child {
+    width: 25%;
+}
+
+.table-name tr {
+    /* padding: 10px; */
+    position: relative;
+}
+
 input[type="range"]::-webkit-slider-thumb:active {
     box-shadow: 0 0 4px 1px rgb(15, 82, 163);
 }

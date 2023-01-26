@@ -16,8 +16,14 @@ export const menuHomeManager = [
     {
         id: 3,
         text: "Thông tin tài khoản",
-        path: "/he-thong/thong-tin-tai-khoan",
+        path: "/he-thong/thong-tin-ca-nhan",
         icon: <RiFolderUserLine />,
+    },
+    {
+        id: 4,
+        text: "Liên hệ",
+        path: "/lien-he",
+        icon: <BsChatText />,
     },
 ];
 
@@ -40,16 +46,11 @@ export const menuSidebarManager = [
         path: "/he-thong/thong-tin-ca-nhan",
         icon: <RiFolderUserLine />,
     },
-    // {
-    //     id: 4,
-    //     text: "Sửa thông tin cá nhân",
-    //     path: "/he-thong/sua-thong-tin-ca-nhan",
-    //     icon: <RiFolderUserLine />,
-    // },
+
     {
         id: 4,
         text: "Liên hệ",
-        path: "/he-thong/lien-he",
+        path: "/lien-he",
         icon: <BsChatText />,
     },
 ];

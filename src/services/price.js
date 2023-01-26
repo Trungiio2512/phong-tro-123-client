@@ -6,7 +6,7 @@ export const getPrices = () => {
         try {
             const res = await axiosConfig({
                 method: "get",
-                url: "/api/v1/price/all",
+                url: "/api/v1/price/",
             });
 
             resolve(res.data);

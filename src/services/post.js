@@ -1,16 +1,17 @@
 import axiosConfig from "../axiosConfig";
 import axios from "axios";
-export const apiGetPosts = () => {
+export const apiGetPost = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
             const res = await axiosConfig({
                 method: "get",
-                url: "/api/v1/post/all",
-                // data: payload,
+                url: "/api/v1/post",
+                params: { id: id },
             });
-
+            // console.log(res.data);
             resolve(res.data);
         } catch (error) {
+            console.log(error);
             reject(error);
         }
     });
@@ -33,12 +34,13 @@ export const apiGetPostsLitmit = (payload = {}) => {
     });
 };
 
-export const apiGetNewPosts = () => {
+export const apiGetNewPosts = (payload) => {
     return new Promise(async (resolve, reject) => {
         try {
             const res = await axiosConfig({
                 method: "get",
                 url: "/api/v1/post/new_post",
+                params: payload,
             });
 
             resolve(res.data);
@@ -53,7 +55,7 @@ export const apiCreateNewPost = (payload) => {
         try {
             const res = await axiosConfig({
                 method: "post",
-                url: "/api/v1/post/create_post",
+                url: "/api/v1/post/create",
                 data: payload,
             });
 
@@ -85,7 +87,7 @@ export const apiGetPostsPrivate = (payload = {}) => {
         try {
             const res = await axiosConfig({
                 method: "get",
-                url: "/api/v1/post/limit_private",
+                url: "/api/v1/post/posts_private",
                 // data: payload,
                 params: payload,
             });
@@ -102,7 +104,7 @@ export const apiUpdatePostPrivate = (payload) => {
         try {
             const res = await axiosConfig({
                 method: "put",
-                url: "/api/v1/post/update_private",
+                url: "/api/v1/post/update",
                 data: payload,
             });
 
@@ -118,7 +120,7 @@ export const apiDeletePostPrivate = (payload) => {
         try {
             const res = await axiosConfig({
                 method: "delete",
-                url: "/api/v1/post/delete_private",
+                url: "/api/v1/post/delete",
                 data: payload,
             });
 

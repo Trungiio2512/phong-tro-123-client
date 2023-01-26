@@ -48,7 +48,7 @@ function Navigation({ system = false }) {
                         return (
                             <div key={category?.code} className="flex">
                                 <NavLink
-                                    to={formatVietnameseToString(category?.value)}
+                                    to={`/${formatVietnameseToString(category?.value)}`}
                                     className={({ isActive }) =>
                                         `${isActive ? linkActive : notActive} ${defaultLink}`
                                     }
@@ -58,6 +58,14 @@ function Navigation({ system = false }) {
                             </div>
                         );
                     })}
+                <NavLink
+                    to={path.CONTACT}
+                    className={({ isActive }) =>
+                        `${isActive ? linkActive : notActive} ${defaultLink}`
+                    }
+                >
+                    Liên hệ
+                </NavLink>
             </nav>
         </div>
     );

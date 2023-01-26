@@ -26,12 +26,13 @@ function Login() {
             password,
         }),
         onSubmit: (values) => {
-            dispatch(actions.login(values));
+            Swal.fire("Thành công", "Đăng nhập thành công", "success").then(() => {
+                dispatch(actions.login(values));
+                formik.handleReset();
+                navigate("/");
+            });
         },
     });
-    useEffect(() => {
-        isLogging && navigate("/");
-    }, [isLogging]);
 
     useEffect(() => {
         msg && Swal.fire("Ooopps !", msg, "error");

@@ -10,10 +10,10 @@ import {
     BsChatText,
     BsFillCameraFill,
 } from "react-icons/bs";
-import { HiOutlineLocationMarker } from "react-icons/hi";
+import { HiOutlineLocationMarker, HiOutlineClock, HiHashtag } from "react-icons/hi";
 import { TbReportMoney, TbPlayerTrackNext, TbPlayerTrackPrev } from "react-icons/tb";
 import { SlCrop } from "react-icons/sl";
-import { MdApartment } from "react-icons/md";
+import { MdApartment, MdLocationOn } from "react-icons/md";
 import { FiSearch } from "react-icons/fi";
 import { FaClipboardList, FaTimesCircle } from "react-icons/fa";
 import { RiFolderUserLine } from "react-icons/ri";
@@ -24,10 +24,13 @@ const icons = {
     HiOutlineLocationMarker,
     BsFillCameraFill,
     TbReportMoney,
+    HiHashtag,
     SlCrop,
     MdApartment,
     RiFolderUserLine,
     BsChatText,
+    MdLocationOn,
+    HiOutlineClock,
     FiSearch,
     FaClipboardList,
     GrLinkPrevious,

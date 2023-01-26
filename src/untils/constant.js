@@ -1,20 +1,24 @@
 export const path = {
     HOME: "/",
     HOME__PAGE: ":page",
-    LOGIN: "login",
-    REGISTER: "register",
+    LOGIN: "dang-nhap",
+    REGISTER: "dang-ky",
     CHO_THUE_CAN_HO: "cho-thue-can-ho",
     CHO_THUE_MAT_BANG: "cho-thue-mat-bang",
     CHO_THUE_PHONG_TRO: "cho-thue-phong-tro",
     NHA_CHO_THUE: "nha-cho-thue",
-    DETAIL_POST__TITLE__POSTID: "chi-tiet/:title/:postId",
     SEARCH: "tim-kiem",
     NOTFOUND: "*",
+    DETAIL: "/chi-tiet",
+    // DETAIL_ALL: "/chi-tiet/*",
+    DETAIL_POST__TITLE__POSTID: "chi-tiet/:title/:postId",
+
     //private
-    SYSTEM: "/he-thong/*",
+    SYSTEM: "/he-thong/",
     CREATE_POST: "tao-moi-bai-dang",
     MANAGER_POST: "quan-ly-bai-dang",
     USER_INFO: "thong-tin-ca-nhan",
+    CONTACT: "lien-he",
     // UPDATE_POST: "chinh-sua-bai-dang",
 };
 
