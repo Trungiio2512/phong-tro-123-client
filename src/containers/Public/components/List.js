@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Button, Item } from "../../../components";
@@ -47,13 +47,12 @@ const List = ({ categoryCode }) => {
     return (
         <div className="w-full border border-gray-300 p-4 rounded-lg bg-white shadow-md">
             <div className="flex items-baseline justify-between mb-3">
-                <h3 className="text-lg font-semibold ">Danh sach tin dang</h3>
-                <span>cap nhat ngay 25-12-2022</span>
+                <h3 className="text-lg font-semibold ">Danh sách tin đăng</h3>
             </div>
-            <div className="flex items-center gap-1 mb-2">
+            <div className="flex items-center justify-start gap-2 mb-2 ">
                 <span>Sap xep :</span>
-                <Button text="Mặc định" bgColor={"bg-gray-200"} />
-                <Button text="Mới nhất" bgColor={"bg-gray-200"} />
+                <Button text="Mặc định" bgColor={"bg-gray-200"} className="m-0" />
+                <Button text="Mới nhất" bgColor={"bg-gray-200"} className="m-0" />
             </div>
             <div className="">
                 {!loading ? (
@@ -70,6 +69,7 @@ const List = ({ categoryCode }) => {
                                     star={+post?.star}
                                     user={post?.userData}
                                     id={post?.id}
+                                    categoryCode={post?.categoryCode}
                                 />
                             );
                         })

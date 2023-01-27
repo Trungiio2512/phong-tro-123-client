@@ -1,14 +1,16 @@
 import { AiOutlinePlusCircle, AiOutlineLogout } from "react-icons/ai";
-import { GrNext, GrStar, GrLinkPrevious } from "react-icons/gr";
+import { GrNext, GrPrevious, GrStar, GrLinkPrevious } from "react-icons/gr";
 import {
     BsChevronRight,
     BsFillHeartFill,
+    BsHeartFill,
     BsHeart,
     BsFillBookmarkStarFill,
     BsFillPencilFill,
     BsFillCaretDownFill,
     BsChatText,
     BsFillCameraFill,
+    BsFillTelephoneFill,
 } from "react-icons/bs";
 import { HiOutlineLocationMarker, HiOutlineClock, HiHashtag } from "react-icons/hi";
 import { TbReportMoney, TbPlayerTrackNext, TbPlayerTrackPrev } from "react-icons/tb";
@@ -23,7 +25,10 @@ const icons = {
     BsChevronRight,
     HiOutlineLocationMarker,
     BsFillCameraFill,
+    GrPrevious,
     TbReportMoney,
+    BsFillTelephoneFill,
+    BsHeartFill,
     HiHashtag,
     SlCrop,
     MdApartment,

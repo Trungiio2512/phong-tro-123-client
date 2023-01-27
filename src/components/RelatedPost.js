@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import { formatVietnameseToString } from "../untils/common/fn";
 import { apiGetNewPosts } from "../services/post";
 const countLoading = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const RelatedPost = () => {
+const RelatedPost = ({ categoryCode, title = "Tin mới đăng", limit, order }) => {
     const location = useLocation();
 
     const [loading, setloading] = useState(true);
@@ -15,13 +15,20 @@ const RelatedPost = () => {
 
     useEffect(() => {
         // từ state categories dựa theo pathname của trang đó lấy ra category trang đó
+        // console.log(location.pathname);
         const category = categories.find(
             (i) => `/${formatVietnameseToString(i.value)}` === location.pathname,
         );
         setloading(true);
         const timerfc = setTimeout(async () => {
-            const res = await apiGetNewPosts({ categoryCode: category?.code });
-            console.log(res);
+            const queries = {
+                categoryCode: categoryCode ? categoryCode : category?.code,
+                limit,
+                order,
+            };
+            // console.log(queries);
+            const res = await apiGetNewPosts(queries);
+            // console.log(res);
             if (res.err === 0) {
                 setnewPosts(res.data);
                 setloading(false);
@@ -30,7 +37,7 @@ const RelatedPost = () => {
         return () => {
             clearTimeout(timerfc);
         };
-    }, [categories, location.pathname]);
+    }, [categories, categoryCode, limit, location.pathname, order]);
 
     // useEffect(() => {
     //     newPosts.length > 0 &&
@@ -38,7 +45,7 @@ const RelatedPost = () => {
 
     return (
         <div className="p-4 bg-white w-full rounded-lg  border border-gray-300">
-            <h3 className="font-semibold text-lg">Tin moi</h3>
+            <h3 className="font-semibold text-lg">{title}</h3>
             <div className="w-full">
                 {loading
                     ? countLoading.map((item) => {
@@ -52,8 +59,10 @@ const RelatedPost = () => {
                                   title={newPost?.title}
                                   price={newPost?.attributesData?.price}
                                   images={JSON.parse(newPost?.imagesData?.images)}
+                                  id={newPost?.id}
                                   star={newPost?.star}
-                                  time={newPost?.createdAt}
+                                  time={newPost?.updatedAt}
+                                  categoryCode={newPost?.categoryCode}
                               />
                           );
                       })}

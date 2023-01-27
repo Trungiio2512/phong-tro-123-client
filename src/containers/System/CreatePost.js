@@ -146,88 +146,84 @@ const CreatePost = ({ isEdit = false, setisEdit }) => {
             <h1 className="font-semibold text-3xl py-4 border-b-1 border-gray-300">
                 {isEdit ? "Chỉnh sửa tin đăng" : "Đăng tin mới"}
             </h1>
-            <div className="flex gap-4 pb-12">
-                <div className="flex flex-auto flex-col gap-8">
-                    <Address
-                        isEdit={isEdit}
-                        payload={payload}
-                        invalidFields={invalidFields}
-                        setpayload={setpayload}
-                        setinvalidFields={setinvalidFields}
-                    />
-                    <OverView
-                        payload={payload}
-                        setpayload={setpayload}
-                        invalidFields={invalidFields}
-                        setinvalidFields={setinvalidFields}
-                        isEdit={isEdit}
-                    />
-                    {/* <input type="date" value={date} onChange={(e) => handleExpiredPost(e)} /> */}
+            <div className="flex flex-auto flex-col gap-8">
+                <Address
+                    isEdit={isEdit}
+                    payload={payload}
+                    invalidFields={invalidFields}
+                    setpayload={setpayload}
+                    setinvalidFields={setinvalidFields}
+                />
+                <OverView
+                    payload={payload}
+                    setpayload={setpayload}
+                    invalidFields={invalidFields}
+                    setinvalidFields={setinvalidFields}
+                    isEdit={isEdit}
+                />
+                {/* <input type="date" value={date} onChange={(e) => handleExpiredPost(e)} /> */}
 
-                    <div className="w-full">
-                        <h2 className="font-semibold text-xl border-gray-300">Hình ảnh</h2>
-                        <small>Cập nhật hình ảnh dễ đàng sẽ cho thuê nhanh hơn</small>
-                        <div className="w-full my-4">
-                            <label
-                                htmlFor="file"
-                                className="w-full flex flex-col gap-2 text-blue-400 items-center justify-center h-200 border-2 border-gray-400 border-dashed rounded-md"
-                            >
-                                {loading ? (
-                                    <LoadingCircle />
-                                ) : (
-                                    <>
-                                        <BsFillCameraFill size={50} />
-                                        <span>Thêm ảnh</span>
-                                    </>
-                                )}
-                            </label>
-                            <input
-                                type="file"
-                                name="file"
-                                id="file"
-                                hidden
-                                multiple
-                                onChange={handleFiles}
-                            />
-                        </div>
-                        {previewImages.length > 0 && (
-                            <div className="max-w-[620px] w-full flex items-center gap-2 overflow-x-scroll ">
-                                {previewImages.map((image, index) => {
-                                    return (
-                                        <figure
-                                            className="w-200 h-200 border border-gray-300 relative"
-                                            key={image}
-                                        >
-                                            <img
-                                                className="w-full h-full object-contain"
-                                                src={image}
-                                                alt={image}
-                                            />
-                                            <button
-                                                className="absolute top-0 right-0 z-10 "
-                                                title="Xoá"
-                                                onClick={() => handleDeleteImage(image)}
-                                            >
-                                                <FaTimesCircle
-                                                    size={22}
-                                                    className="hover:text-red-500"
-                                                />
-                                            </button>
-                                        </figure>
-                                    );
-                                })}
-                            </div>
-                        )}
+                <div className="w-full">
+                    <h2 className="font-semibold text-xl border-gray-300">Hình ảnh</h2>
+                    <small>Cập nhật hình ảnh dễ đàng sẽ cho thuê nhanh hơn</small>
+                    <div className="w-full my-4">
+                        <label
+                            htmlFor="file"
+                            className="w-full flex flex-col gap-2 text-blue-400 items-center justify-center h-200 border-2 border-gray-400 border-dashed rounded-md"
+                        >
+                            {loading ? (
+                                <LoadingCircle />
+                            ) : (
+                                <>
+                                    <BsFillCameraFill size={50} />
+                                    <span>Thêm ảnh</span>
+                                </>
+                            )}
+                        </label>
+                        <input
+                            type="file"
+                            name="file"
+                            id="file"
+                            hidden
+                            multiple
+                            onChange={handleFiles}
+                        />
                     </div>
-                    <Button
-                        text={isEdit ? "Thay đổi" : "Tạo mới"}
-                        bgColor={"bg-green-400"}
-                        textColor="text-white"
-                        onClick={handleSubmit}
-                    />
+                    {previewImages.length > 0 && (
+                        <div className="max-w-[620px] w-full flex items-center gap-2 overflow-x-scroll ">
+                            {previewImages.map((image, index) => {
+                                return (
+                                    <figure
+                                        className="w-200 h-200 border border-gray-300 relative"
+                                        key={image}
+                                    >
+                                        <img
+                                            className="w-full h-full object-contain"
+                                            src={image}
+                                            alt={image}
+                                        />
+                                        <button
+                                            className="absolute top-0 right-0 z-10 "
+                                            title="Xoá"
+                                            onClick={() => handleDeleteImage(image)}
+                                        >
+                                            <FaTimesCircle
+                                                size={22}
+                                                className="hover:text-red-500"
+                                            />
+                                        </button>
+                                    </figure>
+                                );
+                            })}
+                        </div>
+                    )}
                 </div>
-
-                <div className="w-[40%]">Map</div>
+                <Button
+                    text={isEdit ? "Thay đổi" : "Tạo mới"}
+                    bgColor={"bg-green-400"}
+                    textColor="text-white"
+                    onClick={handleSubmit}
+                />
             </div>
         </div>
     );

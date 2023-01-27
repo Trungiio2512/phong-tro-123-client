@@ -1,13 +1,15 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
 import Slider from "react-slick";
+import ButtonSlider from "./ButtonSlider";
 
 const settings = {
     dots: false,
-    infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    nextArrow: <ButtonSlider next />,
+    prevArrow: <ButtonSlider prev />,
 };
 const SliderPost = ({ images }) => {
     return (

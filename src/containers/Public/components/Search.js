@@ -16,7 +16,6 @@ const Search = () => {
     const navigate = useNavigate();
     const { provinces, prices, areas, categories } = useSelector((state) => state.app);
 
-    const [searchParams, setSearchParams] = useSearchParams();
     const [queries, setqueries] = useState({});
     const [showModal, setshowModal] = useState(false);
     const [name, setname] = useState("");
@@ -65,11 +64,7 @@ const Search = () => {
         } ${queriesObjText.province ? `Tại ${queriesObjText.province}` : ""} ${
             queriesObjText.price ? `giá ${queriesObjText.price}` : ""
         } ${queriesObjText.area ? `diện tích ${queriesObjText.area}` : ""}`;
-        // return params;
-        // console.log(queries);
-        // console.log(queriesArr);
-        console.log(params);
-        // dispatch(actions.getPostsLimit(params));
+        // console.log(params);
         navigate(
             {
                 pathname: `/${path.SEARCH}`,
@@ -84,11 +79,15 @@ const Search = () => {
     };
 
     useEffect(() => {
+        const category = categories.find(
+            (i) => `/${formatVietnameseToString(i.value)}` === location.pathname,
+        );
         if (!location.pathname.includes(path.SEARCH)) {
             setobjMinMax({});
-            setqueries({});
+            setqueries(category ? { category: category.value, categoryCode: category.code } : {});
         }
-    }, [location.pathname]);
+        // console.log(location.pathname);
+    }, [categories, location.pathname]);
 
     return (
         <>

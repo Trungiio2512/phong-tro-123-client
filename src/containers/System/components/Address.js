@@ -111,7 +111,7 @@ const Address = ({ isEdit = false, setpayload, invalidFields, setinvalidFields }
         <div>
             <h2 className="text-xl font-medium py-4">Địa chỉ cho thuê</h2>
             <div className="flex flex-col gap-4">
-                <div className="flex items-center justify-around gap-2">
+                <div className="flex items-center  gap-2">
                     <Select
                         label="Tỉnh/Thành phố"
                         value={province}

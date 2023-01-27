@@ -41,6 +41,31 @@ input[type="range"]::-webkit-slider-thumb {
     position: relative;
 }
 
+.btn-slider-playlist {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    background-color: yellow !important;
+    position: absolute !important;
+    top: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 1 !important;
+    font-size: 1.6rem !important;
+    color: white !important;
+    transform: translateY(-50%) !important;
+}
+.btn-slider-playlist::before {
+    content: "" !important;
+}
+
+.btn-slider-playlist.next {
+    right: 0;
+}
+.btn-slider-playlist.prev {
+    left: 0;
+}
 input[type="range"]::-webkit-slider-thumb:active {
     box-shadow: 0 0 4px 1px rgb(15, 82, 163);
 }

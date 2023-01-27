@@ -11,7 +11,18 @@ import SkeletonCutom from "./SkeletonCutom";
 const indexs = [0, 1, 2, 3];
 const { BsFillHeartFill, GrStar, BsHeart, BsFillBookmarkStarFill } = icons;
 
-const Item = ({ id, title, address, attributes, description, images, star, user, loading }) => {
+const Item = ({
+    id,
+    title,
+    address,
+    attributes,
+    description,
+    images,
+    star,
+    user,
+    loading,
+    categoryCode,
+}) => {
     const [isHoverHeart, setisHoverHeart] = useState(false);
     const [stars, setstars] = useState(() => {
         const stars = [];
@@ -61,14 +72,14 @@ const Item = ({ id, title, address, attributes, description, images, star, user,
                     </span>
                 )}
             </div>
-            <div className="flex flex-col gap-3 ml-3 flex-1">
+            <div className="flex flex-col gap-3 ml-3 flex-1 relative">
                 <div className="">
                     {loading ? (
                         <SkeletonCutom count={2} />
                     ) : (
                         <Link
                             to={linkDetailPost(id)}
-                            state={{ id: id }}
+                            state={{ id: id, categoryCode }}
                             className="gap-2 text-red-600 uppercase font-semibold hover:cursor-pointer hover:underline line-clamp-2"
                         >
                             {stars.map((i, index) => (
@@ -78,7 +89,7 @@ const Item = ({ id, title, address, attributes, description, images, star, user,
                         </Link>
                     )}
                     {!loading && star > 4 && (
-                        <div className="w-[10%] flex items-center">
+                        <div className="w-[10%] flex items-center absolute top-0 right-[-20px]">
                             {" "}
                             <BsFillBookmarkStarFill
                                 size={24}

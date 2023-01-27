@@ -1,4 +1,5 @@
 import axios from "axios";
+import { apiRefresh } from "./services/auth";
 
 const instance = axios.create({
     baseURL: process.env.REACT_APP_SERVER_URL,
@@ -12,6 +13,7 @@ instance.interceptors.request.use(
         let token =
             window.localStorage.getItem("persist:auth") &&
             JSON.parse(window.localStorage.getItem("persist:auth"))?.token?.slice(1, -1);
+        // console.log(window.localStorage.getItem("persist:auth"));
         config.headers = {
             authorization: token ? `Bearer ${token}` : null,
         };
@@ -23,12 +25,19 @@ instance.interceptors.request.use(
 );
 
 // Add a response interceptor
+let refresh = false;
 instance.interceptors.response.use(
     function (response) {
         // refresh token
         return response;
     },
-    function (error) {
+    async function (error) {
+        console.log(error);
+        if (error.response.status === 401 && !refresh) {
+            refresh = true;
+            // await apiRefresh();
+        }
+        refresh = false;
         return Promise.reject(error);
     },
 );

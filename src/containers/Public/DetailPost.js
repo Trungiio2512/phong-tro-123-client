@@ -1,32 +1,51 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useLocation } from "react-router-dom";
-import { apiGetPost } from "../../services/post";
-import { SkeletonCutom, SliderPost } from "../../components";
+import { apiGetPost, apiGetPostsLitmit } from "../../services/post";
+import { Button, Item, RelatedPost, SkeletonCutom, SliderPost } from "../../components";
 import icons from "../../untils/icons";
 import { TableRow } from "./components";
+import { base64Tofile } from "../../untils/common/base64";
+import notavatar from "../../assests/img_user_default_nobg.png";
+const {
+    GrStar,
+    MdLocationOn,
+    SlCrop,
+    TbReportMoney,
+    HiHashtag,
+    HiOutlineClock,
+    BsFillTelephoneFill,
+    BsHeartFill,
+    BsHeart,
+} = icons;
+const countItemLoading = [1, 2, 3, 4, 5];
 
-const { GrStar, MdLocationOn, SlCrop, TbReportMoney, HiHashtag, HiOutlineClock } = icons;
 const DetailPost = (props) => {
     const loaction = useLocation();
-    const { id } = loaction.state;
+    const { id, categoryCode } = loaction.state;
     const [postDetail, setpostDetail] = useState({});
+    const [posts, setposts] = useState([]);
     const [loading, setloading] = useState(false);
-
+    const [love, setlove] = useState(() => {
+        return true;
+    });
     useEffect(() => {
-        console.log(id);
         setloading(true);
         const timerfc = setTimeout(async () => {
-            const res = await apiGetPost(id);
-            setpostDetail(res.data);
-            console.log(res.data);
+            const [res1, res2] = await Promise.all([
+                apiGetPost(id),
+                apiGetPostsLitmit({ categoryCode: categoryCode, limit: 5 }),
+            ]);
+            setpostDetail(res1.data);
+            setposts(res2.data.rows);
+            // console.log(res2.data);
             setloading(false);
         }, 3000);
         return () => {
             clearTimeout(timerfc);
         };
-    }, [id]);
-
+    }, [categoryCode, id]);
+    // console.log(posts);
     return (
         <div className="flex gap-5">
             <div className="w-8/12">
@@ -43,7 +62,7 @@ const DetailPost = (props) => {
                     </div>
                 )}
                 <div className="border border-gray-300 p-5 rounded-b-md flex flex-col gap-4">
-                    <div className="flex flex-col gap-2">
+                    <section className="flex flex-col gap-2">
                         <h2 className="text-xl gap-2 text-red-600 uppercase font-bold line-clamp-2">
                             {loading ? <SkeletonCutom /> : postDetail?.title}
                         </h2>
@@ -95,26 +114,27 @@ const DetailPost = (props) => {
                                 </div>
                             </div>
                         )}
-                    </div>
-                    <div>
+                    </section>
+                    <section>
                         <h3 className="text-xl font-bold text-333">Thông tin mô tả</h3>
                         <div className="flex flex-col gap-2 mt-2">
                             {loading ? (
                                 <SkeletonCutom height={400} />
+                            ) : (postDetail.description &&
+                                  typeof JSON.parse(postDetail.description)) === "object" ? (
+                                JSON.parse(postDetail.description)?.map((item, index) => {
+                                    return (
+                                        <span key={index} className="text-333 text-base">
+                                            {item}
+                                        </span>
+                                    );
+                                })
                             ) : (
-                                postDetail?.description &&
-                                (JSON.parse(postDetail.description) ||
-                                    JSON.parse(postDetail.description)?.map((item, index) => {
-                                        return (
-                                            <span key={index} className="text-333 text-base">
-                                                {item}
-                                            </span>
-                                        );
-                                    }))
+                                postDetail.description && JSON.parse(postDetail?.description)
                             )}
                         </div>
-                    </div>
-                    <div>
+                    </section>
+                    <section>
                         <h3 className="text-xl font-bold text-333">Đặc điểm tin đăng</h3>
                         <table className="table-name w-full mt-3">
                             <tbody>
@@ -156,10 +176,127 @@ const DetailPost = (props) => {
                                 />
                             </tbody>
                         </table>
+                    </section>
+                    <section>
+                        <h3 className="text-xl font-bold text-333">Thông tin liên hệ</h3>
+                        <table className="table-name w-full mt-3">
+                            <tbody>
+                                <TableRow
+                                    label="Liên hệ"
+                                    loading={loading}
+                                    value={postDetail?.userData?.name}
+                                />
+                                <TableRow
+                                    label="Điện thoại"
+                                    loading={loading}
+                                    value={postDetail?.userData?.phone}
+                                />
+                                <TableRow
+                                    label="Zalo"
+                                    loading={loading}
+                                    value={postDetail?.userData?.zalo}
+                                />
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+                <div className="mt-6 p-5 rounded-md border border-gray-300">
+                    <div className="flex items-baseline justify-between mb-3">
+                        <h3 className="text-lg font-semibold ">Danh sách tin liên quan</h3>
                     </div>
+                    {!loading ? (
+                        posts.length > 0 ? (
+                            posts?.map((post) => {
+                                return (
+                                    <Item
+                                        key={post?.id}
+                                        title={post?.title}
+                                        address={post?.address}
+                                        attributes={post?.attributesData}
+                                        description={JSON.parse(post?.description)}
+                                        images={JSON.parse(post?.imagesData?.images)}
+                                        star={+post?.star}
+                                        user={post?.userData}
+                                        id={post?.id}
+                                        categoryCode={post?.categoryCode}
+                                    />
+                                );
+                            })
+                        ) : (
+                            <h2>Không tìm thấy kết quả phù hợp</h2>
+                        )
+                    ) : (
+                        countItemLoading.map((item) => {
+                            return <Item key={item} loading={loading} />;
+                        })
+                    )}
+                    {/* {console.log(posts)} */}
                 </div>
             </div>
-            <div className="w-4/12">content</div>
+            <aside className="w-4/12 flex flex-col gap-4">
+                <div className="flex flex-col items-center gap-2 bg-[#febb02] rounded-md p-4">
+                    <figure className="w-[80px] h-[80px] rounded-full overflow-hidden">
+                        {loading ? (
+                            <SkeletonCutom circle height={"100%"} />
+                        ) : (
+                            <img
+                                className="w-full h-full object-cover"
+                                src={base64Tofile(postDetail?.userData?.avatar) || notavatar}
+                                alt={postDetail?.userData?.name}
+                            />
+                        )}
+                    </figure>
+                    {loading ? (
+                        <SkeletonCutom className={"min-w-200"} />
+                    ) : (
+                        <span className="font-bold text-xl">{postDetail?.userData?.name}</span>
+                    )}
+                    {loading ? (
+                        <SkeletonCutom className={"min-w-200 p-3"} />
+                    ) : (
+                        <Button
+                            isBefore
+                            Icon={BsFillTelephoneFill}
+                            textColor={"text-white"}
+                            bgColor={"bg-[#16C784]"}
+                            text={postDetail?.userData?.phone}
+                            className={"min-w-200 h-[40px] text-xl font-bold tracking-wide "}
+                        />
+                    )}
+
+                    {loading ? (
+                        <SkeletonCutom className={"min-w-200 p-3"} />
+                    ) : (
+                        <Button
+                            bgColor={"bg-white"}
+                            text={"Nhắn zalo"}
+                            className={"border h-[40px] border-gray- text-sm font-bold min-w-200"}
+                            textColor={"text-333"}
+                        />
+                    )}
+
+                    {loading ? (
+                        <SkeletonCutom className={"min-w-200 p-3"} />
+                    ) : (
+                        <Button
+                            isBefore
+                            Icon={!love ? BsHeart : BsHeartFill}
+                            bgColor={"bg-white"}
+                            text={"Yêu thích"}
+                            textColor={love ? "text-pink-600" : "text-333"}
+                            className={"border h-[40px] border-gray- text-sm font-bold min-w-200"}
+                        />
+                    )}
+                </div>
+                <RelatedPost
+                    categoryCode={categoryCode}
+                    title="Tin nổi bật"
+                    limit={5}
+                    order={["star", "DESC"]}
+                />
+
+                <RelatedPost />
+            </aside>
         </div>
     );
 };

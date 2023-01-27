@@ -32,3 +32,17 @@ export const apiLogin = (payload) => {
         }
     });
 };
+export const apiRefresh = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const res = await axiosConfig({
+                method: "post",
+                url: "/api/v1/auth/refresh",
+            });
+            // resolve(res.data)
+            console.log(res.data);
+        } catch (error) {
+            console.log(error);
+        }
+    });
+};
