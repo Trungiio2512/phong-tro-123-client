@@ -21,7 +21,7 @@ function Header() {
 
     const [isShowMenu, setisShowMenu] = useState(false);
 
-    const { isLogging } = useSelector((state) => state.auth);
+    const { isLogging, token } = useSelector((state) => state.auth);
 
     useEffect(() => {
         headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -111,6 +111,9 @@ function Header() {
                         Icon={AiOutlinePlusCircle}
                         textColor="text-white"
                         bgColor="bg-secondary2"
+                        onClick={() =>
+                            token ? navigate("/he-thong/tao-moi-bai-dang") : navigate(path.LOGIN)
+                        }
                     />
                 </div>
             </div>

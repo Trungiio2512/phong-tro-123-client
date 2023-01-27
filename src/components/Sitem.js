@@ -10,7 +10,7 @@ import icons from "../untils/icons";
 const { BsFillBookmarkStarFill, GrStar } = icons;
 // const star = [1, 2, 3, 4, 5];
 
-const Sitem = ({ title, images, id, star, price, time, loading, categoryCode }) => {
+const Sitem = ({ title, images, id, star, price, time, loading, categoryCode, labelCode }) => {
     // console.log(time);
     const linkDetailPost = (id) => {
         return !loading && `${path.DETAIL}/${formatVietnameseToString(title)}/${id}`;
@@ -34,7 +34,7 @@ const Sitem = ({ title, images, id, star, price, time, loading, categoryCode }) 
             <div className="flex-1 flex flex-col justify-between ml-3 relative ">
                 <Link
                     to={linkDetailPost(id)}
-                    state={{ id: id, categoryCode }}
+                    state={{ id: id, categoryCode, labelCode }}
                     className={`${
                         +star > 4 ? "text-red-600 flex items-center" : "text-blue-700 "
                     } text-sm line-clamp-2 select-none`}

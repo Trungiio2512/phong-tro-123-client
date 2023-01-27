@@ -9,12 +9,11 @@ import { InputForm, Button } from "../../components";
 import * as actions from "../../store/actions";
 import { path } from "../../untils/constant";
 import { phone, password } from "../../untils/yup_schema";
+import { apiLogin } from "../../services/auth";
 
 function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const { isLogging, msg } = useSelector((state) => state.auth);
 
     const formik = useFormik({
         initialValues: {
@@ -25,19 +24,26 @@ function Login() {
             phone,
             password,
         }),
-        onSubmit: (values) => {
-            Swal.fire("Thành công", "Đăng nhập thành công", "success").then(() => {
-                dispatch(actions.login(values));
-                formik.handleReset();
-                navigate("/");
-            });
+        onSubmit: async (values) => {
+            // dispatch(actions.login(values));
+            const res = await apiLogin(values);
+            if (res.err === 0) {
+                Swal.fire("Đăng nhập thành công", res.msg, "success").then(() => {
+                    formik.handleReset();
+                    dispatch(
+                        actions.login({
+                            accessToken: res.accessToken,
+                            refreshToken: res.refreshToken,
+                        }),
+                    );
+                    navigate(path.HOME);
+                });
+            } else if (res.err === 2) {
+                Swal.fire("Có vấn đề về tài khoản của bạn", res.msg, "error");
+            }
         },
     });
 
-    useEffect(() => {
-        msg && Swal.fire("Ooopps !", msg, "error");
-    }, [msg]);
-    // console.log(formik.errors);
     return (
         <div className="bg-white w-full max-w-600 pt-[30px] px-[30px] pb-[100px] rounded-md border-1 border-stone-300 m-auto">
             <h1 className="font-semibold text-3xl">Đăng nhập</h1>

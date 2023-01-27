@@ -28,16 +28,17 @@ const ManagerPost = (props) => {
     };
 
     const handleDeletePost = async (post) => {
-        // console.log(post);
+        console.log(post);
         const payload = {
             postId: post.id,
             attributesId: post.attributesId,
             imagesId: post.imagesId,
             overviewId: post.overviewId,
         };
+        console.log(payload);
 
         const res = await apiDeletePostPrivate(payload);
-        console.log(res);
+        // console.log(res);
         if (res.data > 0) {
             Swal.fire("Thành công ", "thanh cong", "success");
             setrefreshPage(!refreshPage);

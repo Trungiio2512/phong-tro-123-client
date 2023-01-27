@@ -62,6 +62,7 @@ const RelatedPost = ({ categoryCode, title = "Tin mới đăng", limit, order })
                                   id={newPost?.id}
                                   star={newPost?.star}
                                   time={newPost?.updatedAt}
+                                  labelCode={newPost?.labelData?.code}
                                   categoryCode={newPost?.categoryCode}
                               />
                           );

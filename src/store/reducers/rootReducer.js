@@ -16,7 +16,7 @@ const commonConfig = {
 const authConfig = {
     ...commonConfig,
     key: "auth",
-    whitelist: ["isLogging", "token"],
+    whitelist: ["isLogging", "token", "refreshToken"],
 };
 
 const rootReducer = combineReducers({

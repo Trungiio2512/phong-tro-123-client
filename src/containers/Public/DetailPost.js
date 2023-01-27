@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { createSearchParams } from "react-router-dom";
+
 import { apiGetPost, apiGetPostsLitmit } from "../../services/post";
 import { Button, Item, RelatedPost, SkeletonCutom, SliderPost } from "../../components";
 import icons from "../../untils/icons";
 import { TableRow } from "./components";
 import { base64Tofile } from "../../untils/common/base64";
 import notavatar from "../../assests/img_user_default_nobg.png";
+import { path } from "../../untils/constant";
 const {
     GrStar,
     MdLocationOn,
@@ -22,19 +25,30 @@ const countItemLoading = [1, 2, 3, 4, 5];
 
 const DetailPost = (props) => {
     const loaction = useLocation();
-    const { id, categoryCode } = loaction.state;
+    const { id, categoryCode, labelCode } = loaction.state;
+    const [searchParams, setSearchParams] = useSearchParams();
+    // const navigate
+
     const [postDetail, setpostDetail] = useState({});
     const [posts, setposts] = useState([]);
     const [loading, setloading] = useState(false);
     const [love, setlove] = useState(() => {
         return true;
     });
+    console.log(postDetail);
+
+    const handleFilterArea = () => {};
+
     useEffect(() => {
         setloading(true);
         const timerfc = setTimeout(async () => {
             const [res1, res2] = await Promise.all([
                 apiGetPost(id),
-                apiGetPostsLitmit({ categoryCode: categoryCode, limit: 5 }),
+                apiGetPostsLitmit({
+                    limit: 5,
+                    labelCode,
+                    categoryCode,
+                }),
             ]);
             setpostDetail(res1.data);
             setposts(res2.data.rows);
@@ -71,9 +85,12 @@ const DetailPost = (props) => {
                         ) : (
                             <p className="flex items-center gap-2">
                                 <span>Chuyển mục:</span>
-                                <strong className="text-blue-600">
-                                    {postDetail?.overviews?.area}
-                                </strong>
+                                <Link
+                                    to={`/${path.SEARCH}/`}
+                                    className="text-blue-600 hover:underline"
+                                >
+                                    {postDetail?.labelData?.value}
+                                </Link>
                             </p>
                         )}
                         {loading ? (
@@ -202,7 +219,13 @@ const DetailPost = (props) => {
                 </div>
                 <div className="mt-6 p-5 rounded-md border border-gray-300">
                     <div className="flex items-baseline justify-between mb-3">
-                        <h3 className="text-lg font-semibold ">Danh sách tin liên quan</h3>
+                        <h3 className="text-lg font-semibold ">
+                            {!loading && postDetail?.labelData?.value ? (
+                                postDetail?.labelData?.value
+                            ) : (
+                                <SkeletonCutom className={"min-w-200"} />
+                            )}
+                        </h3>
                     </div>
                     {!loading ? (
                         posts.length > 0 ? (

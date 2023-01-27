@@ -9,12 +9,11 @@ import { InputForm, Button } from "../../components";
 import * as actions from "../../store/actions";
 import { path } from "../../untils/constant";
 import { phone, password, name } from "../../untils/yup_schema";
+import { apiRegister } from "../../services/auth";
 
 function Register() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const { isLogging, msg } = useSelector((state) => state.auth);
 
     const formik = useFormik({
         initialValues: {
@@ -27,17 +26,24 @@ function Register() {
             name,
             password,
         }),
-        onSubmit: (values) => {
-            dispatch(actions.register({ ...values, type: "R2" }));
+        onSubmit: async (values) => {
+            const res = await apiRegister({ ...values, type: "R2" });
+            if (res.err === 0) {
+                Swal.fire("Đăng ký thành công", res.msg, "success").then(() => {
+                    formik.handleReset();
+                    dispatch(
+                        actions.login({
+                            accessToken: res.accessToken,
+                            refreshToken: res.refreshToken,
+                        }),
+                    );
+                    navigate(path.HOME);
+                });
+            } else if (res.err === 2) {
+                Swal.fire("Có vấn đề về tài khoản của bạn", res.msg, "error");
+            }
         },
     });
-    useEffect(() => {
-        isLogging && navigate("/");
-    }, [isLogging]);
-
-    useEffect(() => {
-        msg && Swal.fire("Ooopps !", msg, "error");
-    }, [msg]);
 
     return (
         <div className="bg-white w-full max-w-600 pt-[30px] px-[30px] pb-[100px] rounded-md border-1 border-stone-300 m-auto">

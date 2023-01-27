@@ -22,6 +22,7 @@ const Item = ({
     user,
     loading,
     categoryCode,
+    labelCode,
 }) => {
     const [isHoverHeart, setisHoverHeart] = useState(false);
     const [stars, setstars] = useState(() => {
@@ -43,7 +44,10 @@ const Item = ({
                 ) : (
                     images?.length > 0 && (
                         <>
-                            <Link to={linkDetailPost(id)} state={{ id: id }}>
+                            <Link
+                                to={linkDetailPost(id)}
+                                state={{ id: id, categoryCode, labelCode }}
+                            >
                                 <figure className="w-full h-full">
                                     <img
                                         src={images[0]}
@@ -79,7 +83,7 @@ const Item = ({
                     ) : (
                         <Link
                             to={linkDetailPost(id)}
-                            state={{ id: id, categoryCode }}
+                            state={{ id: id, categoryCode, labelCode }}
                             className="gap-2 text-red-600 uppercase font-semibold hover:cursor-pointer hover:underline line-clamp-2"
                         >
                             {stars.map((i, index) => (
@@ -140,16 +144,24 @@ const Item = ({
                         {loading ? (
                             <SkeletonCutom className={"min-w-100"} />
                         ) : (
-                            <button className="py-[2px] px-1 text-sm bg-blue-700  outline outline-1 outline-blue-700 text-white rounded-md select-none">
+                            <a
+                                href={`tel:${user?.phone}`}
+                                className="py-[2px] px-1 text-sm bg-blue-700  outline outline-1 outline-blue-700 text-white rounded-md select-none"
+                            >
                                 Gọi {user?.zalo || user?.phone}
-                            </button>
+                            </a>
                         )}
                         {loading ? (
                             <SkeletonCutom className={"min-w-100"} />
                         ) : (
-                            <button className="py-[2px] px-1 text-sm bg-white text-blue-700 outline outline-1 outline-blue-700 rounded-md select-none">
+                            // eslint-disable-next-line react/jsx-no-target-blank
+                            <a
+                                href={`https://zalo.me/${user?.zalo}`}
+                                target="_blank"
+                                className="py-[2px] px-1 text-sm bg-white text-blue-700 outline outline-1 outline-blue-700 rounded-md select-none"
+                            >
                                 Nhắn zalo
-                            </button>
+                            </a>
                         )}
                     </div>
                 </div>

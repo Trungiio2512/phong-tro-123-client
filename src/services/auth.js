@@ -10,7 +10,7 @@ export const apiRegister = (payload) => {
                 data: payload,
             });
 
-            resolve(res);
+            resolve(res.data);
         } catch (error) {
             reject(error);
         }
@@ -26,12 +26,13 @@ export const apiLogin = (payload) => {
                 data: payload,
             });
 
-            resolve(res);
+            resolve(res.data);
         } catch (error) {
             reject(error);
         }
     });
 };
+
 export const apiRefresh = () => {
     return new Promise(async (resolve, reject) => {
         try {

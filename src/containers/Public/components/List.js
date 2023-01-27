@@ -10,8 +10,9 @@ const countItemLoading = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const List = ({ categoryCode }) => {
     const dispatch = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
-    const [loading, setloading] = useState(true);
     const { posts } = useSelector((state) => state.post);
+    const [loading, setloading] = useState(true);
+    const [sort, setsort] = useState(0);
 
     useEffect(() => {
         // setloading(true);
@@ -33,6 +34,9 @@ const List = ({ categoryCode }) => {
             }
         });
         if (categoryCode) searchQueryParams.categoryCode = categoryCode;
+        if (sort === 1) {
+            searchQueryParams.order = ["createdAt", "DESC"];
+        }
         setloading(true);
         const timerfc = setTimeout(() => {
             setloading(false);
@@ -42,7 +46,7 @@ const List = ({ categoryCode }) => {
         return () => {
             clearTimeout(timerfc);
         };
-    }, [categoryCode, dispatch, searchParams]);
+    }, [categoryCode, dispatch, searchParams, sort]);
 
     return (
         <div className="w-full border border-gray-300 p-4 rounded-lg bg-white shadow-md">
@@ -51,8 +55,22 @@ const List = ({ categoryCode }) => {
             </div>
             <div className="flex items-center justify-start gap-2 mb-2 ">
                 <span>Sap xep :</span>
-                <Button text="Mặc định" bgColor={"bg-gray-200"} className="m-0" />
-                <Button text="Mới nhất" bgColor={"bg-gray-200"} className="m-0" />
+                <span
+                    className={`text-md p-2 cursor-pointer rounded-md  ${
+                        sort === 0 ? "text-red-500" : "bg-gray-300"
+                    }`}
+                    onClick={() => setsort(0)}
+                >
+                    Mặc định
+                </span>
+                <span
+                    className={`text-md p-2 cursor-pointer rounded-md  ${
+                        sort === 1 ? "text-red-500" : "bg-gray-300"
+                    }`}
+                    onClick={() => setsort(1)}
+                >
+                    Mới nhất
+                </span>
             </div>
             <div className="">
                 {!loading ? (
@@ -70,6 +88,7 @@ const List = ({ categoryCode }) => {
                                     user={post?.userData}
                                     id={post?.id}
                                     categoryCode={post?.categoryCode}
+                                    labelCode={post?.labelData?.code}
                                 />
                             );
                         })
