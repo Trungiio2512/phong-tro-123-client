@@ -4,7 +4,7 @@ import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { createSearchParams } from "react-router-dom";
 
 import { apiGetPost, apiGetPostsLitmit } from "../../services/post";
-import { Button, Item, RelatedPost, SkeletonCutom, SliderPost } from "../../components";
+import { Button, Item, ListItem, RelatedPost, SkeletonCutom, SliderPost } from "../../components";
 import icons from "../../untils/icons";
 import { TableRow } from "./components";
 import { base64Tofile } from "../../untils/common/base64";
@@ -26,8 +26,6 @@ const countItemLoading = [1, 2, 3, 4, 5];
 const DetailPost = (props) => {
     const loaction = useLocation();
     const { id, categoryCode, labelCode } = loaction.state;
-    const [searchParams, setSearchParams] = useSearchParams();
-    // const navigate
 
     const [postDetail, setpostDetail] = useState({});
     const [posts, setposts] = useState([]);
@@ -35,9 +33,9 @@ const DetailPost = (props) => {
     const [love, setlove] = useState(() => {
         return true;
     });
-    console.log(postDetail);
+    // console.log(postDetail);
 
-    const handleFilterArea = () => {};
+    // const handleFilterArea = () => {};
 
     useEffect(() => {
         setloading(true);
@@ -227,33 +225,7 @@ const DetailPost = (props) => {
                             )}
                         </h3>
                     </div>
-                    {!loading ? (
-                        posts.length > 0 ? (
-                            posts?.map((post) => {
-                                return (
-                                    <Item
-                                        key={post?.id}
-                                        title={post?.title}
-                                        address={post?.address}
-                                        attributes={post?.attributesData}
-                                        description={JSON.parse(post?.description)}
-                                        images={JSON.parse(post?.imagesData?.images)}
-                                        star={+post?.star}
-                                        user={post?.userData}
-                                        id={post?.id}
-                                        categoryCode={post?.categoryCode}
-                                    />
-                                );
-                            })
-                        ) : (
-                            <h2>Không tìm thấy kết quả phù hợp</h2>
-                        )
-                    ) : (
-                        countItemLoading.map((item) => {
-                            return <Item key={item} loading={loading} />;
-                        })
-                    )}
-                    {/* {console.log(posts)} */}
+                    <ListItem posts={posts} loading={loading} counts={countItemLoading} />
                 </div>
             </div>
             <aside className="w-4/12 flex flex-col gap-4">
@@ -316,6 +288,7 @@ const DetailPost = (props) => {
                     title="Tin nổi bật"
                     limit={5}
                     order={["star", "DESC"]}
+                    counts={[1, 2, 3, 4, 5]}
                 />
 
                 <RelatedPost />

@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+
 import { path } from "./untils/constant";
 import {
     DetailPost,
@@ -32,7 +34,7 @@ function App() {
         }, 1000);
         return () => clearTimeout(timoutGetInfoUser);
     }, [token]);
-    console.log(lovePosts);
+    // console.log(lovePosts);
 
     useEffect(() => {
         // [["page", 5], ["pageSize", 25]]
@@ -66,6 +68,7 @@ function App() {
                 </Route>
                 <Route path={path.NOTFOUND} element={<NotFound />} />
             </Routes>
+            <ToastContainer />
         </div>
     );
 }

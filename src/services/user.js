@@ -29,3 +29,17 @@ export const apiUpdateUser = (payload) => {
         }
     });
 };
+export const apiGetLovePosts = (payload) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const res = await axiosConfig({
+                method: "get",
+                url: "/api/v1/user/love_posts",
+            });
+            // console.log();
+            resolve(res.data);
+        } catch (error) {
+            reject(error);
+        }
+    });
+};

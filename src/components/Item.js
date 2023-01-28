@@ -2,6 +2,7 @@ import React, { memo, useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+// import { toast } from "react-toastify";
 
 import icons from "../untils/icons";
 import imageUserDefaults from "../assests/img_user_default_nobg.png";
@@ -11,6 +12,7 @@ import { formatVietnameseToString } from "../untils/common/fn";
 import { apiCreateLovePost, apiDeleteLovePost } from "../services/lovePost";
 import SkeletonCutom from "./SkeletonCutom";
 import * as actions from "../store/actions";
+import { toastError, toastSuccess } from "../untils/toast";
 const indexs = [0, 1, 2, 3];
 const { BsFillHeartFill, GrStar, BsHeart, BsFillBookmarkStarFill } = icons;
 
@@ -47,20 +49,27 @@ const Item = ({
     };
 
     const handleLovePost = async (id) => {
+        // console.log(id);
         if (!token) {
             console.log("login failed");
         } else {
             const love = lovePosts.find((item) => item.postId === id);
             if (love) {
-                const res = await apiDeleteLovePost({ id: love.id });
+                const res = await apiDeleteLovePost({ postId: id });
                 if (res.err === 0) {
                     const newLovePosts = lovePosts.filter((item) => item.id !== love.id);
                     dispatch(actions.deletedLovePost(newLovePosts));
+                    toastSuccess("Đã xoá khỏi yêu thích");
+                } else {
+                    toastError("Xoá thất bại");
                 }
             } else {
                 const res = await apiCreateLovePost({ postId: id });
                 if (res.err === 0) {
                     dispatch(actions.addLovePost(res.data));
+                    toastSuccess("Thêm thành công");
+                } else {
+                    toastError("Thêm thất bại");
                 }
             }
         }

@@ -1,12 +1,18 @@
 import React, { memo, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Sitem } from "./index";
+import { ListSitem, Sitem } from "./index";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { formatVietnameseToString } from "../untils/common/fn";
 import { apiGetNewPosts } from "../services/post";
 const countLoading = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const RelatedPost = ({ categoryCode, title = "Tin mới đăng", limit, order }) => {
+const RelatedPost = ({
+    categoryCode,
+    title = "Tin mới đăng",
+    limit,
+    order,
+    counts = countLoading,
+}) => {
     const location = useLocation();
 
     const [loading, setloading] = useState(true);
@@ -47,26 +53,7 @@ const RelatedPost = ({ categoryCode, title = "Tin mới đăng", limit, order })
         <div className="p-4 bg-white w-full rounded-lg  border border-gray-300">
             <h3 className="font-semibold text-lg">{title}</h3>
             <div className="w-full">
-                {loading
-                    ? countLoading.map((item) => {
-                          return <Sitem key={item} loading={loading} />;
-                      })
-                    : newPosts.length > 0 &&
-                      newPosts.map((newPost) => {
-                          return (
-                              <Sitem
-                                  key={newPost?.id}
-                                  title={newPost?.title}
-                                  price={newPost?.attributesData?.price}
-                                  images={JSON.parse(newPost?.imagesData?.images)}
-                                  id={newPost?.id}
-                                  star={newPost?.star}
-                                  time={newPost?.updatedAt}
-                                  labelCode={newPost?.labelData?.code}
-                                  categoryCode={newPost?.categoryCode}
-                              />
-                          );
-                      })}
+                <ListSitem loading={loading} posts={newPosts} counts={counts} />
             </div>
         </div>
     );

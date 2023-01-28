@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Button, Item } from "../../../components";
+import { ListItem } from "../../../components";
 import PropTypes from "prop-types";
 import * as actions from "../../../store/actions";
 import { useSearchParams } from "react-router-dom";
@@ -74,36 +74,7 @@ const List = ({ categoryCode }) => {
                 </span>
             </div>
             <div className="">
-                {!loading ? (
-                    posts.length > 0 ? (
-                        posts?.map((post) => {
-                            return (
-                                <Item
-                                    key={post?.id}
-                                    title={post?.title}
-                                    address={post?.address}
-                                    attributes={post?.attributesData}
-                                    description={JSON.parse(post?.description)}
-                                    images={JSON.parse(post?.imagesData?.images)}
-                                    star={+post?.star}
-                                    user={post?.userData}
-                                    id={post?.id}
-                                    categoryCode={post?.categoryCode}
-                                    labelCode={post?.labelData?.code}
-                                />
-                            );
-                        })
-                    ) : (
-                        <h2>Không tìm thấy kết quả phù hợp</h2>
-                    )
-                ) : (
-                    countItemLoading.map((item) => {
-                        return <Item key={item} loading={loading} />;
-                    })
-                )}
-
-                {/* <Item />
-                <Item /> */}
+                <ListItem posts={posts} loading={loading} counts={countItemLoading} />
             </div>
         </div>
     );
