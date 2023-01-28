@@ -3,6 +3,7 @@ const initialState = {
     currentData: {},
     posts: [],
     post: {},
+    lovePosts: [],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -11,26 +12,25 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 currentData: action.data || {},
-                msg: action.msg || "",
             };
+
         case actionTypes.GET_USER_FAIL:
             return {
                 ...state,
                 currentData: {},
-                msg: action.msg || "",
             };
         case actionTypes.LOGOUT:
             return {
                 ...state,
                 currentData: {},
-                msg: "",
+                posts: [],
+                post: {},
+                lovePosts: [],
             };
         case actionTypes.GET_POSTS_PRIVATE:
             return {
                 ...state,
                 posts: action.data || [],
-                msg: action.msg || "",
-                // count: action.count || 0,
             };
         case actionTypes.EDIT_POSTS_PRIVATE:
             return {
@@ -41,6 +41,21 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 post: {},
+            };
+        case actionTypes.GET_LOVE_POSTS:
+            return {
+                ...state,
+                lovePosts: action.data || [],
+            };
+        case actionTypes.DELETE_LOVE_POST:
+            return {
+                ...state,
+                lovePosts: action.data,
+            };
+        case actionTypes.ADD_LOVE_POST:
+            return {
+                ...state,
+                lovePosts: [...state.lovePosts, action.data],
             };
         default:
             return state;

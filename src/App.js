@@ -12,21 +12,27 @@ import {
     NotSearch,
 } from "./containers/Public";
 
-import { Contact, CreatePost, ManagerPost, System, UserInfo } from "./containers/System";
+import { Contact, CreatePost, LovePost, ManagerPost, System, UserInfo } from "./containers/System";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "./store/actions";
-import moment from "moment";
+// import { apiGetLovePost } from "./services/lovePost";
+// import moment from "moment";
 
 function App() {
     const { token } = useSelector((state) => state.auth);
+    const { lovePosts } = useSelector((state) => state.user);
     const dispatch = useDispatch();
     useEffect(() => {
-        const timoutGetInfoUser = setTimeout(() => {
-            token && dispatch(actions.getCurrentUser());
+        const timoutGetInfoUser = setTimeout(async () => {
+            if (token) {
+                dispatch(actions.getCurrentUser());
+                dispatch(actions.getLovePost());
+            }
         }, 1000);
         return () => clearTimeout(timoutGetInfoUser);
     }, [token]);
+    console.log(lovePosts);
 
     useEffect(() => {
         // [["page", 5], ["pageSize", 25]]
@@ -50,6 +56,7 @@ function App() {
                     <Route path={path.CREATE_POST} element={<CreatePost />} />
                     <Route path={path.MANAGER_POST} element={<ManagerPost />} />
                     <Route path={path.USER_INFO} element={<UserInfo />} />
+                    <Route path={path.LOVE_POST} element={<LovePost />} />
                 </Route>
                 <Route element={<NotSearch />}>
                     <Route path={path.LOGIN} element={<Login />} />

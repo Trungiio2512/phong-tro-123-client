@@ -1,13 +1,16 @@
 import React, { memo, useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-
-import { formatVietnameseToString } from "../untils/common/fn";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import icons from "../untils/icons";
 import imageUserDefaults from "../assests/img_user_default_nobg.png";
-import { base64Tofile } from "../untils/common/base64";
 import { path } from "../untils/constant";
+import { base64Tofile } from "../untils/common/base64";
+import { formatVietnameseToString } from "../untils/common/fn";
+import { apiCreateLovePost, apiDeleteLovePost } from "../services/lovePost";
 import SkeletonCutom from "./SkeletonCutom";
+import * as actions from "../store/actions";
 const indexs = [0, 1, 2, 3];
 const { BsFillHeartFill, GrStar, BsHeart, BsFillBookmarkStarFill } = icons;
 
@@ -24,7 +27,13 @@ const Item = ({
     categoryCode,
     labelCode,
 }) => {
+    const dispatch = useDispatch();
+
+    const { lovePosts } = useSelector((state) => state.user);
+    const { token } = useSelector((state) => state.auth);
+
     const [isHoverHeart, setisHoverHeart] = useState(false);
+
     const [stars, setstars] = useState(() => {
         const stars = [];
         for (let i = 0; i < star; i++) {
@@ -36,6 +45,27 @@ const Item = ({
     const linkDetailPost = (id) => {
         return !loading && `${path.DETAIL}/${formatVietnameseToString(title)}/${id}`;
     };
+
+    const handleLovePost = async (id) => {
+        if (!token) {
+            console.log("login failed");
+        } else {
+            const love = lovePosts.find((item) => item.postId === id);
+            if (love) {
+                const res = await apiDeleteLovePost({ id: love.id });
+                if (res.err === 0) {
+                    const newLovePosts = lovePosts.filter((item) => item.id !== love.id);
+                    dispatch(actions.deletedLovePost(newLovePosts));
+                }
+            } else {
+                const res = await apiCreateLovePost({ postId: id });
+                if (res.err === 0) {
+                    dispatch(actions.addLovePost(res.data));
+                }
+            }
+        }
+    };
+    // console.log(lovePosts);
     return (
         <div className="w-full flex border-t-1 border-t-red-500 py-4">
             <div className="relative shrink-0 w-[280px] h-[240px] rounded-md overflow-hidden">
@@ -64,11 +94,16 @@ const Item = ({
                 )}
                 {!loading && (
                     <span
-                        className="absolute bottom-1 right-2"
+                        className="absolute bottom-1 right-2 cursor-pointer"
                         onMouseEnter={() => setisHoverHeart(true)}
                         onMouseLeave={() => setisHoverHeart(false)}
+                        onClick={() => {
+                            handleLovePost(id);
+                        }}
                     >
-                        {!isHoverHeart ? (
+                        {lovePosts?.some((item) => item?.postId === id) ? (
+                            <BsFillHeartFill size={20} className="text-pink-600" />
+                        ) : !isHoverHeart ? (
                             <BsHeart size={20} className="text-gray-500" />
                         ) : (
                             <BsFillHeartFill size={20} className="text-pink-600" />

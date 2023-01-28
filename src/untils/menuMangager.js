@@ -1,5 +1,5 @@
 import icons from "./icons";
-const { BsFillPencilFill, FaClipboardList, RiFolderUserLine, BsChatText } = icons;
+const { BsFillPencilFill, FaClipboardList, RiFolderUserLine, BsChatText, BsHeartFill } = icons;
 export const menuHomeManager = [
     {
         id: 1,
@@ -18,6 +18,12 @@ export const menuHomeManager = [
         text: "Thông tin tài khoản",
         path: "/he-thong/thong-tin-ca-nhan",
         icon: <RiFolderUserLine />,
+    },
+    {
+        id: 5,
+        text: "Yêu thích",
+        path: "/he-thong/yeu-thich",
+        icon: <BsHeartFill />,
     },
     {
         id: 4,
@@ -46,7 +52,12 @@ export const menuSidebarManager = [
         path: "/he-thong/thong-tin-ca-nhan",
         icon: <RiFolderUserLine />,
     },
-
+    {
+        id: 5,
+        text: "Yêu thích",
+        path: "/he-thong/yeu-thich",
+        icon: <BsHeartFill />,
+    },
     {
         id: 4,
         text: "Liên hệ",

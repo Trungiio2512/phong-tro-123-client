@@ -11,6 +11,7 @@ const List = ({ categoryCode }) => {
     const dispatch = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
     const { posts } = useSelector((state) => state.post);
+
     const [loading, setloading] = useState(true);
     const [sort, setsort] = useState(0);
 

@@ -5,11 +5,11 @@ import { Search, Header } from "./components";
 function Home() {
     const navRef = useRef();
     useEffect(() => {
-        console.log(navRef.current);
+        // console.log(navRef.current);
         const handleScroll = (e) => {
             // console.log(window.pageYOffset);
             if (window.pageYOffset > 85) {
-                console.log(navRef.current);
+                // console.log(navRef.current);
                 navRef.current.style = `
                     position: fixed;
                     top : 0;
