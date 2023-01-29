@@ -15,12 +15,18 @@ export const path = {
     DETAIL_POST__TITLE__POSTID: "chi-tiet/:title/:postId",
 
     //private
-    SYSTEM: "/he-thong/",
+    SYSTEM: "he-thong",
     CREATE_POST: "tao-moi-bai-dang",
     MANAGER_POST: "quan-ly-bai-dang",
     USER_INFO: "thong-tin-ca-nhan",
     CONTACT: "lien-he",
     // UPDATE_POST: "chinh-sua-bai-dang",
+    ADMIN: "admin",
+    STATISTIC: "thong-ke",
+    ACCOUNT: "tai-khoan",
+    POSTS: "tin-dang",
+    TYPE_OF_POST: "loai-danh-sach-tin-dang",
+    NEWS: "tin-tuc",
 };
 
 export const textHome = {

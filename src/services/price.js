@@ -1,12 +1,10 @@
-import axios from "axios";
-import axiosConfig from "../axiosConfig";
-
+import { axiosPublic } from "../axiosConfig";
 export const getPrices = () => {
     return new Promise(async (resolve, reject) => {
         try {
-            const res = await axiosConfig({
+            const res = await axiosPublic({
                 method: "get",
-                url: "/api/v1/price/",
+                url: "/api/v1/price",
             });
 
             resolve(res.data);

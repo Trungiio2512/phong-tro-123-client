@@ -1,9 +1,12 @@
 import axiosConfig from "../axiosConfig";
 import axios from "axios";
+import { axiosPublic } from "../axiosConfig";
+
+//public
 export const apiGetPost = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const res = await axiosConfig({
+            const res = await axiosPublic({
                 method: "get",
                 url: "/api/v1/post",
                 params: { id: id },
@@ -20,7 +23,7 @@ export const apiGetPost = (id) => {
 export const apiGetPostsLitmit = (payload = {}) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const res = await axiosConfig({
+            const res = await axiosPublic({
                 method: "get",
                 url: "/api/v1/post/limit",
                 // data: payload,
@@ -37,7 +40,7 @@ export const apiGetPostsLitmit = (payload = {}) => {
 export const apiGetNewPosts = (payload) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const res = await axiosConfig({
+            const res = await axiosPublic({
                 method: "get",
                 url: "/api/v1/post/new_post",
                 params: payload,
@@ -50,6 +53,7 @@ export const apiGetNewPosts = (payload) => {
     });
 };
 
+//Private Methods
 export const apiCreateNewPost = (payload) => {
     return new Promise(async (resolve, reject) => {
         try {

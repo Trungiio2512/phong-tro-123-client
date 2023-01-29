@@ -7,9 +7,9 @@ import { path } from "../../untils/constant";
 import { useSelector } from "react-redux";
 import { Sidebar } from "./components";
 const System = ({ children }) => {
-    const { isLogging } = useSelector((state) => state.auth);
+    const { token } = useSelector((state) => state.auth);
 
-    if (!isLogging) {
+    if (!token) {
         return <Navigate to={path.NOTFOUND} replace />;
     }
 

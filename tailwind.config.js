@@ -42,6 +42,10 @@ module.exports = {
             margin: {
                 200: "200px",
             },
+            colors: {
+                "dark-purple": "#081a51",
+                "light-white": "rgba(255,255,255,0.17)",
+            },
         },
     },
     plugins: [require("@tailwindcss/line-clamp")],

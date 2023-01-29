@@ -1,3 +1,4 @@
+import jwt from "jwt-decode";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
@@ -7,26 +8,27 @@ import icons from "../../../untils/icons";
 import { Button, User } from "../../../components";
 import { path } from "../../../untils/constant";
 import * as actions from "../../../store/actions/auth";
-import { menuHomeManager } from "../../../untils/menuMangager";
+import { menuCreator, menuUser } from "../../../untils/menuMangager";
 import Swal from "sweetalert2";
-const { AiOutlinePlusCircle, AiOutlineLogout, BsFillCaretDownFill } = icons;
+const { AiOutlinePlusCircle, AiOutlineLogout, BsFillCaretDownFill, GrUserAdmin } = icons;
 
 function Header() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const headerRef = useRef();
 
+    const { isLogging, token } = useSelector((state) => state.auth);
     const [searchParams, setSearchParams] = useSearchParams();
     const pageNumber = searchParams.get("page");
 
     const [isShowMenu, setisShowMenu] = useState(false);
 
-    const { isLogging, token } = useSelector((state) => state.auth);
+    const menu = token && (jwt(token)?.roleCode !== "R3" ? menuCreator : menuUser);
 
     useEffect(() => {
         headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }, [pageNumber]);
-
+    // console.log(typeUser);
     return (
         <div className="w-4/5" ref={headerRef}>
             <div className="w-full flex items-center justify-between ">
@@ -35,7 +37,7 @@ function Header() {
                 </Link>
                 <div className="flex items-center gap-2">
                     <div className="flex items-center relative gap-2">
-                        {!isLogging && (
+                        {!token && (
                             <>
                                 <small className="text-lg">Phòng trọ 123 xin chào</small>
 
@@ -54,9 +56,19 @@ function Header() {
                                 />
                             </>
                         )}
-                        {isLogging && (
+                        {token && (
                             <>
                                 <User />
+                                {token &&
+                                    (jwt(token)?.roleCode === "R1" ? (
+                                        <Button
+                                            text={"Admin"}
+                                            textColor="text-black"
+                                            isBefore
+                                            Icon={GrUserAdmin}
+                                            onClick={() => navigate(`/${path.ADMIN}`)}
+                                        />
+                                    ) : null)}
                                 <Button
                                     onClick={() => setisShowMenu(!isShowMenu)}
                                     text={"Quản lý tài khoản"}
@@ -67,7 +79,7 @@ function Header() {
                                 />
                                 {isShowMenu && (
                                     <div className="absolute right-0 top-full bg-white shadow-md rounded-md min-w-200 flex flex-col">
-                                        {menuHomeManager.map((item) => {
+                                        {menu.map((item) => {
                                             return (
                                                 <Link
                                                     className="p-2 flex items-center gap-2 text-blue-500 hover:text-orange-500"

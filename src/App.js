@@ -14,10 +14,20 @@ import {
     NotSearch,
 } from "./containers/Public";
 
-import { Contact, CreatePost, LovePost, ManagerPost, System, UserInfo } from "./containers/System";
+import {
+    Admin,
+    Contact,
+    CreatePost,
+    LovePost,
+    ManagerPost,
+    Statistic,
+    System,
+    UserInfo,
+} from "./containers/System";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "./store/actions";
+import { PrivateRoute, PrivateRouteAdmin } from "./containers/System/PrivateRoute";
 // import { apiGetLovePost } from "./services/lovePost";
 // import moment from "moment";
 
@@ -55,10 +65,25 @@ function App() {
                     <Route path={path.SEARCH} element={<SearchDetail />} />
                 </Route>
                 <Route path={path.SYSTEM} element={<System />}>
-                    <Route path={path.CREATE_POST} element={<CreatePost />} />
-                    <Route path={path.MANAGER_POST} element={<ManagerPost />} />
+                    <Route element={<PrivateRoute token={token} />}>
+                        <Route path={path.CREATE_POST} element={<CreatePost />} />
+                        <Route path={path.MANAGER_POST} element={<ManagerPost />} />
+                    </Route>
                     <Route path={path.USER_INFO} element={<UserInfo />} />
                     <Route path={path.LOVE_POST} element={<LovePost />} />
+                </Route>
+                <Route element={<PrivateRouteAdmin token={token} />}>
+                    <Route path={path.ADMIN} element={<Admin />}>
+                        <Route
+                            index
+                            element={
+                                <div className="w-full">
+                                    <h2>Chào mừng đến với quản trị viên</h2>
+                                </div>
+                            }
+                        />
+                        <Route path={path.STATISTIC} element={<Statistic />} />
+                    </Route>
                 </Route>
                 <Route element={<NotSearch />}>
                     <Route path={path.LOGIN} element={<Login />} />

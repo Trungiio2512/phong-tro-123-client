@@ -8,6 +8,7 @@ export const apiRegister = (payload) => {
                 method: "post",
                 url: "/api/v1/auth/register",
                 data: payload,
+                // withCredentials: true,
             });
 
             resolve(res.data);
@@ -24,6 +25,7 @@ export const apiLogin = (payload) => {
                 method: "post",
                 url: "/api/v1/auth/login",
                 data: payload,
+                // withCredentials: true,
             });
 
             resolve(res.data);
@@ -40,8 +42,8 @@ export const apiRefresh = () => {
                 method: "post",
                 url: "/api/v1/auth/refresh",
             });
-            // resolve(res.data)
-            console.log(res.data);
+            resolve(res.data);
+            // console.log(res.data);
         } catch (error) {
             console.log(error);
         }

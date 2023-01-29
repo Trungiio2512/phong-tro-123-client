@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
+import { path } from "../untils/constant";
 import avatarDefault from "../assests/img_user_default_nobg.png";
 import { base64Tofile } from "../untils/common/base64";
 import SkeletonCutom from "./SkeletonCutom";
@@ -19,11 +22,13 @@ const User = (props) => {
                 {loading ? (
                     <SkeletonCutom circle height={"100%"} />
                 ) : (
-                    <img
-                        className="object-cover w-full h-full"
-                        src={base64Tofile(currentData?.avatar) || avatarDefault}
-                        alt="avatar"
-                    />
+                    <Link to={`${path.SYSTEM}/${path.USER_INFO}`}>
+                        <img
+                            className="object-cover w-full h-full"
+                            src={base64Tofile(currentData?.avatar) || avatarDefault}
+                            alt="avatar"
+                        />
+                    </Link>
                 )}
             </figure>
             <div className="flex flex-col">

@@ -15,3 +15,4 @@ export const password = Yup.string()
     .required("Không được để trống trường này")
     .min(5, "Tối thiểu 5 kí tự");
 export const textContent = Yup.string().required("Không được để trống trường này");
+export const type = Yup.string().required("Bạn không được để trống trường này");

@@ -8,7 +8,7 @@ import * as Yup from "yup";
 import { InputForm, Button } from "../../components";
 import * as actions from "../../store/actions";
 import { path } from "../../untils/constant";
-import { phone, password, name } from "../../untils/yup_schema";
+import { phone, password, name, type } from "../../untils/yup_schema";
 import { apiRegister } from "../../services/auth";
 
 function Register() {
@@ -20,14 +20,17 @@ function Register() {
             name: "",
             phone: "",
             password: "",
+            type: "",
         },
         validationSchema: Yup.object({
             phone,
             name,
             password,
+            type,
         }),
         onSubmit: async (values) => {
-            const res = await apiRegister({ ...values, type: "R2" });
+            // console.log(values);
+            const res = await apiRegister(values);
             if (res.err === 0) {
                 Swal.fire("Đăng ký thành công", res.msg, "success").then(() => {
                     formik.handleReset();
@@ -47,30 +50,56 @@ function Register() {
 
     return (
         <div className="bg-white w-full max-w-600 pt-[30px] px-[30px] pb-[100px] rounded-md border-1 border-stone-300 m-auto">
-            <h1 className="font-semibold text-3xl">Đăng nhập</h1>
-            <div className="w-full flex flex-col mt-5">
+            <h1 className="font-semibold text-3xl">Đăng ký</h1>
+            <div className="w-full flex flex-col mt-5 gap-5">
                 <InputForm
                     label="Tên đăng nhập"
                     value={formik.values.name}
                     setValue={formik.handleChange}
                     name={"name"}
                     error={formik.errors?.name}
+                    onBlur={formik.handleBlur}
+                    touched={formik.touched.name}
                 />
                 <InputForm
                     label="Số điện thoại"
                     value={formik.values.phone}
                     setValue={formik.handleChange}
                     name={"phone"}
+                    onBlur={formik.handleBlur}
                     error={formik.errors?.phone}
+                    touched={formik.touched.phone}
                 />
                 <InputForm
                     label="Mật khẩu"
                     value={formik.values.password}
+                    onBlur={formik.handleBlur}
                     setValue={formik.handleChange}
                     name={"password"}
                     type="password"
+                    touched={formik.touched.password}
                     error={formik.errors?.password}
                 />
+                <div className="w-full">
+                    {/* <label
+                        htmlFor="type"
+                        className="block mb-2 text-sm font-medium text-gray-900 "
+                    >Lựa</label> */}
+                    <select
+                        id="type"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        onChange={formik.handleChange}
+                        value={formik.values.type}
+                        // onTouchStart={formik.touched.type}
+                    >
+                        <option value="">Chọn loại tài khoản</option>
+                        <option value="R3">Tìm kiếm</option>
+                        <option value="R2">Đăng tin</option>
+                    </select>
+                    {formik.touched.type && formik.errors.type ? (
+                        <small className="italic text-red-400">{formik.errors.type}</small>
+                    ) : null}
+                </div>
             </div>
             <div className="mt-5">
                 <Button
@@ -79,7 +108,7 @@ function Register() {
                     bgColor={"bg-secondary1"}
                     fullWidth
                     type="submit"
-                    onClick={() => formik.handleSubmit()}
+                    onClick={formik.handleSubmit}
                 />
             </div>
             <div className="w-full flex items-center justify-between mt-[30px]">

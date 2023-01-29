@@ -1,67 +1,97 @@
 import icons from "./icons";
-const { BsFillPencilFill, FaClipboardList, RiFolderUserLine, BsChatText, BsHeartFill } = icons;
-export const menuHomeManager = [
+const {
+    BsFillPencilFill,
+    FaClipboardList,
+    RiFolderUserLine,
+    BsChatText,
+    BsHeartFill,
+    MdSupervisorAccount,
+    GiNewspaper,
+    FcStatistics,
+} = icons;
+export const menuCreator = [
     {
         id: 1,
         text: "Đăng tin cho thuê",
         path: "/he-thong/tao-moi-bai-dang",
-        icon: <BsFillPencilFill />,
+        icon: <BsFillPencilFill size={20} />,
     },
     {
         id: 2,
         text: "Quản lý tin đăng",
         path: "/he-thong/quan-ly-bai-dang",
-        icon: <FaClipboardList />,
+        icon: <FaClipboardList size={20} />,
     },
     {
         id: 3,
         text: "Thông tin tài khoản",
         path: "/he-thong/thong-tin-ca-nhan",
-        icon: <RiFolderUserLine />,
+        icon: <RiFolderUserLine size={20} />,
     },
     {
         id: 5,
         text: "Yêu thích",
         path: "/he-thong/yeu-thich",
-        icon: <BsHeartFill />,
+        icon: <BsHeartFill size={20} />,
     },
     {
         id: 4,
         text: "Liên hệ",
         path: "/lien-he",
-        icon: <BsChatText />,
+        icon: <BsChatText size={20} />,
     },
 ];
 
-export const menuSidebarManager = [
-    {
-        id: 1,
-        text: "Đăng tin cho thuê",
-        path: "/he-thong/tao-moi-bai-dang",
-        icon: <BsFillPencilFill />,
-    },
-    {
-        id: 2,
-        text: "Quản lý tin đăng",
-        path: "/he-thong/quan-ly-bai-dang",
-        icon: <FaClipboardList />,
-    },
+export const menuUser = [
     {
         id: 3,
-        text: "Sửa thông tin cá nhân",
+        text: "Thông tin tài khoản",
         path: "/he-thong/thong-tin-ca-nhan",
-        icon: <RiFolderUserLine />,
+        icon: <RiFolderUserLine size={20} />,
     },
     {
         id: 5,
         text: "Yêu thích",
         path: "/he-thong/yeu-thich",
-        icon: <BsHeartFill />,
+        icon: <BsHeartFill size={20} />,
     },
     {
         id: 4,
         text: "Liên hệ",
         path: "/lien-he",
-        icon: <BsChatText />,
+        icon: <BsChatText size={20} />,
+    },
+];
+
+export const menuAdmin = [
+    {
+        id: 1,
+        text: "Thống kê",
+        path: "/admin/thong-ke",
+        icon: <FcStatistics size={30} />,
+    },
+    {
+        id: 2,
+        text: "Quản lý tài khoản",
+        path: "/admin/tai-khoan",
+        icon: <MdSupervisorAccount size={30} />,
+    },
+    {
+        id: 3,
+        text: "Tin đăng",
+        path: "/admin/tin-dang",
+        icon: <GiNewspaper size={30} />,
+    },
+    {
+        id: 4,
+        text: "Loại danh sách tin đăng",
+        path: "/admin/loai-danh-sach-tin-dang",
+        icon: <RiFolderUserLine size={30} />,
+    },
+    {
+        id: 5,
+        text: "Tin tức",
+        path: "/admin/tin-tuc",
+        icon: <GiNewspaper size={30} />,
     },
 ];

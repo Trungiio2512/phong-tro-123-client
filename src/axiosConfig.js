@@ -1,20 +1,24 @@
 import axios from "axios";
-import { apiRefresh } from "./services/auth";
-
+import jwt from "jwt-decode";
+export const axiosPublic = axios.create({ baseURL: process.env.REACT_APP_SERVER_URL });
 const instance = axios.create({
     baseURL: process.env.REACT_APP_SERVER_URL,
 });
 
 // Add a request interceptor
 instance.interceptors.request.use(
-    function (config) {
-        // Do something before request is sent
-        // gắn token vào header
-        let token =
+    function async(config) {
+        const token =
             window.localStorage.getItem("persist:auth") &&
             JSON.parse(window.localStorage.getItem("persist:auth"))?.token?.slice(1, -1);
-        // console.log(token);
-        // console.log(window.localStorage.getItem("persist:auth"));
+        // if (token) {
+        //     const currentDate = new Date();
+
+        //     const decodeToken = jwt(token);
+        //     if (decodeToken.exp * 1000 < currentDate.getTime()) {
+        //     }
+        // }
+
         config.headers = {
             authorization: token ? `Bearer ${token}` : null,
         };
