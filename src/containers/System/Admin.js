@@ -14,11 +14,11 @@ const Admin = (props) => {
             <div
                 className={`${
                     open ? "w-72" : "w-20"
-                } duration-300 h-screen pt-7 bg-dark-purple relative`}
+                } duration-300 min-h-screen pt-7 bg-dark-purple relative`}
             >
                 <button
                     onClick={() => setopen(!open)}
-                    className={`absolute duration-300 cursor-pointer right-[-15px] top-9 rounded-full p-2 border-2 bg-white border-dark-purple z-10 ${
+                    className={`absolute duration-300 cursor-pointer right-[-15px] top-9 rounded-full p-2 border-2 bg-white border-dark-purple z-10  ${
                         !open && "rotate-180"
                     }`}
                 >
@@ -64,7 +64,8 @@ const Admin = (props) => {
                                 <span
                                     className={`${
                                         open ? "hidden" : ""
-                                    } absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-20 group-hover:duration-300 group-hover:w-fit  `}
+                                    } absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-20 group-hover:duration-300 group-hover:w-fit 
+                                    z-10 `}
                                 >
                                     {item.text}
                                 </span>
@@ -73,7 +74,7 @@ const Admin = (props) => {
                     })}
                 </div>
             </div>
-            <div className="p-7 text-2xl font-semibold h-screen flex-1">
+            <div className="p-7 text-2xl font-semibold min-h-screen bg-gray-200 flex-1">
                 <Outlet />
             </div>
         </div>

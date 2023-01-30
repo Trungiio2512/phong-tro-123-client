@@ -15,6 +15,7 @@ import {
 } from "./containers/Public";
 
 import {
+    Account,
     Admin,
     Contact,
     CreatePost,
@@ -83,6 +84,7 @@ function App() {
                             }
                         />
                         <Route path={path.STATISTIC} element={<Statistic />} />
+                        <Route path={path.ACCOUNT} element={<Account />} />
                     </Route>
                 </Route>
                 <Route element={<NotSearch />}>

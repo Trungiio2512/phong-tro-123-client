@@ -15,8 +15,8 @@ import {
 import { HiOutlineLocationMarker, HiOutlineClock, HiHashtag } from "react-icons/hi";
 import { TbReportMoney, TbPlayerTrackNext, TbPlayerTrackPrev } from "react-icons/tb";
 import { SlCrop } from "react-icons/sl";
-import { MdApartment, MdLocationOn, MdSupervisorAccount } from "react-icons/md";
-import { FiSearch } from "react-icons/fi";
+import { MdApartment, MdLocationOn, MdSupervisorAccount, MdOutlineDelete } from "react-icons/md";
+import { FiSearch, FiHome } from "react-icons/fi";
 import { FaClipboardList, FaTimesCircle } from "react-icons/fa";
 import { RiFolderUserLine } from "react-icons/ri";
 import { GiNewspaper } from "react-icons/gi";
@@ -25,10 +25,12 @@ const icons = {
     AiOutlinePlusCircle,
     GrNext,
     BsChevronRight,
+    FiHome,
     HiOutlineLocationMarker,
     BsFillCameraFill,
     GrPrevious,
     TbReportMoney,
+    MdOutlineDelete,
     MdSupervisorAccount,
     BsFillTelephoneFill,
     BsHeartFill,

@@ -8,6 +8,7 @@ const {
     MdSupervisorAccount,
     GiNewspaper,
     FcStatistics,
+    FiHome,
 } = icons;
 export const menuCreator = [
     {
@@ -65,11 +66,18 @@ export const menuUser = [
 
 export const menuAdmin = [
     {
+        id: 5,
+        text: "Trang chủ",
+        path: "/",
+        icon: <FiHome size={30} />,
+    },
+    {
         id: 1,
         text: "Thống kê",
         path: "/admin/thong-ke",
         icon: <FcStatistics size={30} />,
     },
+
     {
         id: 2,
         text: "Quản lý tài khoản",

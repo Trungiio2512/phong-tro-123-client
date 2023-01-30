@@ -31,7 +31,7 @@ function Navigation({ system = false }) {
             <nav
                 className={`${
                     system ? "" : "w-4/5 m-auto"
-                } flex items-center text-base font-medium text-white`}
+                } md:flex md:items-center text-base font-medium text-white`}
             >
                 <div className="flex">
                     <NavLink
