@@ -158,7 +158,9 @@ const Account = (props) => {
                     return (
                       <tr key={user?.id}>
                         <td className="whitespace-nowrap text-sm p-3 text-gray-700">{user.id}</td>
-                        <td className="whitespace-nowrap text-sm p-3 text-gray-700">{user.name}</td>
+                        <td className="whitespace-nowrap text-sm p-3 text-gray-700 ">
+                          {user.name}
+                        </td>
                         <td
                           className={`whitespace-nowrap text-sm p-3 text-gray-700 rounded-md flex justify-start`}
                         >
@@ -250,7 +252,7 @@ const Account = (props) => {
                   <div key={user.id} className="bg-gray-100 p-4 rounded-md shadow">
                     <div className="flex flex-col gap-4 ">
                       <span className="text-sm ">Id: {user.id}</span>
-                      <span className="text-sm ">Tên người dùng : {user.name}</span>
+                      <span className="text-sm line-clamp-1">Tên người dùng : {user.name}</span>
                       <span
                         className={`p-1.5 text-xs font-medium uppercase tracking-wide ${
                           user.userRole.code === "R1"

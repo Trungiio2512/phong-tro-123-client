@@ -7,3 +7,4 @@ export { default as LovePost } from "./LovePost";
 export { default as Admin } from "./Admin";
 export { default as Statistic } from "./Statistic";
 export { default as Account } from "./Account";
+export { default as RegisterPost } from "./RegisterPost";
