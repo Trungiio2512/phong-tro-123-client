@@ -30,29 +30,25 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "./store/actions";
 import { PrivateRoute, PrivateRouteAdmin } from "./containers/System/PrivateRoute";
-// import { apiGetLovePost } from "./services/lovePost";
-// import moment from "moment";
 
 function App() {
   const { token } = useSelector((state) => state.auth);
-  const { lovePosts } = useSelector((state) => state.user);
+  const { lovePosts, registerPosts } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   useEffect(() => {
     const timoutGetInfoUser = setTimeout(async () => {
       if (token) {
         dispatch(actions.getCurrentUser());
         dispatch(actions.getLovePost());
+        dispatch(actions.getRegisterPosts());
       }
     }, 1000);
     return () => clearTimeout(timoutGetInfoUser);
   }, [token]);
-  // console.log(lovePosts);
 
   useEffect(() => {
-    // [["page", 5], ["pageSize", 25]]
     dispatch(actions.getPrices());
     dispatch(actions.getAreas());
-    // dispatch(actions.getNewPosts());
     dispatch(actions.getProvinces());
   }, []);
   return (

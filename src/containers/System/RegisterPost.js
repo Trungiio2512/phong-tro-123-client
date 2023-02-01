@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
-import { ListItem, SkeletonCutom } from "../../components";
-import { Input, Pagination, Popconfirm, Button } from "antd";
-import * as userServices from "../../services/user";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { Input, Pagination, Popconfirm, Button } from "antd";
+
+import { ListItem, SkeletonCutom } from "../../components";
 import { checkStatus } from "../../untils/common/fn";
+import { apiAddRegisterPost, apiDeleteRegisterPost } from "../../services/registerPost";
+import * as actions from "../../store/actions";
+import * as userServices from "../../services/user";
+import { toastError, toastSuccess } from "../../untils/toast";
+
 const { Search } = Input;
 
 const countLoading = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const RegisterPost = (props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const { registerPosts } = useSelector((state) => state.user);
 
   const [loading, setloading] = useState(true);
   const [posts, setposts] = useState([]);
@@ -34,6 +42,32 @@ const RegisterPost = (props) => {
     setSearchValue(value);
     setSearchParams(searchParams);
   };
+  const handleDeletePost = async (id) => {
+    const post = registerPosts.find((item) => item.postId === id);
+    if (post) {
+      const res = await apiDeleteRegisterPost({ postId: id });
+      if (res.err === 0) {
+        const newRegisterPosts = registerPosts.filter((item) => item.postId !== id);
+        dispatch(actions.deletedRegisterPost(newRegisterPosts));
+        toastSuccess("Huỷ đăng ký thành công");
+      } else {
+        toastError("Huỷ thất bại");
+      }
+    } else {
+      const res = await apiAddRegisterPost({ postId: id });
+      if (res.err === 0) {
+        dispatch(actions.addRegisterPost({ postId: id }));
+        toastSuccess("Đăng ký thành công");
+      } else {
+        toastError("Đăng ký thất bại");
+      }
+    }
+  };
+
+  const hasRegisterPost = (id) => {
+    return registerPosts.some((post) => post.postId === id);
+  };
+
   useEffect(() => {
     setloading(true);
     const timer = setTimeout(async () => {
@@ -51,6 +85,7 @@ const RegisterPost = (props) => {
       clearTimeout(timer);
     };
   }, [page, searchValue]);
+
   return (
     <div className="p-8 h-full">
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between border-b-1 gap-2 border-gray-300 mb-10">
@@ -140,13 +175,22 @@ const RegisterPost = (props) => {
                           <td className="p-3 text-center">{post?.userData?.phone}</td>
                           <td>
                             <Popconfirm
-                              title="Bạn có chắc chắn huỷ đăng ký"
-                              okType="danger"
+                              title={
+                                hasRegisterPost(post?.id)
+                                  ? "Bạn có chắc chắn huỷ đăng ký?"
+                                  : "Bạn có muốn đăng ký lại?"
+                              }
+                              okType={hasRegisterPost(post?.id) ? "danger" : "default"}
                               placement="topRight"
-                              // onConfirm={() => handleDeletePost(post)}
+                              onConfirm={() => handleDeletePost(post?.id)}
                             >
-                              <Button size="medium" danger type="primary">
-                                Huỷ đăng ký
+                              <Button
+                                size="medium"
+                                danger={hasRegisterPost(post?.id)}
+                                type="primary"
+                                ghost
+                              >
+                                {hasRegisterPost(post?.id) ? "Huỷ đăng ký" : "Đăng ký"}
                               </Button>
                             </Popconfirm>
                           </td>
@@ -263,13 +307,17 @@ const RegisterPost = (props) => {
                       {checkStatus(post?.overviews?.expired.split(" ")[3]) ? "Còn hạn" : "Hết hạn"}
                     </span>
                     <Popconfirm
-                      title="Bạn có chắc chắn huỷ đăng ký"
-                      okType="danger"
+                      title={
+                        hasRegisterPost(post?.id)
+                          ? "Bạn có chắc chắn huỷ đăng ký?"
+                          : "Bạn có muốn đăng ký lại?"
+                      }
+                      okType={hasRegisterPost(post?.id) ? "danger" : "default"}
                       placement="topRight"
-                      // onConfirm={() => handleDeletePost(post)}
+                      onConfirm={() => handleDeletePost(post?.id)}
                     >
-                      <Button size="medium" danger type="primary">
-                        Huỷ đăng ký
+                      <Button size="medium" danger={hasRegisterPost(post?.id)} type="primary" ghost>
+                        {hasRegisterPost(post?.id) ? "Huỷ đăng ký" : "Đăng ký"}
                       </Button>
                     </Popconfirm>
                   </div>

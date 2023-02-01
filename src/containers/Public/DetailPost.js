@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { apiCreateLovePost, apiDeleteLovePost } from "../../services/lovePost";
 import * as actions from "../../store/actions";
 import { toastError, toastSuccess } from "../../untils/toast";
+import { apiAddRegisterPost, apiDeleteRegisterPost } from "../../services/registerPost";
 const {
   GrStar,
   MdLocationOn,
@@ -31,12 +32,12 @@ const DetailPost = (props) => {
   const loaction = useLocation();
   const dispatch = useDispatch();
   const { id, categoryCode, labelCode } = loaction.state;
-  const { lovePosts } = useSelector((state) => state.user);
+  const { lovePosts, registerPosts } = useSelector((state) => state.user);
+
 
   const [postDetail, setpostDetail] = useState({});
   const [posts, setposts] = useState([]);
   const [loading, setloading] = useState(false);
-  // const handleFilterArea = () => {};
   const handleLovePost = async (id) => {
     const love = lovePosts.find((item) => item.postId === id);
     if (love) {
@@ -52,6 +53,28 @@ const DetailPost = (props) => {
       const res = await apiCreateLovePost({ postId: id });
       if (res.err === 0) {
         dispatch(actions.addLovePost(res.data));
+        toastSuccess("Thêm thành công");
+      } else {
+        toastError("Thêm thất bại");
+      }
+    }
+  };
+
+  const handleRegisterPost = async (id) => {
+    const post = registerPosts.find((item) => item.postId === id);
+    if (post) {
+      const res = await apiDeleteRegisterPost({ postId: id });
+      if (res.err === 0) {
+        const newRegisterPosts = registerPosts.filter((item) => item.postId !== id);
+        dispatch(actions.deletedRegisterPost(newRegisterPosts));
+        toastSuccess("Huỷ đăng ký thành công");
+      } else {
+        toastError("Huỷ thất bại");
+      }
+    } else {
+      const res = await apiAddRegisterPost({ postId: id });
+      if (res.err === 0) {
+        dispatch(actions.addRegisterPost({ postId: id }));
         toastSuccess("Thêm thành công");
       } else {
         toastError("Thêm thất bại");
@@ -269,13 +292,21 @@ const DetailPost = (props) => {
               isBefore
               Icon={lovePosts.some((post) => post.postId === postDetail.id) ? BsHeart : BsHeartFill}
               bgColor={"bg-white"}
-              text={"Yêu thích"}
+              text={`${
+                lovePosts.some((post) => post.postId === postDetail.id)
+                  ? "Huỷ yêu thích"
+                  : "Yêu thích"
+              }`}
               textColor={
                 lovePosts.some((post) => post.postId === postDetail.id)
                   ? "text-pink-600"
                   : "text-333"
               }
-              className={"border-2 h-[40px] border-gray-800 text-sm font-bold min-w-200"}
+              className={`border-2 h-[40px] text-sm font-bold min-w-200 ${
+                lovePosts.some((post) => post.postId === postDetail.id)
+                  ? "border-pink-600"
+                  : "border-gray-800 "
+              }`}
               onClick={() => handleLovePost(postDetail.id)}
             />
           )}
@@ -283,10 +314,23 @@ const DetailPost = (props) => {
             <SkeletonCutom className={"min-w-200 p-3"} />
           ) : (
             <Button
-              bgColor={"bg-red-100"}
-              text={"Đăng ký phòng trọ"}
-              textColor={"text-red-800"}
-              className={"border h-[40px] border-gray- text-sm font-bold min-w-200"}
+              bgColor={"bg-white"}
+              text={`${
+                registerPosts.some((post) => post.postId === postDetail.id)
+                  ? "Huỷ đăng ký"
+                  : "Đăng ký"
+              }`}
+              textColor={`${
+                registerPosts.some((post) => post.postId === postDetail.id)
+                  ? "text-red-600"
+                  : "text-gray-800 "
+              }`}
+              className={`border-2 h-[40px] text-sm font-bold min-w-200 ${
+                registerPosts.some((post) => post.postId === postDetail.id)
+                  ? "border-red-600"
+                  : "border-gray-600"
+              }`}
+              onClick={() => handleRegisterPost(postDetail.id)}
             />
           )}
         </div>

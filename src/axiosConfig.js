@@ -32,7 +32,7 @@ instance.interceptors.request.use(
 );
 
 // Add a response interceptor
-let refresh = false;
+// let refresh = false;
 instance.interceptors.response.use(
   function (response) {
     // refresh token
@@ -41,11 +41,7 @@ instance.interceptors.response.use(
   async function (error) {
     console.log(error);
     toastError(error.response.data?.msg);
-    if (error.response.status === 401 && !refresh) {
-      refresh = true;
-      // await apiRefresh();
-    }
-    refresh = false;
+
     return Promise.reject(error);
   },
 );

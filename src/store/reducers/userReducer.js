@@ -5,6 +5,7 @@ const initialState = {
   countPosts: 0,
   post: {},
   lovePosts: [],
+  registerPosts: [],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -14,12 +15,6 @@ const userReducer = (state = initialState, action) => {
         ...state,
         currentData: action.data || {},
       };
-
-    case actionTypes.GET_USER_FAIL:
-      return {
-        ...state,
-        currentData: {},
-      };
     case actionTypes.LOGOUT:
       return {
         ...state,
@@ -27,8 +22,10 @@ const userReducer = (state = initialState, action) => {
         posts: [],
         post: {},
         lovePosts: [],
+        registerPosts: [],
         countPosts: 0,
       };
+    //post private
     case actionTypes.GET_POSTS_PRIVATE:
       return {
         ...state,
@@ -46,10 +43,11 @@ const userReducer = (state = initialState, action) => {
         ...state,
         post: {},
       };
+    // love posts
     case actionTypes.GET_LOVE_POSTS:
       return {
         ...state,
-        lovePosts: action.data || [],
+        lovePosts: action.data,
       };
     case actionTypes.DELETE_LOVE_POST:
       return {
@@ -60,6 +58,22 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         lovePosts: [...state.lovePosts, action.data],
+      };
+    //register posts
+    case actionTypes.GET_REGISTER_POSTS:
+      return {
+        ...state,
+        registerPosts: action.data,
+      };
+    case actionTypes.DELETE_REGISTER_POST:
+      return {
+        ...state,
+        registerPosts: action.data,
+      };
+    case actionTypes.ADD_REGISTER_POST:
+      return {
+        ...state,
+        registerPosts: [...state.registerPosts, action.data],
       };
     default:
       return state;
