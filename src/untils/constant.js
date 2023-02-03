@@ -19,6 +19,7 @@ export const path = {
   MANAGER_POST: "quan-ly-bai-dang",
   LOVE_POST: "yeu-thich",
   REGISTER_POST: "dang-ky-bai-dang",
+  USERS_REGISTER_POST: "nguoi-dang-ky-bai-dang",
   //   UPDATE_POST: "",
   USER_INFO: "thong-tin-ca-nhan",
   CONTACT: "lien-he",
@@ -28,6 +29,7 @@ export const path = {
   STATISTIC: "thong-ke",
   ACCOUNT: "tai-khoan",
   POSTS: "tin-dang",
+  MANAGER_CATEGORY: "quan-ly-loai-dach-sach",
   TYPE_OF_POST: "loai-danh-sach-tin-dang",
 };
 

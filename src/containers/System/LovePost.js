@@ -30,10 +30,11 @@ const LovePost = (props) => {
     };
   }, [page]);
   return (
-    <div className="w-full p-10">
+    <div className="h-full">
+      <h2 className="text-2xl text-gray-700 font-bold mb-2">Bài đăng yêu thích</h2>
       <ListItem posts={posts} loading={loading} counts={[1, 2, 3, 4, 5]} />
       <Pagination
-        // hideOnSinglePage
+        hideOnSinglePage
         total={count}
         defaultCurrent={page}
         onChange={(page) => {

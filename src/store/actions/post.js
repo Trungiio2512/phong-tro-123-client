@@ -1,8 +1,9 @@
 import actionTypes from "./actionsType";
-import { apiGetNewPosts, apiGetPostsLitmit, apiGetPostsPrivate } from "../../services/post";
+import * as postServices from "../../services/post";
+import * as adminServices from "../../services/admin";
 export const getPostsLimit = (payload) => async (dispatch) => {
   try {
-    const res = await apiGetPostsLitmit(payload);
+    const res = await postServices.apiGetPostsLitmit(payload);
     // console.log(res);
     if (res?.err === 0) {
       dispatch({
@@ -21,7 +22,8 @@ export const getPostsLimit = (payload) => async (dispatch) => {
 
 export const getPostsPrivate = (payload) => async (dispatch) => {
   try {
-    const res = await apiGetPostsPrivate(payload);
+    let res;
+    res = await postServices.apiGetPostsPrivate(payload);
     if (res?.err === 0) {
       dispatch({
         type: actionTypes.GET_POSTS_PRIVATE,

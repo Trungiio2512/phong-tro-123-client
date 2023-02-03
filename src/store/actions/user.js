@@ -1,6 +1,7 @@
 import * as userService from "../../services/user";
 import * as lovePostService from "../../services/lovePost";
 import * as registerPostService from "../../services/registerPost";
+import * as adminServices from "../../services/admin";
 import actionTypes from "./actionsType";
 
 export const getCurrentUser = () => async (dispatch) => {
@@ -63,3 +64,21 @@ export const addRegisterPost = (payload) => ({
   type: actionTypes.ADD_REGISTER_POST,
   data: payload,
 });
+export const getPosts = (payload) => async (dispatch) => {
+  try {
+    let res;
+    res = await adminServices.apiGetPosts(payload);
+    if (res?.err === 0) {
+      dispatch({
+        type: actionTypes.GET_POSTS_PRIVATE,
+        data: res?.data?.rows,
+        count: res?.data?.count,
+      });
+    } else {
+      dispatch({ type: actionTypes.GET_POSTS_PRIVATE, msg: res.msg });
+    }
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: actionTypes.GET_POSTS_PRIVATE, msg: error?.message });
+  }
+};

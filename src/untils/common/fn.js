@@ -5,6 +5,7 @@ export const formatVietnameseToString = (value) => {
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .split(" ")
+    .map((item) => item.replace("/", "-"))
     .join("-")
     .toLowerCase();
 };

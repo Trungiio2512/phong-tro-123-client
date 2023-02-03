@@ -177,10 +177,10 @@ const CreatePost = () => {
   }, [isEdit]);
   // console.log(formatDateDefault(post?.overviews?.expired));
   return (
-    <div className={`px-8 min-h-screen`}>
-      <h1 className="font-semibold text-3xl py-4 mb-5 border-b-1 border-gray-300">
+    <div className={`min-h-screen`}>
+      <h2 className="font-semibold text-2xl pb-4 mb-8 border-b-1 border-gray-300">
         {isEdit ? "Chỉnh sửa tin đăng" : "Đăng tin mới"}
-      </h1>
+      </h2>
       <Row gutter={24}>
         <Col sm={24} md={24} lg={16} className="flex flex-auto flex-col gap-8 ">
           <Address

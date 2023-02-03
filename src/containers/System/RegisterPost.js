@@ -87,7 +87,7 @@ const RegisterPost = (props) => {
   }, [page, searchValue]);
 
   return (
-    <div className="p-8 h-full">
+    <div className="h-full">
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between border-b-1 gap-2 border-gray-300 mb-10">
         <h1 className="font-semibold text-3xl mb-4 ">Tin đã đăng ký</h1>
         <Search

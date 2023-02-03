@@ -11,6 +11,9 @@ const {
   FcStatistics,
   FiHome,
   RiRegisteredFill,
+  BiUserPin,
+  // RiFileUserLine,
+  // RiFolderUserLine
 } = icons;
 
 export const menuCreator = [
@@ -47,6 +50,12 @@ export const menuCreator = [
   },
   {
     id: 7,
+    text: "Những người đã đăng ký",
+    path: "/he-thong/nguoi-dang-ky-bai-dang",
+    icon: <BiUserPin size={30} />,
+  },
+  {
+    id: 8,
     text: "Liên hệ",
     path: "/lien-he",
     icon: <BsChatText size={30} />,
@@ -103,14 +112,14 @@ export const menuAdmin = [
   },
   {
     id: 3,
-    text: "Tin đăng",
-    path: "/admin/tin-dang",
+    text: "Quản lý bài đăng",
+    path: "/admin/quan-ly-bai-dang",
     icon: <GiNewspaper size={30} />,
   },
   {
     id: 4,
-    text: "Loại danh sách tin đăng",
-    path: "/admin/loai-danh-sach-tin-dang",
+    text: "Loại danh sách bài đăng",
+    path: "/admin/quan-ly-loai-dach-sach",
     icon: <RiFolderUserLine size={30} />,
   },
   {

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { Input, Pagination, Popconfirm } from "antd";
 import moment from "moment";
-
+import jwt from "jwt-decode";
 import Swal from "sweetalert2";
 
 import * as actions from "../../store/actions";
@@ -12,15 +12,19 @@ import { Button, SkeletonCutom } from "../../components";
 import { apiDeletePostPrivate } from "../../services/post";
 import { path } from "../../untils/constant";
 import { checkStatus } from "../../untils/common/fn";
+import icons from "../../untils/icons";
 
 const countLoading = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const { Search } = Input;
-const ManagerPost = (props) => {
+const { AiOutlinePlus } = icons;
+const ManagerPost = ({ admin = false }) => {
+  // console.log(token);
   const navigate = useNavigate();
   const dispath = useDispatch();
+  const location = useLocation();
   const [searchParams, setSeachParams] = useSearchParams();
-
+  // console.log(location);
   const { posts, countPosts } = useSelector((state) => state.user);
 
   const [refreshPage, setrefreshPage] = useState(false);
@@ -28,9 +32,14 @@ const ManagerPost = (props) => {
   const [page, setpage] = useState(1);
   const [searchValue, setsearchValue] = useState("");
 
+  // console.log(role);
   useEffect(() => {
     // const payload = {page}
-    dispath(actions.getPostsPrivate({ page, title: searchValue }));
+    if (admin) {
+      dispath(actions.getPosts({ page, title: searchValue }));
+    } else {
+      dispath(actions.getPostsPrivate({ page, title: searchValue }));
+    }
   }, [page, refreshPage, searchValue]);
 
   useEffect(() => {
@@ -82,9 +91,9 @@ const ManagerPost = (props) => {
   };
 
   return (
-    <div className="px-8 h-full">
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between border-b-1 gap-2 border-gray-300 mb-10">
-        <h1 className="font-semibold text-3xl py-4 ">Quản lý tin đăng</h1>
+    <div className="h-full">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between border-b-1 gap-2 border-gray-300mb-2 pb-4">
+        <h2 className="font-semibold text-2xl ">Quản lý tin đăng</h2>
         <Search
           placeholder="Tìm kiếm theo tên bài đăng"
           allowClear
@@ -99,6 +108,18 @@ const ManagerPost = (props) => {
           <option value="1">--Hết hạn--</option>
         </select> */}
       </div>
+      {admin && (
+        <Button
+          textColor={"text-white"}
+          bgColor="bg-red-400"
+          text={"Tạo mới"}
+          isAfter
+          Icon={AiOutlinePlus}
+          className="lg:float-left lg:w-auto w-full mb-4"
+          onClick={() => navigate(`/${path.ADMIN}/${path.CREATE_POST}`)}
+        />
+      )}
+
       <div className="hidden relative lg:flex flex-col w-full min-w-0 mb-0 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border">
         <div className="flex-auto px-0 pt-0 pb-2">
           <div className="p-0 overflow-x-auto">
@@ -205,7 +226,7 @@ const ManagerPost = (props) => {
                     return (
                       <tr key={i}>
                         <td className="p-3 ">
-                          <SkeletonCutom className={"min-w-[80px]"} />
+                          <SkeletonCutom className={"max-w-[80px] "} />
                         </td>
                         <td className="p-3">
                           <figure className="max-w-[120px] w-full h-full">
@@ -242,7 +263,7 @@ const ManagerPost = (props) => {
           </div>
         </div>
       </div>
-      <div className={`lg:hidden grid md:grid-cols-2 gap-3`}>
+      <div className={`lg:hidden grid md:grid-cols-2 gap-3 mb-4`}>
         {loading ? (
           countLoading.map((i) => {
             return (
@@ -250,37 +271,25 @@ const ManagerPost = (props) => {
                 key={i}
                 className={`w-full bg-gray-100 shadow-md rounded-md border-b-1 border-gray-300 p-4 flex flex-col gap-4`}
               >
+                <SkeletonCutom containerClassName={"max-w-[80px]"} />
                 <div className="flex flex-col md:flex-row md:items-center gap-2">
                   <div className="flex flex-col gap-2">
-                    <span className="text-sm font-semibold ">
-                      <SkeletonCutom className={"min-w-[80px]"} />
-                    </span>
-                    <figure className="w-full max-h-[150px] rounded-md overflow-hidden md:w-[150px] md:h-[100px]">
+                    <figure className="w-full h-[400px] md:w-[150px] rounded-md overflow-hidden md:h-[200px]">
                       <SkeletonCutom height={"100%"} />
                     </figure>
                   </div>
-                  <div className="flex flex-col gap-2 flex-1">
-                    <h2 className="font-semibold line-clamp-1">
-                      <SkeletonCutom className={"min-w-100"} />
-                    </h2>
-                    <span className="text-md text-red-300">
-                      <SkeletonCutom className={"min-w-[80px]"} />
-                    </span>
-                    <div className="flex items-center gap-3">
-                      <span className="text-sm flex-1">
-                        {" "}
-                        <SkeletonCutom className={"min-w-[80px]"} />
-                      </span>
-                      <span className="text-sm flex-1">
-                        {" "}
-                        <SkeletonCutom className={"min-w-[80px]"} />
-                      </span>
+                  <div className="flex flex-col gap-2 flex-1 justify-start h-full">
+                    <SkeletonCutom containerClassName={"md:max-w-[100px] w-full"} count={3} />
+                    <SkeletonCutom containerClassName={"md:max-w-[100px] w-full"} />
+                    <div className="flex flex-col gap-3">
+                      <SkeletonCutom containerClassName={"flex-1 "} />
+                      <SkeletonCutom containerClassName={"flex-1 "} />
                     </div>
                   </div>
                 </div>
                 <div className="flex flex-col md:flex-row ms:items-center gap-2">
-                  <SkeletonCutom className={"min-w-100 p-3"} />
-                  <SkeletonCutom className={"min-w-100 p-3"} />
+                  <SkeletonCutom className={"p-3"} containerClassName={"flex-1 "} />
+                  <SkeletonCutom className={"p-3"} containerClassName={"flex-1 "} />
                 </div>
               </div>
             );
@@ -292,21 +301,21 @@ const ManagerPost = (props) => {
                 key={post?.id}
                 className={`w-full bg-gray-100 shadow-md rounded-md border-b-1 border-gray-300 p-4 flex flex-col gap-4`}
               >
+                <span className="text-sm font-semibold ">{post?.overviews?.code}</span>
                 <div className="flex flex-col md:flex-row md:items-center gap-2">
                   <div className="flex flex-col gap-2">
-                    <span className="text-sm font-semibold ">{post?.overviews?.code}</span>
-                    <figure className="w-full max-h-[150px] rounded-md overflow-hidden md:w-[150px] md:h-[100px]">
+                    <figure className="w-full h-[400px] rounded-md overflow-hidden md:w-[150px]  md:h-[200px]">
                       <img
                         src={JSON.parse(post?.imagesData.images)[0]}
                         alt={post?.title}
-                        className={"w-full h-full object-cover"}
+                        className={"w-full h-full object-contain"}
                       />
                     </figure>
                   </div>
-                  <div className="flex flex-col gap-2 flex-1">
-                    <h2 className="font-semibold line-clamp-1">{post?.title}</h2>
+                  <div className="flex flex-col gap-2 flex-1 justify-start h-full">
+                    <h2 className="font-semibold line-clamp-3">{post?.title}</h2>
                     <span className="text-md text-red-300">{post?.attributesData?.price}</span>
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-col gap-3">
                       <span className="text-sm flex-1">{post?.overviews?.created}</span>
                       <span className="text-sm flex-1">{post?.overviews?.expired}</span>
                     </div>

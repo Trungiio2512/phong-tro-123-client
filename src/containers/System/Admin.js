@@ -10,11 +10,11 @@ const { GrLinkPrevious, GrNext } = icons;
 const Admin = (props) => {
   const [open, setopen] = useState(false);
   // const menu/
+  // const navRef =
   return (
     <div className="flex ">
-      
       <NewSidebar open={open} setopen={setopen} menu={menuAdmin} />
-      <div className="p-7 text-2xl font-semibold min-h-screen bg-gray-200 flex-1">
+      <div className={`bg-gray-200 p-8 shadow-md min-h-full overflow-hidden flex-1`}>
         <Outlet />
       </div>
     </div>

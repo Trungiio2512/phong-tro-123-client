@@ -1,4 +1,4 @@
-import { AiOutlinePlusCircle, AiOutlineLogout } from "react-icons/ai";
+import { AiOutlinePlusCircle, AiOutlineLogout, AiOutlinePlus } from "react-icons/ai";
 import { GrNext, GrPrevious, GrStar, GrLinkPrevious, GrUserAdmin } from "react-icons/gr";
 import {
   BsChevronRight,
@@ -21,9 +21,11 @@ import { FaClipboardList, FaTimesCircle } from "react-icons/fa";
 import { RiFolderUserLine, RiRegisteredFill } from "react-icons/ri";
 import { GiNewspaper } from "react-icons/gi";
 import { FcStatistics } from "react-icons/fc";
+import { BiUserPin } from "react-icons/bi";
 const icons = {
   AiOutlinePlusCircle,
   GrNext,
+  AiOutlinePlus,
   BsChevronRight,
   FiHome,
   HiOutlineLocationMarker,
@@ -39,6 +41,7 @@ const icons = {
   FcStatistics,
   GiNewspaper,
   SlCrop,
+  // RiFileUserLine,
   MdApartment,
   RiFolderUserLine,
   BsChatText,
@@ -51,6 +54,7 @@ const icons = {
   AiOutlineLogout,
   BsFillHeartFill,
   GrStar,
+  BiUserPin,
   BsFillBookmarkStarFill,
   BsHeart,
   TbPlayerTrackNext,

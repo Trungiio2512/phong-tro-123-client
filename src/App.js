@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-
+import jwt from "jwt-decode";
 import { path } from "./untils/constant";
 import {
   DetailPost,
@@ -20,11 +20,13 @@ import {
   Contact,
   CreatePost,
   LovePost,
+  ManagerCategory,
   ManagerPost,
   RegisterPost,
   Statistic,
   System,
   UserInfo,
+  UsersRegisterPost,
 } from "./containers/System";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,9 +34,10 @@ import * as actions from "./store/actions";
 import { PrivateRoute, PrivateRouteAdmin } from "./containers/System/PrivateRoute";
 
 function App() {
-  const { token } = useSelector((state) => state.auth);
-  const { lovePosts, registerPosts } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.auth);
+  // const role = jwt(token)?.roleCode;
+  // console.log(role);
   useEffect(() => {
     const timoutGetInfoUser = setTimeout(async () => {
       if (token) {
@@ -65,7 +68,8 @@ function App() {
         <Route path={path.SYSTEM} element={<System />}>
           <Route element={<PrivateRoute token={token} />}>
             <Route path={path.CREATE_POST} element={<CreatePost />} />
-            <Route path={path.MANAGER_POST} element={<ManagerPost />} />
+            <Route path={path.MANAGER_POST} element={<ManagerPost token={token} />} />
+            <Route path={path.USERS_REGISTER_POST} element={<UsersRegisterPost />} />
             <Route path={`${path.UPDATE_POST}/:id`} element={<CreatePost />} />
           </Route>
           <Route path={path.USER_INFO} element={<UserInfo />} />
@@ -84,6 +88,9 @@ function App() {
             />
             <Route path={path.STATISTIC} element={<Statistic />} />
             <Route path={path.ACCOUNT} element={<Account />} />
+            <Route path={path.MANAGER_POST} element={<ManagerPost admin />} />
+            <Route path={path.MANAGER_CATEGORY} element={<ManagerCategory />} />
+            <Route path={path.CREATE_POST} element={<CreatePost />} />
           </Route>
         </Route>
         <Route element={<NotSearch />}>

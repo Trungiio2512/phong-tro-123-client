@@ -25,7 +25,7 @@ const System = ({ children }) => {
       <div className="flex w-full min-h-screen flex-auto relative">
         {/* <Sidebar /> */}
         <NewSidebar open={open} setopen={setopen} menu={menu} />
-        <div className={`bg-gray-200 shadow-md min-h-full overflow-hidden flex-1`}>
+        <div className={`bg-gray-200 p-8 shadow-md min-h-full overflow-hidden flex-1`}>
           <Outlet />
         </div>
       </div>

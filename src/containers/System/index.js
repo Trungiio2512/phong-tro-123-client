@@ -8,3 +8,5 @@ export { default as Admin } from "./Admin";
 export { default as Statistic } from "./Statistic";
 export { default as Account } from "./Account";
 export { default as RegisterPost } from "./RegisterPost";
+export { default as UsersRegisterPost } from "./UsersRegisterPost";
+export { default as ManagerCategory } from "./ManagerCategory";

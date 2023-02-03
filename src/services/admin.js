@@ -31,6 +31,38 @@ export const apiGetUsers = (payload) => {
     }
   });
 };
+export const apiGetPosts = (payload) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      // console.log(payload);
+      const res = await axiosConfig({
+        method: "get",
+        url: "api/v1/admin/posts",
+        params: payload,
+      });
+      resolve(res.data);
+    } catch (error) {
+      console.log(error);
+      reject(error);
+    }
+  });
+};
+export const apiGetCategories = (payload) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      // console.log(payload);
+      const res = await axiosConfig({
+        method: "get",
+        url: "api/v1/admin/categories",
+        params: payload,
+      });
+      resolve(res.data);
+    } catch (error) {
+      console.log(error);
+      reject(error);
+    }
+  });
+};
 export const apiDeleteUser = (payload) => {
   return new Promise(async (resolve, reject) => {
     try {

@@ -59,3 +59,18 @@ export const apiGetRegisterPosts = (payload) => {
     }
   });
 };
+export const apiGetUsersRegisterPosts = (payload) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await axiosConfig({
+        method: "get",
+        url: "/api/v1/user/users_register_post",
+        params: payload,
+      });
+      // console.log();
+      resolve(res.data);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
