@@ -115,7 +115,7 @@ const ManagerPost = ({ admin = false }) => {
           text={"Tạo mới"}
           isAfter
           Icon={AiOutlinePlus}
-          className="lg:float-left lg:w-auto w-full mb-4"
+          className="left-0 m-0 md:w-auto w-full mb-4"
           onClick={() => navigate(`/${path.ADMIN}/${path.CREATE_POST}`)}
         />
       )}

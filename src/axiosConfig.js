@@ -1,7 +1,11 @@
 import axios from "axios";
 import jwt from "jwt-decode";
+import { useDispatch } from "react-redux";
+import * as actions from "./store/actions";
 import { toast } from "react-toastify";
 import { toastError } from "./untils/toast";
+import { useNavigate } from "react-router-dom";
+import { path } from "./untils/constant";
 export const axiosPublic = axios.create({ baseURL: process.env.REACT_APP_SERVER_URL });
 const instance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
@@ -39,8 +43,12 @@ instance.interceptors.response.use(
     return response;
   },
   async function (error) {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     console.log(error);
     toastError(error.response.data?.msg);
+    dispatch(actions.logout());
+    navigate(`/${path.LOGIN}`);
 
     return Promise.reject(error);
   },

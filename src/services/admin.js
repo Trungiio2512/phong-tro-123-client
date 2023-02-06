@@ -63,6 +63,54 @@ export const apiGetCategories = (payload) => {
     }
   });
 };
+export const apiCreateCategory = (payload) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      // console.log(payload);
+      const res = await axiosConfig({
+        method: "post",
+        url: "api/v1/admin/create_category",
+        data: payload,
+      });
+      resolve(res.data);
+    } catch (error) {
+      console.log(error);
+      reject(error);
+    }
+  });
+};
+export const apiDeleteCategory = (payload) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      // console.log(payload);
+      const res = await axiosConfig({
+        method: "delete",
+        url: "api/v1/admin/delete_category",
+        data: payload,
+      });
+      resolve(res.data);
+    } catch (error) {
+      console.log(error);
+      reject(error);
+    }
+  });
+};
+export const apiUpdateCategory = (payload) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      // console.log(payload);
+      const res = await axiosConfig({
+        method: "put",
+        url: "api/v1/admin/update_category",
+        data: payload,
+      });
+      resolve(res.data);
+    } catch (error) {
+      console.log(error);
+      reject(error);
+    }
+  });
+};
 export const apiDeleteUser = (payload) => {
   return new Promise(async (resolve, reject) => {
     try {
