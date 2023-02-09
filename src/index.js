@@ -15,15 +15,15 @@ import { BrowserRouter } from "react-router-dom";
 const { store, persistor } = reduxStore();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    // <React.StrictMode>
-    <Provider store={store}>
-        <PersistGate persistor={persistor} loading={null}>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
-        </PersistGate>
-    </Provider>,
-    // </React.StrictMode>,
+  // <React.StrictMode>
+  <Provider store={store}>
+    <PersistGate persistor={persistor} loading={null}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </PersistGate>
+  </Provider>,
+  // </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

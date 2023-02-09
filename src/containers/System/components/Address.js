@@ -55,6 +55,7 @@ const Address = ({ isEdit = false, setpayload, invalidFields, setinvalidFields }
   }, [district]);
 
   useEffect(() => {
+    console.log(isEdit);
     if (isEdit) {
       if (provinces?.length > 0) {
         const addArr = post?.address.split(",");

@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import icons from "../../../untils/icons";
 import logoAdmin from "../../../assests/logo_admin.jpg";
+import { path } from "../../../untils/constant";
 
-const { GrLinkPrevious, GrNext } = icons;
+const { GrLinkPrevious, GrNext, FiHome } = icons;
 
 const NewSidebar = ({ open, setopen, menu }) => {
   return (
@@ -36,6 +37,29 @@ const NewSidebar = ({ open, setopen, menu }) => {
         </h1>
       </div>
       <div className="mt-4 flex flex-col gap-2 relative ">
+        <Link
+          to={path.HOME}
+          className={`flex group px-6 py-2 cursor-pointer  text-sm items-center rounded-md relative gap-x-4 duration-300 hover:bg-light-white text-gray-300
+            `}
+        >
+          <span>
+            <FiHome size={20} />
+          </span>
+          <span
+            style={{ transitionDelay: `00ms` }}
+            className={`${!open && "scale-0"} whitespace-pre duration-200 `}
+          >
+            Trang chủ
+          </span>
+          <span
+            className={`${
+              open ? "hidden" : ""
+            } absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-20 group-hover:duration-300 group-hover:w-fit 
+                                    z-10 `}
+          >
+            Trang chủ
+          </span>
+        </Link>
         {menu.map((item, index) => {
           return (
             <NavLink

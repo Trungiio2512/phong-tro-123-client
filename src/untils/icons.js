@@ -1,4 +1,9 @@
-import { AiOutlinePlusCircle, AiOutlineLogout, AiOutlinePlus } from "react-icons/ai";
+import {
+  AiOutlinePlusCircle,
+  AiOutlineLogout,
+  AiOutlinePlus,
+  AiOutlineUnorderedList,
+} from "react-icons/ai";
 import { GrNext, GrPrevious, GrStar, GrLinkPrevious, GrUserAdmin } from "react-icons/gr";
 import {
   BsChevronRight,
@@ -30,6 +35,7 @@ const icons = {
   FiHome,
   HiOutlineLocationMarker,
   BsFillCameraFill,
+  AiOutlineUnorderedList,
   RiRegisteredFill,
   GrPrevious,
   TbReportMoney,

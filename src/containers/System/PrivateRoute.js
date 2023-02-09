@@ -10,11 +10,9 @@ export const PrivateRoute = ({ token, children }) => {
     if (role === "R2" || role === "R1") {
       return children ? children : <Outlet />;
     }
+  } else {
+    return <Navigate to={path.NOTFOUND} replace />;
   }
-
-  // console.log(role);
-
-  return <Navigate to={path.NOTFOUND} replace />;
 };
 export const PrivateRouteAdmin = ({ token, children }) => {
   if (token) {
@@ -22,9 +20,7 @@ export const PrivateRouteAdmin = ({ token, children }) => {
     if (role === "R1") {
       return children ? children : <Outlet />;
     }
+  } else {
+    return <Navigate to={path.NOTFOUND} replace />;
   }
-
-  // console.log(role);
-
-  return <Navigate to={path.NOTFOUND} replace />;
 };

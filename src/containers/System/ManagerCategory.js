@@ -163,7 +163,7 @@ const ManagerCategory = (props) => {
       </Modal>
       <div className="w-full h-full">
         <div className="flex md:flex-row md:items-center md:justify-between mb-2 flex-col gap-3">
-          <h2 className="font-semibold text-xl">Danh sách tài khoản</h2>
+          <h2 className="font-semibold text-xl">Các loại danh sách</h2>
           <Search
             placeholder="Tìm kiếm theo tên"
             enterButton="Search"
@@ -258,7 +258,7 @@ const ManagerCategory = (props) => {
                     );
                   })
                 ) : (
-                  <div>Không có người dùng nào</div>
+                  <div>Không có loại danh sách nào nào</div>
                 )
               ) : (
                 countLoading.map((item) => {

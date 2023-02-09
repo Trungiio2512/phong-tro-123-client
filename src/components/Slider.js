@@ -4,10 +4,10 @@ import Slider from "react-slick";
 import ButtonSlider from "./ButtonSlider";
 
 const settings = {
-  dots: false,
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
+  initialSlide: 0,
   nextArrow: <ButtonSlider next />,
   prevArrow: <ButtonSlider prev />,
 };

@@ -32,12 +32,14 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "./store/actions";
 import { PrivateRoute, PrivateRouteAdmin } from "./containers/System/PrivateRoute";
+import { formatVietnameseToString } from "./untils/common/fn";
 
 function App() {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
+  const { categories } = useSelector((state) => state.app);
   // const role = jwt(token)?.roleCode;
-  // console.log(role);
+  // console.log(categories);
   useEffect(() => {
     const timoutGetInfoUser = setTimeout(async () => {
       if (token) {
@@ -52,6 +54,7 @@ function App() {
   useEffect(() => {
     dispatch(actions.getPrices());
     dispatch(actions.getAreas());
+    dispatch(actions.getCategories());
     dispatch(actions.getProvinces());
   }, []);
   return (
@@ -59,13 +62,30 @@ function App() {
       <Routes>
         <Route path={path.HOME} element={<Home />}>
           <Route index element={<HomePage />} />
-          <Route path={path.CHO_THUE_CAN_HO} element={<Rentail />} />
+          {categories.map((item) => {
+            return (
+              <Route
+                key={item.code}
+                path={formatVietnameseToString(item?.value)}
+                element={<Rentail />}
+              />
+            );
+          })}
+          {/* <Route path={path.CHO_THUE_CAN_HO} element={<Rentail />} />
           <Route path={path.CHO_THUE_MAT_BANG} element={<Rentail />} />
           <Route path={path.CHO_THUE_PHONG_TRO} element={<Rentail />} />
-          <Route path={path.NHA_CHO_THUE} element={<Rentail />} />
+          <Route path={path.NHA_CHO_THUE} element={<Rentail />} /> */}
           <Route path={path.SEARCH} element={<SearchDetail />} />
         </Route>
         <Route path={path.SYSTEM} element={<System />}>
+          <Route
+            index
+            element={
+              <div className="w-full">
+                <h2>Chào mừng</h2>
+              </div>
+            }
+          />
           <Route element={<PrivateRoute token={token} />}>
             <Route path={path.CREATE_POST} element={<CreatePost />} />
             <Route path={path.MANAGER_POST} element={<ManagerPost token={token} />} />
@@ -90,7 +110,7 @@ function App() {
             <Route path={path.ACCOUNT} element={<Account />} />
             <Route path={path.MANAGER_POST} element={<ManagerPost admin />} />
             <Route path={path.MANAGER_CATEGORY} element={<ManagerCategory />} />
-            <Route path={path.CREATE_POST} element={<CreatePost />} />
+            <Route path={path.CREATE_POST} element={<CreatePost admin />} />
           </Route>
         </Route>
         <Route element={<NotSearch />}>

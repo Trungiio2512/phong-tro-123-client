@@ -49,7 +49,6 @@ const Item = ({
   };
 
   const handleLovePost = async (id) => {
-
     const love = lovePosts.find((item) => item.postId === id);
     if (love) {
       const res = await apiDeleteLovePost({ postId: id });
@@ -72,48 +71,47 @@ const Item = ({
   };
   // console.log(lovePosts);
   return (
-    <div className="w-full flex border-t-1 border-t-red-500 py-4">
-      <div className="relative shrink-0 w-[280px] h-[240px] rounded-md overflow-hidden">
+    <div className="w-full flex md:flex-row flex-col border-t-1 border-t-red-500 py-4">
+      <div>
         {loading ? (
-          <SkeletonCutom className={"h-full"} />
+          <div className="sm:w-[280px] w-full">
+            <SkeletonCutom height={240} />
+          </div>
         ) : (
           images?.length > 0 && (
-            <>
-              <Link to={linkDetailPost(id)} state={{ id: id, categoryCode, labelCode }}>
-                <figure className="w-full h-full">
-                  <img
-                    src={images[0]}
-                    alt="preview"
-                    className="w-full h-full object-cover border border-gray-300"
-                  />
-                </figure>
-              </Link>
-              <span className="bg-overlay-50 text-white p-1 text-xs rounded-md absolute bottom-1 left-2">
-                {images.length} ảnh
-              </span>
-            </>
+            <Link to={linkDetailPost(id)} state={{ id: id, categoryCode, labelCode }}>
+              <figure className="sm:w-[280px] h-[240px] rounded-md overflow-hidden relative">
+                <img
+                  src={images[0]}
+                  alt="preview"
+                  className="w-full h-full object-contain border border-gray-300"
+                />
+                <span className="bg-overlay-50 text-white p-1 text-xs rounded-md absolute bottom-1 left-2">
+                  {images.length} ảnh
+                </span>
+                <span
+                  className="absolute bottom-1 right-2 cursor-pointer"
+                  onMouseEnter={() => setisHoverHeart(true)}
+                  onMouseLeave={() => setisHoverHeart(false)}
+                  onClick={() => {
+                    handleLovePost(id);
+                  }}
+                >
+                  {lovePosts?.some((item) => item?.postId === id) ? (
+                    <BsFillHeartFill size={20} className="text-pink-600" />
+                  ) : !isHoverHeart ? (
+                    <BsHeart size={20} className="text-gray-500" />
+                  ) : (
+                    <BsFillHeartFill size={20} className="text-pink-600" />
+                  )}
+                </span>
+              </figure>
+            </Link>
           )
         )}
-        {!loading && (
-          <span
-            className="absolute bottom-1 right-2 cursor-pointer"
-            onMouseEnter={() => setisHoverHeart(true)}
-            onMouseLeave={() => setisHoverHeart(false)}
-            onClick={() => {
-              handleLovePost(id);
-            }}
-          >
-            {lovePosts?.some((item) => item?.postId === id) ? (
-              <BsFillHeartFill size={20} className="text-pink-600" />
-            ) : !isHoverHeart ? (
-              <BsHeart size={20} className="text-gray-500" />
-            ) : (
-              <BsFillHeartFill size={20} className="text-pink-600" />
-            )}
-          </span>
-        )}
       </div>
-      <div className="flex flex-col gap-3 ml-3 flex-1 relative">
+
+      <div className="flex md:mt-0 mt-4 flex-col gap-3 md:ml-3 flex-1 relative">
         <div className="">
           {loading ? (
             <SkeletonCutom count={2} />
@@ -121,7 +119,7 @@ const Item = ({
             <Link
               to={linkDetailPost(id)}
               state={{ id: id, categoryCode, labelCode }}
-              className="gap-2 text-red-600 uppercase font-semibold hover:cursor-pointer hover:underline line-clamp-2"
+              className="gap-2 text-red-600 uppercase font-semibold hover:cursor-pointer hover:underline line-clamp-2 md:pr-8"
             >
               {stars.map((i, index) => (
                 <span key={index}>{i}</span>
@@ -136,7 +134,7 @@ const Item = ({
             </div>
           )}
         </div>
-        <div className="flex items-baseline justify-between">
+        <div className="flex md:items-baseline md:justify-between md:flex-row flex-col">
           <strong className="text-green-500 text-lg text-ellipsis whitespace-nowrap overflow-hidden inline-block">
             {loading ? <SkeletonCutom className={"min-w-100"} /> : attributes?.price}
           </strong>
@@ -155,11 +153,11 @@ const Item = ({
           )}
         </div>
         <p className="text-sm text-gray-400 line-clamp-3">
-          {loading ? <SkeletonCutom height={60} /> : description}
+          {loading ? <SkeletonCutom count={3} /> : description}
         </p>
-        <div className="flex items-center justify-between gap-5">
-          <div className="flex items-center gap-2 flex-1">
-            <figure className="w-[30px] h-[30px] overflow-hidden rounded-full">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between md:gap-5 gap-3">
+          <div className="flex items-center gap-2 ">
+            <figure className="w-[50px] h-[50px] md:w-[30px] md:h-[30px] overflow-hidden rounded-full">
               {loading ? (
                 <SkeletonCutom circle height="100%" />
               ) : (
@@ -174,25 +172,25 @@ const Item = ({
               {loading ? <SkeletonCutom count={1} /> : user?.name}
             </span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex md:items-center md:flex-row flex-col gap-2">
             {loading ? (
-              <SkeletonCutom className={"min-w-100"} />
+              <SkeletonCutom className={"min-w-100 p-2"} />
             ) : (
               <a
                 href={`tel:${user?.phone}`}
-                className="py-[2px] px-1 text-sm bg-blue-700  outline outline-1 outline-blue-700 text-white rounded-md select-none"
+                className="sm:py-[2px] py-2 px-1 text-sm bg-blue-700 outline outline-1 outline-blue-700 text-white rounded-md select-none w-full"
               >
-                Gọi {user?.zalo || user?.phone}
+                {`Gọi ${user?.zalo || user?.phone}`}
               </a>
             )}
             {loading ? (
-              <SkeletonCutom className={"min-w-100"} />
+              <SkeletonCutom className={"min-w-100 p-2"} />
             ) : (
               // eslint-disable-next-line react/jsx-no-target-blank
               <a
                 href={`https://zalo.me/${user?.zalo}`}
                 target="_blank"
-                className="py-[2px] px-1 text-sm bg-white text-blue-700 outline outline-1 outline-blue-700 rounded-md select-none"
+                className="sm:py-[2px] p-2 px-1 text-sm bg-white text-blue-700 outline outline-1 outline-blue-700 rounded-md select-none w-full"
               >
                 Nhắn zalo
               </a>
@@ -200,7 +198,7 @@ const Item = ({
           </div>
         </div>
         <span className="float-right text-sm text-gray-400">
-          {loading ? <SkeletonCutom /> : attributes?.published}
+          {loading ? <SkeletonCutom className={"min-w-100"} /> : attributes?.published}
         </span>
       </div>
     </div>

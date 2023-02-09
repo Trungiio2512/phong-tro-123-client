@@ -11,9 +11,10 @@ import { Address, OverView } from "./components";
 import { useDispatch, useSelector } from "react-redux";
 import icons from "../../untils/icons";
 import validate from "../../untils/validate";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import * as actions from "../../store/actions";
 import { formatDate, formatDateDefault } from "../../untils/common/formatDefaultDate";
+import { path } from "../../untils/constant";
 
 const { BsFillCameraFill, FaTimesCircle } = icons;
 const warnnings = [
@@ -30,29 +31,31 @@ const warnnings = [
   },
 ];
 
-const CreatePost = () => {
+const CreatePost = ({ admin = false }) => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const isEdit = location.state?.isEdit ? location.state?.isEdit : false;
   const { post } = useSelector((state) => state.user);
   const { prices, areas, categories } = useSelector((state) => state.app);
-
+  // const { categories } = useSelector((state) => state.app);
+  // console.log(categories);
   const [previewImages, setpreviewImages] = useState(() => {
-    return isEdit ? JSON.parse(post?.imagesData?.images) : [];
+    return [];
   });
 
   const [loading, setloading] = useState(false);
   const [payload, setpayload] = useState({
-    categoryCode: isEdit ? post?.categoryCode : "",
-    title: isEdit ? post?.title : "",
-    priceNumber: isEdit ? +post?.priceNumber * Math.pow(10, 6) : 0,
-    areaNumber: isEdit ? +post?.areaNumber : 0,
-    address: isEdit ? post?.address : "",
-    description: isEdit ? JSON.parse(post?.description) : "",
-    target: isEdit ? post?.overviews?.target : "",
-    province: isEdit ? post?.province : "",
-    expired: isEdit ? formatDateDefault(post?.overviews?.expired) : "",
+    categoryCode: "",
+    title: "",
+    priceNumber: 0,
+    areaNumber: 0,
+    address: "",
+    description: "",
+    target: "",
+    province: "",
+    expired: "",
   });
 
   // formatDate(post?.overviews?.created);
@@ -74,7 +77,7 @@ const CreatePost = () => {
     setloading(false);
     setpreviewImages((prev) => [...prev, ...images]);
   };
-  console.log("render");
+  // console.log("render");
   // console.log(formatDateDefault(post?.overviews?.expired));
   const handleDeleteImage = (image) => {
     setpreviewImages((prev) => prev.filter((item, index) => item !== image));
@@ -116,6 +119,7 @@ const CreatePost = () => {
         if (res.err === 0) {
           Swal.fire("Thành công ", "Thành công", "success").then(() => {
             dispatch(actions.setDefaultPostPriveate());
+            navigate(`/${admin ? path.ADMIN : path.SYSTEM}/${path.MANAGER_POST}`);
           });
         } else {
           Swal.fire("Thất bại", "Có lỗi", "error");
@@ -139,6 +143,7 @@ const CreatePost = () => {
               expired: "",
             });
             setpreviewImages([]);
+            // navigate(`/${admin ? path.ADMIN : path.SYSTEM}/${path.MANAGER_POST}`);
           });
         } else {
           Swal.fire("Thất bại", "Có lỗi", "error");
@@ -146,6 +151,7 @@ const CreatePost = () => {
       }
     }
   };
+  // console.log(payload);
   useEffect(() => {
     if (isEdit) {
       setpayload({

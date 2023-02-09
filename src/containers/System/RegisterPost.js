@@ -77,7 +77,6 @@ const RegisterPost = (props) => {
         setCount(res.data.count);
         setposts(res.data.rows);
         // console.log(res.data);
-      } else if (res.err === -1) {
       }
       setloading(false);
     }, 3000);
