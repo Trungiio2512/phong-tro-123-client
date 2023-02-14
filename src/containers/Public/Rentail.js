@@ -8,6 +8,7 @@ import { ItemSidebar, Provice, RelatedPost } from "../../components";
 import { List, Panigation } from "./components";
 import * as actions from "../../store/actions";
 import { formatVietnameseToString } from "../../untils/common/fn";
+import { Col, Row } from "antd";
 
 const Rentail = (props) => {
   const dispatch = useDispatch();
@@ -32,17 +33,19 @@ const Rentail = (props) => {
         <p className="text-[#65676b] text-sm">{currentCategory?.subheader}</p>
       </div>
       <Provice />
-      <div className="w-full flex gap-4 ">
-        <div className="w-[70%]">
+      <Row className="lg:flex-row flex-col-reverse" gutter={[{ lg: 8 }, { sm: 8, md: 16, lg: 24 }]}>
+        <Col xs={24} md={24} lg={16}>
           <List categoryCode={currentCategory?.code} />
           <Panigation />
-        </div>
-        <div className="w-[30%] flex flex-col items-center gap-4">
-          <ItemSidebar type="priceCode" title="Xem theo giá" isDouble content={prices} />
-          <ItemSidebar title="Xem theo diện tích" type="areaCode" isDouble content={areas} />
-          <RelatedPost />
-        </div>
-      </div>
+        </Col>
+        <Col xs={24} md={24} lg={8}>
+          <div className={"flex lg:flex-col md:flex-row flex-col gap-3"}>
+            <ItemSidebar type="priceCode" title="Xem theo giá" isDouble content={prices} />
+            <ItemSidebar title="Xem theo diện tích" type="areaCode" isDouble content={areas} />
+            <RelatedPost />
+          </div>
+        </Col>
+      </Row>
     </div>
   );
 };

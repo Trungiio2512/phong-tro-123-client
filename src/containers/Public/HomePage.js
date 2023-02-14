@@ -10,7 +10,7 @@ import { Col, Row } from "antd";
 const HomePage = (props) => {
   const { categories, prices, areas } = useSelector((state) => state.app);
   return (
-    <div className=" w-full flex flex-col gap-3">
+    <div className=" w-full flex flex-col gap-3 w-full">
       <div className="">
         <h1 className="font-semibold text-gray-700 text-3xl mb-1">{textHome.HOME_TITLE}</h1>
         <p className="text-[#65676b] text-sm">{textHome.HOME_DESCRIPTION}</p>
@@ -23,7 +23,11 @@ const HomePage = (props) => {
         </Col>
         <Col xs={24} md={24} lg={8}>
           <div className={"flex lg:flex-col md:flex-row flex-col gap-3"}>
-            <ItemSidebar content={categories} title={"Xem theo danh sách cho thuê"} />
+            <ItemSidebar
+              content={categories}
+              type={"categoryCode"}
+              title={"Xem theo danh sách cho thuê"}
+            />
             <ItemSidebar type="priceCode" title="Xem theo giá" isDouble content={prices} />
             <ItemSidebar title="Xem theo diện tích" type="areaCode" isDouble content={areas} />
             <RelatedPost />

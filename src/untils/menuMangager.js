@@ -92,12 +92,6 @@ export const menuUser = [
 
 export const menuAdmin = [
   {
-    id: 5,
-    text: "Trang chủ",
-    path: "/",
-    icon: <FiHome size={20} />,
-  },
-  {
     id: 1,
     text: "Thống kê",
     path: "/admin/thong-ke",

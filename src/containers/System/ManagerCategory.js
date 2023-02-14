@@ -306,7 +306,7 @@ const ManagerCategory = (props) => {
                         </Button>{" "}
                         <Popconfirm
                           title="Xoá người dùng"
-                          description="Bạn có muốn xoá người dùng này không?"
+                          description="Bạn có muốn xoá không?"
                           okButtonProps
                           okType={"danger"}
                           icon={
@@ -317,6 +317,7 @@ const ManagerCategory = (props) => {
                             />
                           }
                           // onConfirm={() => handleDeleteUser(user?.id, user.userRole.code)}
+                          onConfirm={() => handleDelete(category?.code)}
                         >
                           <Button
                             className="font-medium bg-red-100 text-red-800 flex items-center gap-2 flex-1"
@@ -351,15 +352,13 @@ const ManagerCategory = (props) => {
             })
           )}
         </div>
-        {!loading && (
-          <Pagination
-            hideOnSinglePage
-            defaultCurrent={page}
-            total={countCategories}
-            className="mt-4"
-            // onChange={(page) => handleChangePage(page)}
-          />
-        )}
+        <Pagination
+          hideOnSinglePage
+          defaultCurrent={page}
+          total={countCategories}
+          className="mt-4"
+          // onChange={(page) => handleChangePage(page)}
+        />
       </div>
     </>
   );

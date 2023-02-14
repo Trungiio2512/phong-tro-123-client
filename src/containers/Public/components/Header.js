@@ -21,6 +21,7 @@ const {
   BsFillCaretDownFill,
   GrUserAdmin,
   AiOutlineUnorderedList,
+  FaTimesCircle,
 } = icons;
 
 function Header() {
@@ -48,7 +49,7 @@ function Header() {
       <div className="items-center gap-2 flex justify-end ">
         {!token && (
           <>
-            <small className="text-lg">Phòng trọ 123 xin chào</small>
+            <small className="text-lg hidden md:inline-block">Phòng trọ 123 xin chào</small>
 
             <Button
               onClick={() => navigate(`/${path.LOGIN}`)}
@@ -158,12 +159,17 @@ function Header() {
         )}
       </div>
       <Button type="default text-2xl" className="md:hidden" onClick={() => setshowmenu(!showmenu)}>
-        <AiOutlineUnorderedList />
+        {!showmenu ? <AiOutlineUnorderedList /> : <FaTimesCircle />}
       </Button>
-      {/* <div className="absolute inset-0 z-20 bg-overlay-50">
-        <div className=""></div>
-      </div> */}
-      <ul className="hidden transition-all duration-500 ease-in bg-red-400 absolute w-full top-[100%] left-0 z-20 p-4">
+      <ul
+        className={`md:hidden py-4 shadow-md absolute  bg-blue-100 left-0 w-full transition-all duration-500 ease-in ${
+          showmenu ? "top-20 z-10" : "top-[-490px] z-[-1]"
+        }`}
+        onClick={(e) => console.log(e.target.value)}
+      >
+        <li>
+          <Link to={`/`}>Trang chủ</Link>
+        </li>
         {categories.map((item) => {
           return (
             <li key={item.code}>
@@ -171,19 +177,38 @@ function Header() {
             </li>
           );
         })}
+        {!token && (
+          <>
+            <li>
+              <Link to={`${path.LOGIN}`}>Đăng nhập</Link>
+            </li>
+            <li>
+              <Link to={`${path.REGISTER}`}>Đăng Ký</Link>
+            </li>
+          </>
+        )}
+        {token && jwt(token)?.roleCode === "R1" && (
+          <li>
+            <Link to={`/${path.ADMIN}`}>Admin</Link>
+          </li>
+        )}
+        {token && jwt(token)?.roleCode !== "R3" && (
+          <li>
+            <Link to={`/he-thong/tao-moi-bai-dang`}>Đăng tin mới</Link>
+          </li>
+        )}
+
         {menu.length > 0 &&
           menu.map((item) => {
             return (
               <li
-                className="flex items-center gap-2 text-md text-black font-medium "
                 key={item?.id}
                 // onClick={() => {
                 //   navigate(item?.path);
                 // }}
               >
                 {/* {Link(item.path)} */}
-                <span>{item.icon}</span>
-                <span> {item.text}</span>
+                <Link to={item.path}>{item.text}</Link>
               </li>
             );
           })}

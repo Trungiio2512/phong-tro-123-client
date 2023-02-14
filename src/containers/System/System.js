@@ -19,16 +19,14 @@ const System = ({ children }) => {
   return children ? (
     children
   ) : (
-    <div className="w-full min-h-screen flex flex-col items-center overflow-hidden">
-      {" "}
-      {/* <div className="flex items-center w-full fixed top-0 z-50"><Navigation system /></div> */}
-      <div className="flex w-full min-h-screen flex-auto relative">
-        {/* <Sidebar /> */}
-        <NewSidebar open={open} setopen={setopen} menu={menu} />
-        <div className={`bg-gray-200 p-8 shadow-md min-h-full overflow-hidden flex-1`}>
-          <Outlet />
-        </div>
+    <div className="w-full min-h-screen md:flex overflow-hidden">
+      {/* <div className="flex w-full min-h-screen flex-auto relative"> */}
+      <h2 className="font-bold text-2xl text-black md:hidden p2">Quản lý cá nhân</h2>
+      <NewSidebar open={open} setopen={setopen} menu={menu} />
+      <div className={`bg-gray-200 p-8 shadow-md min-h-full overflow-hidden flex-1`}>
+        <Outlet />
       </div>
+      {/* </div> */}
     </div>
   );
 };

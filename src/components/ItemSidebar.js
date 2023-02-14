@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from "react";
+import React, { memo, useCallback, useState } from "react";
 import { createSearchParams, Link, useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import icons from "../untils/icons";
@@ -11,6 +11,7 @@ const ItemSidebar = ({ content, title, isDouble = false, type }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+  const [pageValue, setPageValue] = useState("");
 
   const formatDouble = useCallback(() => {
     const odds = content?.filter((item1, index1) => +item1?.order % 2 !== 0);
@@ -24,7 +25,11 @@ const ItemSidebar = ({ content, title, isDouble = false, type }) => {
     return contentFormat;
   }, [content]);
 
+  console.log(type);
   const handleFilterPosts = (code) => {
+    console.log(pageValue);
+    if (type === "categoryCode") {
+    }
     // dispatch(actions.getPostsLimit({ [type]: code }));
     navigate({
       pathname: location.pathname,
@@ -33,6 +38,7 @@ const ItemSidebar = ({ content, title, isDouble = false, type }) => {
       })}`,
     });
   };
+
   return (
     <div className="p-4 bg-white w-full rounded-lg  border border-gray-300">
       <h3 className="font-semibold text-base">{title}</h3>
@@ -41,7 +47,7 @@ const ItemSidebar = ({ content, title, isDouble = false, type }) => {
           ? content.map((item) => {
               return (
                 <Link
-                  to={formatVietnameseToString(item?.value)}
+                  to={`/${formatVietnameseToString(item?.value)}`}
                   key={item?.code}
                   className="flex items-center gap-1 text-gray-400 hover:text-orange-600 cursor-pointer py-1 px-2 text-sm hover:bg-gray-100"
                 >
@@ -75,9 +81,22 @@ const ItemSidebar = ({ content, title, isDouble = false, type }) => {
       </div>
       <div className="lg:hidden">
         {content.length > 0 && (
-          <select>
+          <select
+            className="outline-none w-full py-1"
+            defaultValue={""}
+            onChange={(e) => handleFilterPosts(e.target.value)}
+          >
+            <option value={""}>--Chọn--</option>
             {content.map((item) => {
-              return <option key={item?.code}>{item?.value}</option>;
+              return (
+                <option
+                  key={item?.code}
+                  value={item?.code}
+                  // onChange={() => setPageValue(item.value)}
+                >
+                  {item?.value}
+                </option>
+              );
             })}
           </select>
         )}
