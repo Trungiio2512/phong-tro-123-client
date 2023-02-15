@@ -1,6 +1,6 @@
 import { Col, Row } from "antd";
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useSearchParams } from "react-router-dom";
 
@@ -11,11 +11,15 @@ const SearchDetail = (props) => {
   const location = useLocation();
   const titleSearch = location.state?.titleSearch;
   const { prices, areas } = useSelector((state) => state.app);
+  const titleRef = useRef();
+  useEffect(() => {
+    titleRef.current.scrollIntoView({ behavior: "smooth" });
+  }, []);
 
   return (
     <div className="flex flex-col gap-3 w-full">
       <div className="">
-        <h1 className="font-semibold text-gray-700 text-3xl mb-1">
+        <h1 ref={titleRef} className=" font-semibold text-gray-700 text-3xl mb-1">
           {titleSearch || "Kết quả tim kiếm"}
         </h1>
         <p className="text-[#65676b] text-sm">{`${titleSearch || ""}`}</p>

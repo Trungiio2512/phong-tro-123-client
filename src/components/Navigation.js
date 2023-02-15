@@ -16,7 +16,7 @@ function Navigation() {
   // useEffect(() => {}, []);
   return (
     <nav
-      className={`sticky w-full top-0 z-10 border-b border-gray-300 lg:flex lg:items-center hidden bg-white shadow-md`}
+      className={`sticky w-full top-0 z-10 border-b border-gray-300 md:flex md:items-center hidden bg-white shadow-md`}
     >
       <div className="text-base text-gray-600 flex justify-between ">
         <NavLink

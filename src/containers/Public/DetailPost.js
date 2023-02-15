@@ -13,9 +13,10 @@ import { path } from "../../untils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { apiCreateLovePost, apiDeleteLovePost } from "../../services/lovePost";
 import * as actions from "../../store/actions";
-import { toastError, toastSuccess } from "../../untils/toast";
+import { toastError, toastSuccess, toastWarn } from "../../untils/toast";
 import { apiAddRegisterPost, apiDeleteRegisterPost } from "../../services/registerPost";
 import { Col, Row } from "antd";
+import { toast } from "react-toastify";
 const {
   GrStar,
   MdLocationOn,
@@ -34,51 +35,60 @@ const DetailPost = (props) => {
   const dispatch = useDispatch();
   const { id, categoryCode, labelCode } = loaction.state;
   const { lovePosts, registerPosts } = useSelector((state) => state.user);
+  const { token } = useSelector((state) => state.auth);
 
   const [postDetail, setpostDetail] = useState({});
   const [posts, setposts] = useState([]);
   const [loading, setloading] = useState(false);
   const handleLovePost = async (id) => {
-    const love = lovePosts.find((item) => item.postId === id);
-    if (love) {
-      const res = await apiDeleteLovePost({ postId: id });
-      if (res.err === 0) {
-        const newLovePosts = lovePosts.filter((item) => item.id !== love.id);
-        dispatch(actions.deletedLovePost(newLovePosts));
-        toastSuccess("Đã xoá khỏi yêu thích");
+    if (token) {
+      const love = lovePosts.find((item) => item.postId === id);
+      if (love) {
+        const res = await apiDeleteLovePost({ postId: id });
+        if (res.err === 0) {
+          const newLovePosts = lovePosts.filter((item) => item.id !== love.id);
+          dispatch(actions.deletedLovePost(newLovePosts));
+          toastSuccess("Đã xoá khỏi yêu thích");
+        } else {
+          toastError("Xoá thất bại");
+        }
       } else {
-        toastError("Xoá thất bại");
+        const res = await apiCreateLovePost({ postId: id });
+        if (res.err === 0) {
+          dispatch(actions.addLovePost(res.data));
+          toastSuccess("Thêm thành công");
+        } else {
+          toastError("Thêm thất bại");
+        }
       }
     } else {
-      const res = await apiCreateLovePost({ postId: id });
-      if (res.err === 0) {
-        dispatch(actions.addLovePost(res.data));
-        toastSuccess("Thêm thành công");
-      } else {
-        toastError("Thêm thất bại");
-      }
+      toastWarn("Bạn cần đăng nhập");
     }
   };
 
   const handleRegisterPost = async (id) => {
-    const post = registerPosts.find((item) => item.postId === id);
-    if (post) {
-      const res = await apiDeleteRegisterPost({ postId: id });
-      if (res.err === 0) {
-        const newRegisterPosts = registerPosts.filter((item) => item.postId !== id);
-        dispatch(actions.deletedRegisterPost(newRegisterPosts));
-        toastSuccess("Huỷ đăng ký thành công");
+    if (token) {
+      const post = registerPosts.find((item) => item.postId === id);
+      if (post) {
+        const res = await apiDeleteRegisterPost({ postId: id });
+        if (res.err === 0) {
+          const newRegisterPosts = registerPosts.filter((item) => item.postId !== id);
+          dispatch(actions.deletedRegisterPost(newRegisterPosts));
+          toastSuccess("Huỷ đăng ký thành công");
+        } else {
+          toastError("Huỷ thất bại");
+        }
       } else {
-        toastError("Huỷ thất bại");
+        const res = await apiAddRegisterPost({ postId: id });
+        if (res.err === 0) {
+          dispatch(actions.addRegisterPost({ postId: id }));
+          toastSuccess("Thêm thành công");
+        } else {
+          toastError("Thêm thất bại");
+        }
       }
     } else {
-      const res = await apiAddRegisterPost({ postId: id });
-      if (res.err === 0) {
-        dispatch(actions.addRegisterPost({ postId: id }));
-        toastSuccess("Thêm thành công");
-      } else {
-        toastError("Thêm thất bại");
-      }
+      toastWarn("Bạn cần đăng nhập");
     }
   };
 
@@ -270,27 +280,27 @@ const DetailPost = (props) => {
               {loading ? (
                 <SkeletonCutom containerClassName={"w-full sm:w-[200px]"} className={"p-3"} />
               ) : (
-                <Button
-                  isBefore
-                  Icon={BsFillTelephoneFill}
-                  textColor={"text-white"}
-                  bgColor={"bg-[#16C784]"}
-                  text={postDetail?.userData?.phone}
-                  className={"min-w-200 h-[40px] text-xl font-bold tracking-wide sm:w-auto w-full"}
-                />
+                <a
+                  href={`tel:${postDetail?.userData?.phone}`}
+                  className={
+                    "gap-2 flex items-center justify-center min-w-200 bg-[#16C784] h-[40px] text-xl font-bold tracking-wide sm:w-auto w-full text-gray-800 hover:"
+                  }
+                >
+                  <BsFillTelephoneFill /> {postDetail?.userData?.phone}
+                </a>
               )}
 
               {loading ? (
                 <SkeletonCutom containerClassName={"w-full sm:w-[200px]"} className={"p-3"} />
               ) : (
-                <Button
-                  bgColor={"bg-white"}
-                  text={"Nhắn zalo"}
+                <a
+                  href={`https://zalo.me/${postDetail?.userData?.zalo}`}
                   className={
-                    "border-2 h-[40px] border-gray-800 text-sm font-bold min-w-200 sm:w-auto w-full"
+                    "border-2 h-[40px] text-sm font-bold tracking-wide  border-gray-800 flex items-center justify-center bg-white min-w-200 sm:w-auto w-full"
                   }
-                  textColor={"text-333"}
-                />
+                >
+                  Nhắn Zalo
+                </a>
               )}
 
               {loading ? (

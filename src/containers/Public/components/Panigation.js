@@ -46,7 +46,7 @@ const Panigation = () => {
 
   return (
     <div className="flex items-center justify-center gap-2 mt-3 ">
-      {isShowStart && currentPage > 2 && (
+      {currentPage > 2 && (
         <PageNumber
           // icon={<TbPlayerTrackPrev />}
           text={1}

@@ -72,45 +72,47 @@ const Item = ({
   // console.log(lovePosts);
   return (
     <div className="w-full flex md:flex-row flex-col border-t-1 border-t-red-500 py-4">
-      <div>
+      <div className="relative">
         {loading ? (
           <div className="sm:w-[280px] w-full">
             <SkeletonCutom height={240} />
           </div>
         ) : (
           images?.length > 0 && (
-            <Link to={linkDetailPost(id)} state={{ id: id, categoryCode, labelCode }}>
-              <figure className="sm:w-[280px] h-[240px] rounded-md overflow-hidden relative">
-                <img
-                  src={images[0]}
-                  alt="preview"
-                  className="w-full h-full object-contain border border-gray-300"
-                />
-                <span className="bg-overlay-50 text-white p-1 text-xs rounded-md absolute bottom-1 left-2">
-                  {images.length} ảnh
-                </span>
-                <span
-                  className="absolute bottom-1 right-2 cursor-pointer"
-                  onMouseEnter={() => setisHoverHeart(true)}
-                  onMouseLeave={() => setisHoverHeart(false)}
-                  onClick={() => {
-                    handleLovePost(id);
-                  }}
-                >
-                  {lovePosts?.some((item) => item?.postId === id) ? (
-                    <BsFillHeartFill size={20} className="text-pink-600" />
-                  ) : !isHoverHeart ? (
-                    <BsHeart size={20} className="text-gray-500" />
-                  ) : (
-                    <BsFillHeartFill size={20} className="text-pink-600" />
-                  )}
-                </span>
-              </figure>
-            </Link>
+            <>
+              <Link to={linkDetailPost(id)} state={{ id: id, categoryCode, labelCode }}>
+                <figure className="sm:w-[280px] h-[240px] rounded-md overflow-hidden relative">
+                  <img
+                    src={images[0]}
+                    alt="preview"
+                    className="w-full h-full object-contain border border-gray-300"
+                  />
+                  <span className="bg-overlay-50 text-white p-1 text-xs rounded-md absolute bottom-1 left-2">
+                    {images.length} ảnh
+                  </span>
+                </figure>
+              </Link>
+              <span
+                className="absolute z-10 bottom-1 right-2 cursor-pointer"
+                onMouseEnter={() => setisHoverHeart(true)}
+                onMouseLeave={() => setisHoverHeart(false)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleLovePost(id);
+                }}
+              >
+                {lovePosts?.some((item) => item?.postId === id) ? (
+                  <BsFillHeartFill size={20} className="text-pink-600" />
+                ) : !isHoverHeart ? (
+                  <BsHeart size={20} className="text-gray-500" />
+                ) : (
+                  <BsFillHeartFill size={20} className="text-pink-600" />
+                )}
+              </span>
+            </>
           )
         )}
       </div>
-
       <div className="flex md:mt-0 mt-4 flex-col gap-3 md:ml-3 flex-1 relative">
         <div className="">
           {loading ? (
