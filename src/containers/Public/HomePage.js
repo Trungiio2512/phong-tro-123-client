@@ -10,7 +10,7 @@ import { Col, Row } from "antd";
 const HomePage = (props) => {
   const { categories, prices, areas } = useSelector((state) => state.app);
   return (
-    <div className=" w-full flex flex-col gap-3 w-full">
+    <div className=" w-full flex flex-col gap-3">
       <div className="">
         <h1 className="font-semibold text-gray-700 text-3xl mb-1">{textHome.HOME_TITLE}</h1>
         <p className="text-[#65676b] text-sm">{textHome.HOME_DESCRIPTION}</p>

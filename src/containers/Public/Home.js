@@ -33,7 +33,7 @@ function Home() {
       <Navigation />
       <Search />
 
-      <div className="flex flex-col mt-3 ">
+      <div className="flex flex-col mt-3 max-w-[1000px]">
         <Outlet />
       </div>
       <Intro />
