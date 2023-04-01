@@ -2,13 +2,13 @@ import React, { memo, useCallback, useState } from "react";
 import { createSearchParams, Link, useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import icons from "../untils/icons";
-import * as actions from "../store/actions";
-import { useDispatch } from "react-redux";
+// import * as actions from "../store/actions";
+// import { useDispatch } from "react-redux";
 import { formatVietnameseToString } from "../untils/common/fn";
 const { GrNext } = icons;
 
 const ItemSidebar = ({ content, title, isDouble = false, type }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const [pageValue, setPageValue] = useState("");
