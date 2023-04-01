@@ -16,7 +16,7 @@ const Statistic = (props) => {
         setdata(res.data);
         setloading(false);
       }
-    }, 3000);
+    }, 1000);
     return () => {
       clearTimeout(timerLoading);
     };

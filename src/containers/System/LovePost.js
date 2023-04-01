@@ -9,7 +9,7 @@ import { useSearchParams } from "react-router-dom";
 
 const LovePost = (props) => {
   const [searchParams, setSearchParams] = useSearchParams();
-
+  
   const [loading, setloading] = useState(true);
   const [posts, setposts] = useState([]);
   const [count, setcount] = useState(0);
@@ -18,13 +18,14 @@ const LovePost = (props) => {
     setloading(true);
     const timer = setTimeout(async () => {
       const res = await userServices.apiGetLovePosts({ page });
+      // console.log(res);
       if (res.err === 0) {
         // console.log(res.data.rows);
         setposts(res.data.rows);
         setcount(res.data.count);
         setloading(false);
       }
-    }, 3000);
+    }, 1000);
     return () => {
       clearTimeout(timer);
     };

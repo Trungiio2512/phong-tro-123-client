@@ -42,7 +42,7 @@ const List = ({ categoryCode }) => {
     const timerfc = setTimeout(() => {
       setloading(false);
       dispatch(actions.getPostsLimit(searchQueryParams));
-    }, 3000);
+    }, 1000);
 
     return () => {
       clearTimeout(timerfc);

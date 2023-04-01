@@ -24,7 +24,7 @@ instance.interceptors.request.use(
     //     if (decodeToken.exp * 1000 < currentDate.getTime()) {
     //     }
     // }
-
+    // console.log(token);
     config.headers = {
       authorization: token ? `Bearer ${token}` : null,
     };

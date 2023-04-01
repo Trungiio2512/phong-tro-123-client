@@ -107,7 +107,7 @@ const DetailPost = (props) => {
       setposts(res2.data.rows);
       // console.log(res2.data);
       setloading(false);
-    }, 3000);
+    }, 1000);
     return () => {
       clearTimeout(timerfc);
     };

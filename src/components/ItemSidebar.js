@@ -25,7 +25,7 @@ const ItemSidebar = ({ content, title, isDouble = false, type }) => {
     return contentFormat;
   }, [content]);
 
-  console.log(type);
+  // console.log(type);
   const handleFilterPosts = (code) => {
     console.log(pageValue);
     if (type === "categoryCode") {

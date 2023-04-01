@@ -39,7 +39,7 @@ const RelatedPost = ({
         setnewPosts(res.data);
         setloading(false);
       }
-    }, 3000);
+    }, 1000);
     return () => {
       clearTimeout(timerfc);
     };

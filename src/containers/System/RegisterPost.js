@@ -79,7 +79,7 @@ const RegisterPost = (props) => {
         // console.log(res.data);
       }
       setloading(false);
-    }, 3000);
+    }, 1000);
     return () => {
       clearTimeout(timer);
     };
