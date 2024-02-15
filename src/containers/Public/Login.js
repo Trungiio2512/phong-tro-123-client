@@ -17,7 +17,7 @@ function Login() {
 
   const formik = useFormik({
     initialValues: {
-       phone: "0385383855",
+       phone: "0385383655",
       password: "trung2512",
     },
     validationSchema: Yup.object().shape({
